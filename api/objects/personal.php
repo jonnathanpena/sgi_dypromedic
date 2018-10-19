@@ -84,7 +84,7 @@ class Personal {
                     FROM `df_personal` 
                     WHERE `df_nombre_per` like '%".$this->df_nombre_per."%' 
                     OR `df_documento_per` like '%".$this->df_nombre_per."%'
-                    order by df_id_personal desc";
+                    order by df_nombre_per asc";
         // prepare query statement
         $stmt = $this->conn->prepare($query);
     
@@ -392,7 +392,25 @@ class Personal {
         
     }
 
-     
+    // cambia estado del personal
+    function updateEdoPersonal(){
+    
+        // query 
+        $query = "UPDATE `df_personal` SET 
+                    `df_activo_per`= ".$this->df_activo_per." 
+                    WHERE `df_id_personal` = ".$this->df_id_personal;
+    
+        // prepara la sentencia del query
+        $stmt = $this->conn->prepare($query);
+        
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }       
+        
+    }
 
 }
 ?>
