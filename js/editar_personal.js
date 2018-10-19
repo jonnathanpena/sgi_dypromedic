@@ -23,25 +23,34 @@ $(document).ready(function() {
 
 function load() {
     var personal = JSON.parse(localStorage.getItem('distrifar_personal_editar'));
-    $('#tipo_documento').val(personal.df_tipo_documento_per);
-    $('#id').val(personal.df_id_personal);
-    $('#documento').val(personal.df_documento_per);
-    $('#nombre').val(personal.df_nombre_per);
-    $('#apellido').val(personal.df_apellido_per);
-    $('#email').val(personal.df_correo_per);
-    $('#cargo').val(personal.df_cargo_per);
-    $('#fecha_ingreso').val(personal.df_fecha_ingreso);
-    $('#sueldo').val(personal.df_sueldo_detper);
-    $('#bono').val(personal.df_bono_detper);
-    $('#anticipo').val(personal.df_anticipo_detper);
-    $('#descuento').val(personal.df_descuento_detper);
-    $('#decimos').val(personal.df_descuento_detper);
-    $('#vacaciones').val(personal.df_decimos_detper);
-    $('#vacaciones').val(personal.df_vacaciones_detper);
-    $('#comisiones').val(personal.df_comisiones_detper);
-    $('#tabla_comisiones').val(personal.df_tabala_comision_detper);
-    $('#codigo').val(personal.df_codigo_personal);
-    $('#usuario_id').val(personal.df_usuario_detper);
+    console.log('cargo ', personal);
+    var cargo = personal.df_cargo_per;
+    if ( cargo == 'Instrumentista' || cargo == 'Doctor') {
+        $('#form_modificar_personal').hide('slow');
+        $('#form_modificar_externo').show('slow');
+        $('#profesion').val(personal.df_cargo_per);
+        $('#nombre-profesion').val(personal.df_nombre_per);
+        $('#apellido-profesion').val(personal.df_apellido_per);
+        $('#id').val(personal.df_id_personal);
+
+    } else {
+        $('#form_modificar_personal').show('slow');
+        $('#form_modificar_externo').hide('slow');
+        $('#tipo_documento').val(personal.df_tipo_documento_per);
+        $('#id_per').val(personal.df_id_personal);
+        $('#documento').val(personal.df_documento_per);
+        $('#nombre').val(personal.df_nombre_per);
+        $('#apellido').val(personal.df_apellido_per);
+        $('#email').val(personal.df_correo_per);
+        $('#fecha_nac').val(personal.df_fecha_nac_per);
+        $('#direccion').val(personal.df_direccion_per);
+        $('#fecha_ingreso').val(personal.df_fecha_ingreso);
+        $('#contrato').val(personal.df_contrato_per);
+        $('#cargo').val(personal.df_cargo_per);
+        $('#sueldo').val(personal.df_sueldo_detper);
+        $('#codigo').val(personal.df_codigo_personal);
+        $('#usuario_id').val(personal.df_usuario_detper);
+    }    
     if (personal.df_usuario_detper != null) {
         $('#usuario').val(personal.df_usuario_usuario);
         $('#clave').val(personal.df_clave_usuario);
@@ -126,26 +135,37 @@ function insertDetalle(detalle) {
             $('#form_modificar_personal').attr('disabled', false);
         } else {
             var per = JSON.parse(localStorage.getItem('distrifar_personal_editar'));
+            console.log('per ',per);
             if (per.df_usuario_detper != null) {
                 crearUsuario();
                 alertar('success', '¡Éxito!', 'Personal modificado exitosamente');
             } else {
                 alertar('success', '¡Éxito!', 'Personal modificado exitosamente');
                 $('#form_modificar_personal').attr('disabled', false);
-                window.location.href = "personal.php";
+                //window.location.href = "personal.php";
             }
         }
     });
 }
 
-function crearUsuario() {
+function crearUsuario() {    
+    var perfil = '';
+        if ($('#cargo').val() == 'Administrador'){
+            perfil = 'Administrador';
+        } else if ($('#cargo').val() == 'Repartidor' || $('#cargo').val() == 'Vendedor') {
+            perfil = 'Ventas';
+        } else if ($('#cargo').val() == 'Secretaria' || $('#cargo').val() == 'Supervisor') {
+            perfil = 'Supervisor';
+        }
+    console.log('perfil ', perfil);
+    alert('Crear usuario', perfil);
     var user = {
         df_usuario_usuario: $('#usuario').val(),
         df_personal_cod: $('#id').val(),
         df_clave_usuario: $('#clave').val(),
         df_activo: 1,
         df_correo: $('#email').val(),
-        df_tipo_usuario: $('#perfil').val(),
+        df_tipo_usuario: perfil, //$('#perfil').val(),
         df_id_usuario: $('#usuario_id').val()
     };
     updateUsuario(user);
@@ -157,7 +177,7 @@ function updateUsuario(user) {
     $.post(urlCompleta, JSON.stringify(user), function(response) {
         if (response == true) {
             alertar('success', '¡Éxito!', 'Personal modificado exitosamente');
-            window.location.href = "personal.php";
+           // window.location.href = "personal.php";
         } else {
             alertar('danger', '¡Error!', 'Algo malo ocurrió, verifique la información e intente nuevamente');
         }

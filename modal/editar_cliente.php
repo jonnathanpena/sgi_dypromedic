@@ -10,13 +10,13 @@
                 <form class="form-horizontal" id="modificar_cliente" name="modificar_cliente">
                     <div id="resultados_ajax"></div>
                         <div class="form-group">
-                            <label for="editCodigo" class="col-sm-3 control-label">Código</label>
+                            <label for="editCodigo" class="col-sm-3 control-label" style="text-align:left;">Código</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="editCodigo" name="editCodigo" disabled>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editTipo_documento" class="col-sm-3 control-label">Tipo Documento<span class="obligatorio">*</span></label>
+                            <label for="editTipo_documento" class="col-sm-3 control-label" style="text-align:left;">Tipo Documento<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <select name="editTipo_documento" id="editTipo_documento" class="form-control" required>
                                     <option value="null">Seleccione...</option>
@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editDocumento" class="col-sm-3 control-label">Documento<span class="obligatorio">*</span></label>
+                            <label for="editDocumento" class="col-sm-3 control-label" style="text-align:left;">Documento<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="editDocumento" name="editDocumento" min="1" step="1" max="9999999999" placeholder="Documento">
                                 <input type="number" class="form-control" id="editRuc" name="editRuc" min="1" step="1" max=9999999999999 placeholder="Documento">
@@ -35,30 +35,30 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editNombre" class="col-sm-3 control-label">Nombre<span class="obligatorio">*</span></label>
+                            <label for="editNombre" class="col-sm-3 control-label" style="text-align:left;">Nombre<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="editNombre" name="editNombre" placeholder="Nombre" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                             <label for="editRazon_social" class="col-sm-3 control-label">Razón Social</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="editRazon_social" name="editRazon_social" placeholder="Razón Social">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editDireccion" class="col-sm-3 control-label">Dirección<span class="obligatorio">*</span></label>
+                            <label for="editDireccion" class="col-sm-3 control-label" style="text-align:left;">Dirección<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="editDireccion" name="editDireccion" placeholder="Dirección" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                             <label for="editReferencia" class="col-sm-3 control-label">Referencia<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="editReferencia" name="editReferencia" placeholder="Referencia" required>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none;">
                             <label for="editSector" class="col-sm-3 control-label">Sector<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <select class="form-control" name="editSector" id="editSector">
@@ -66,19 +66,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editEmail" class="col-sm-3 control-label">Email</label>
+                            <label for="editEmail" class="col-sm-3 control-label" style="display: none;">Email</label>
                             <div class="col-sm-8">
                                 <input type="email" class="form-control" id="editEmail" name="editEmail" placeholder="Email">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editTelefono" class="col-sm-3 control-label">Teléfono</label>
+                            <label for="editTelefono" class="col-sm-3 control-label" style="display: none;">Teléfono</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="editTelefono" name="editTelefono" placeholder="Teléfono" >
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editCelular" class="col-sm-3 control-label">Celular</label>
+                            <label for="editCelular" class="col-sm-3 control-label" style="display: none;">Celular</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="editCelular" name="editCelular" placeholder="Celular" >
                                 <input type="hidden" class="form-control" id="id">

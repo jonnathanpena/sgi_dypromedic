@@ -44,6 +44,13 @@ class Personal {
     public $df_personal_cod_detper;
     public $df_usuario_detper;
     public $df_fecha_proceso;
+    public $df_telefono_per;
+    public $df_celular_per;
+    public $df_fecha_nac_per;
+    public $df_direccion_per;
+    public $df_contrato_per;
+    public $df_nombre_contacto;
+    public $df_telefono_contacto;
 
     //public $fecha = date("Y-m-d H:i:s");
 
@@ -72,7 +79,8 @@ class Personal {
     
         // select all query
         $query = "SELECT `df_id_personal`, `df_tipo_documento_per`, `df_nombre_per`, `df_apellido_per`, `df_cargo_per`, `df_fecha_ingreso`, 
-                    `df_documento_per`, `df_correo_per`, `df_codigo_personal`, `df_activo_per` 
+                    `df_documento_per`, `df_correo_per`, `df_codigo_personal`, `df_telefono_per`, df_celular_per, `df_fecha_nac_per`, `df_direccion_per`,
+                     `df_contrato_per`, `df_nombre_contacto`, `df_telefono_contacto`, `df_activo_per` 
                     FROM `df_personal` 
                     WHERE `df_nombre_per` like '%".$this->df_nombre_per."%' 
                     OR `df_documento_per` like '%".$this->df_nombre_per."%'
@@ -91,12 +99,13 @@ class Personal {
     
         // select all query
         $query = "SELECT per.`df_id_personal`, per.`df_tipo_documento_per`, per.`df_nombre_per`, per.`df_apellido_per`, per.`df_cargo_per`, 
-                    per.`df_fecha_ingreso`, per.`df_documento_per`, per.`df_correo_per`, per.`df_codigo_personal`, 
+                    per.`df_fecha_ingreso`, per.`df_documento_per`, per.`df_correo_per`, per.`df_codigo_personal`, per.`df_telefono_per`, per.df_celular_per,
+                    per.`df_fecha_nac_per`, per.`df_direccion_per`, per.`df_contrato_per`, per.`df_nombre_contacto`, per.`df_telefono_contacto`,  
                     per.`df_activo_per`, dp.`df_id_detper`, dp.`df_sueldo_detper`, dp.`df_bono_detper`, dp.`df_anticipo_detper`, 
                     dp.`df_descuento_detper`, dp.`df_decimos_detper`, dp.`df_vacaciones_detper`, dp.`df_tabala_comision_detper`, 
                     dp.`df_comisiones_detper`, dp.`df_personal_cod_detper`, dp.`df_usuario_detper`, dp.`df_fecha_proceso`
                     FROM `df_personal` as per
-                    JOIN `df_detalle_personal` as dp ON (per.`df_id_personal` = dp.`df_personal_cod_detper`)
+                    LEFT JOIN `df_detalle_personal` as dp ON (per.`df_id_personal` = dp.`df_personal_cod_detper`)
                     WHERE per.`df_documento_per` = '".$this->df_documento_per."' ORDER BY dp.`df_fecha_proceso` DESC";
                 
         // prepare query statement
@@ -113,12 +122,13 @@ class Personal {
     
         // select all query
         $query = "SELECT per.`df_id_personal`, per.`df_tipo_documento_per`, per.`df_nombre_per`, per.`df_apellido_per`, per.`df_cargo_per`, 
-                    per.`df_fecha_ingreso`, per.`df_documento_per`, per.`df_correo_per`, per.`df_codigo_personal`, 
+                    per.`df_fecha_ingreso`, per.`df_documento_per`, per.`df_correo_per`, per.`df_codigo_personal`, per.`df_telefono_per`, per.df_celular_per,
+                    per.`df_fecha_nac_per`, per.`df_direccion_per`, per.`df_contrato_per`, per.`df_nombre_contacto`, per.`df_telefono_contacto`,  
                     per.`df_activo_per`, dp.`df_id_detper`, dp.`df_sueldo_detper`, dp.`df_bono_detper`, dp.`df_anticipo_detper`, 
                     dp.`df_descuento_detper`, dp.`df_decimos_detper`, dp.`df_vacaciones_detper`, dp.`df_tabala_comision_detper`, 
                     dp.`df_comisiones_detper`, dp.`df_personal_cod_detper`, dp.`df_usuario_detper`, dp.`df_fecha_proceso`
                     FROM `df_personal` as per
-                    JOIN `df_detalle_personal` as dp ON (per.`df_id_personal` = dp.`df_personal_cod_detper`)
+                    LEFT JOIN `df_detalle_personal` as dp ON (per.`df_id_personal` = dp.`df_personal_cod_detper`)
                     WHERE per.`df_id_personal` = '".$this->df_id_personal."' ORDER BY dp.`df_fecha_proceso` DESC";
                 
         // prepare query statement
@@ -134,9 +144,10 @@ class Personal {
     function readByNombre(){
     
         // select all query
-        $query = "SELECT per.`df_id_personal`, per.`df_nombre_per`, per.`df_cargo_per`, per.`df_fecha_ingreso`,
-        per.`df_documento_per`, per.`df_correo_per`, per.`df_codigo_personal`, per.df_activo_per,
-        per.df_tipo_documento_per, usu.`df_id_usuario`, 
+        $query = "SELECT per.`df_id_personal`, per.`df_tipo_documento_per`, per.`df_nombre_per`, per.`df_apellido_per`, per.`df_cargo_per`, 
+        per.`df_fecha_ingreso`, per.`df_documento_per`, per.`df_correo_per`, per.`df_codigo_personal`, per.`df_telefono_per`, per.df_celular_per,
+        per.`df_fecha_nac_per`, per.`df_direccion_per`, per.`df_contrato_per`, per.`df_nombre_contacto`, per.`df_telefono_contacto`,  
+        per.`df_activo_per`,  usu.`df_id_usuario`, 
         usu.`df_tipo_documento_usuario`, usu.`df_documento_usuario`, usu.`df_nombre_usuario`, 
         usu.`df_apellido_usuario`, usu.`df_usuario_usuario`, usu.`df_personal_cod`, 
         usu.`df_clave_usuario`, usu.`df_activo`, usu.`df_correo`, usu.`df_tipo_usuario`, 
@@ -167,7 +178,9 @@ class Personal {
     
         // query to insert record
         $query = "INSERT INTO `df_personal`(`df_tipo_documento_per`, `df_nombre_per`, `df_apellido_per`, `df_cargo_per`, 
-                    `df_fecha_ingreso`, `df_documento_per`, `df_correo_per`, `df_codigo_personal`, `df_activo_per`) VALUES (
+                    `df_fecha_ingreso`, `df_documento_per`, `df_correo_per`, `df_codigo_personal`, `df_telefono_per`, df_celular_per,
+                    `df_fecha_nac_per`, `df_direccion_per`, `df_contrato_per`, `df_nombre_contacto`, 
+                    `df_telefono_contacto`, `df_activo_per`) VALUES (
                         '".$this->df_tipo_documento_per."',
                         '".$this->df_nombre_per."',
                         '".$this->df_apellido_per."',
@@ -176,6 +189,13 @@ class Personal {
                         '".$this->df_documento_per."',
                         '".$this->df_correo_per."',
                         '".$this->df_codigo_personal."',
+                        '".$this->df_telefono_per."',
+                        '".$this->df_celular_per."',
+                        '".$this->df_fecha_nac_per."',
+                        '".$this->df_direccion_per."',
+                        '".$this->df_contrato_per."',
+                        '".$this->df_nombre_contacto."',
+                        '".$this->df_telefono_contacto."',
                         1
                     )";
         // prepara la sentencia del query
@@ -262,7 +282,7 @@ class Personal {
         $stmt = $this->conn->prepare($query);  
 
         if($stmt->execute()){
-            return  true;
+            return $this->conn->lastInsertId();
         }else{
             return false;
         }   
@@ -283,6 +303,13 @@ class Personal {
                     `df_documento_per`= '".$this->df_documento_per."',
                     `df_correo_per`= '".$this->df_correo_per."',
                     `df_codigo_personal`= '".$this->df_codigo_personal."',
+                    `df_telefono_per` = '".$this->df_telefono_per."',                 
+                    `df_celular_per` = '".$this->df_celular_per."',                 
+                    `df_fecha_nac_per` = '".$this->df_fecha_nac_per."', 
+                    `df_direccion_per` = '".$this->df_direccion_per."', 
+                    `df_contrato_per` = '".$this->df_contrato_per."',
+                    `df_nombre_contacto` = '".$this->df_nombre_contacto."', 
+                    `df_telefono_contacto` = '".$this->df_telefono_contacto."',
                     `df_activo_per`= ".$this->df_activo_per." 
                     WHERE `df_id_personal` = ".$this->df_id_personal;
     

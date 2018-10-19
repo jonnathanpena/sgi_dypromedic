@@ -7,7 +7,7 @@
     $active_bodega = "";
     $active_reportes = "";
     $active_reportes_usuarios = "";
-	$title="Guía Entrega | SGB";
+	$title="Guía Entrega | SGI";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +50,8 @@
                                 <th>Código</th>
                                 <th>Fecha</th>
                                 <th>Repartidor</th>
-                                <th class="text-center">Cant Productos Entregados</th>
+                                <th class="text-center">Cant Productos Und</th>
+                                <th class="text-center">Cant Productos Caja</th>
                                 <th class="text-center">Cant Facturas Entregadas</th>
                                 <th class='text-right'>Acciones</th>
                             </tr>

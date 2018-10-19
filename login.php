@@ -17,7 +17,7 @@ date_default_timezone_set('America/Bogota');
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>SGB | Login</title>
+  <title>SGI | Login</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- CSS  -->
@@ -26,7 +26,7 @@ date_default_timezone_set('America/Bogota');
 <body>
  	<div class="container">
         <div class="card card-container">
-            <img id="profile-img" class="profile-img-card" src="img/avatar_2x.png" />
+            <img id="profile-img" class="profile-img-card" src="img/ortopedia.JPG" />
             <p id="profile-name" class="profile-name-card"></p>
             <form id="form-login" accept-charset="utf-8" name="loginform" autocomplete="off" role="form" class="form-signin">
 				<span id="reauth-email" class="reauth-email"></span>

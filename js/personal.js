@@ -34,7 +34,7 @@ function load() {
     clearTimeout(timer);
     timer = setTimeout(function() {
         cargar();
-    }, 1000);
+    }, 0);
 }
 
 function cargar() {
@@ -78,13 +78,13 @@ function generate_table() {
     $('#resultados .table-responsive table tbody').empty();
     var tr;
     $.each(displayRecords, function(index, row) {
-        $('#resultados .table-responsive table tbody').append('<tr><td>' + row.df_documento_per + '</td><td>' + row.df_nombre_per + '</td><td>' + row.df_cargo_per + '</td><td>' + row.df_fecha_ingreso + '</td><td><span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_documento_per + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td></tr>');
+        $('#resultados .table-responsive table tbody').append('<tr><td>' + row.df_documento_per + '</td><td>' + row.df_nombre_per + '</td><td>' + row.df_cargo_per + '</td><td>' + row.df_fecha_ingreso + '</td><td>' + row.df_contrato_per + '</td><td><span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_id_personal + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td></tr>');
     });
 }
 
 function detallar(documento) {
-    var urlCompleta = url + 'personal/getByDocumento.php';
-    $.post(urlCompleta, JSON.stringify({ df_documento_per: documento }), function(data, status, hrx) {
+    var urlCompleta = url + 'personal/getById.php';
+    $.post(urlCompleta, JSON.stringify({ df_id_personal: documento }), function(data, status, hrx) {
         var detalle = data.data[0];
         if (detalle.df_usuario_detper == null) {
             localStorage.setItem('distrifar_personal_editar', JSON.stringify(detalle));

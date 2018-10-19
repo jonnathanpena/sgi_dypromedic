@@ -6,7 +6,7 @@
    $active_bodega = "";
    $active_reportes = "";
    $active_reportes_usuarios = "";
-   $title="Nueva Guía Recepción | SGB";  
+   $title="Nueva Guía Recepción | SGI";  
    $fecha = Date('d/m/Y');
 ?>
 <!DOCTYPE html>
@@ -27,6 +27,7 @@
             <div class="panel-body">
 <?php
 	include("modal/modificar_recepcion.php");
+	include("modal/load.php");
 ?>
                <form class="form-horizontal" role="form" id="form_nueva_guia">
                   <div class="form-group row">

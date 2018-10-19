@@ -43,7 +43,7 @@ if($num>0){
         // this will make $row['name'] to
         // just $name only
         extract($row);
- 
+        
         $personal_item=array(
             "df_id_personal" => $df_id_personal,
             "df_tipo_documento_per" => $df_tipo_documento_per,
@@ -54,6 +54,13 @@ if($num>0){
             "df_documento_per" => $df_documento_per,
             "df_correo_per" => $df_correo_per,
             "df_codigo_personal" => $df_codigo_personal,
+            "df_telefono_per" => $df_telefono_per,
+            "df_celular_per" => $df_celular_per,
+            "df_fecha_nac_per" => $df_fecha_nac_per,
+            "df_direccion_per" => $df_direccion_per,
+            "df_contrato_per" => $df_contrato_per,
+            "df_nombre_contacto" => $df_nombre_contacto,
+            "df_telefono_contacto" => $df_telefono_contacto,
             "df_activo_per" => $df_activo_per
         );
  

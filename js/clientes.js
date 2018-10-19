@@ -309,6 +309,7 @@ $('#editarCliente').submit(function(event) {
 
 function update(cliente) {
     var urlCompleta = url + 'cliente/update.php';
+    console.log('Editar ',cliente);
     $.post(urlCompleta, JSON.stringify(cliente), function(data, status, hrx) {
         if (data == true) {
             alertar('success', '¡Éxito!', 'Cliente modificado exitosamente');

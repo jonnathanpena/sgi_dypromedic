@@ -7,7 +7,7 @@
     $active_bodega = "";
     $active_reportes = "";
 	$active_reportes_usuarios = "";
-	$title="Personal | SGB";
+	$title="Personal | SGI";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +54,7 @@ include("modal/nuevo_personal.php");
                                 <th>Nombre</th>
                                 <th>Cargo</th>
                                 <th>Fecha Ingreso</th>
+                                <th>Tipo Contrato</th>
                                 <th class='text-right'>Acciones</th>
                             </tr>
                         </thead>
