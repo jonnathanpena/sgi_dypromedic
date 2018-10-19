@@ -37,24 +37,17 @@ function load() {
     $('#guardar_banco').attr('disabled', false);
     bancos = [];
     records = [];
-    getAllBancos();    
     $('#resultados .table-responsive table tbody').html('Cargando...');
-    var urlCompleta = url + 'banco/getAll.php';
+    var urlCompleta = url + 'perfil_banco/getAll.php';
     $.get(urlCompleta, function(response) {
         if (response.data.length > 0) {
-            $('#saldo_banco').val('$' + (response.data[0].df_saldo_banco * 1).toFixed(2));
-            saldo = response.data[0].df_saldo_banco * 1;
-            libro = ($('#valor_libro').val() * 1) + saldo;
-            $('#valor_libro').val(libro);
-            console.log('valor inicial', libro);
-            $.each(response.data, function(index, row) {
-                getUsuario(row);
-            })
+            bancos = response.data;
+            console.log('Perfiles de Bancos ', bancos);
             clearTimeout(timer);
             timer = setTimeout(function() {
-                bancos.sort(function(a, b) {
+                /* bancos.sort(function(a, b) {
                     return (b.df_id_banco - a.df_id_banco)
-                });
+                }); */
                 records = bancos;
                 totalRecords = records.length;
                 totalPages = Math.ceil(totalRecords / recPerPage);
@@ -87,22 +80,13 @@ function generate_table() {
     $('#resultados .table-responsive table tbody').empty();
     $.each(displayRecords, function(index, row) {
         var tr;
-        var f = row.df_fecha_banco.split(' ')[0];
-        var time = row.df_fecha_banco.split(' ')[1];
-        var dia = f.split('-')[2];
-        var mes = f.split('-')[1];
-        var ano = f.split('-')[0];
-        var fecha = dia + '/' + mes + '/' + ano;
         tr = $('<tr/>');
-        tr.append("<td>" + row.df_id_banco + "</td>");
-        tr.append("<td>" + fecha + "</td>");
-        tr.append("<td>" + row.df_usuario_usuario + "</td>");
-        tr.append("<td>" + row.df_tipo_movimiento + "</td>");
-        tr.append("<td>" + row.df_detalle_mov_banco + "</td>");
-        tr.append("<td>" + row.df_num_documento_banco + "</td>");
-        tr.append("<td class='text-center'> $ " + Number(row.df_monto_banco).toFixed(2) + "</td>");
-        tr.append("<td class='text-center'> $ " + Number(row.df_saldo_banco).toFixed(2) + "</td>");
-        //tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallar(" + row.df_id_gasto + ",`" + row.tipo + "`, `"+ row.df_movimiento +"`)'><i class='glyphicon glyphicon-edit'></i></button></td>");
+        tr.append("<td class='text-left'>" + row.dp_descripcion_per_ban + "</td>");
+        tr.append("<td class='text-left'>" + row.dp_banco_per_ban + "</td>");
+        tr.append("<td class='text-left'>" + row.dp_cuenta_per_ban + "</td>");
+        tr.append("<td class='text-left'>" + row.dp_tipo_cuenta_per_ban + "</td>");
+        tr.append("<td class='text-left'>" + row.dp_tipo_per_ban + "</td>");
+        tr.append("<td><button class='btn btn-default pull-right' title='Modificar' onclick='detallar(" + row.dp_id_perfil_ban +")'><i class='glyphicon glyphicon-edit'></i></button></td>");
         $('#resultados .table-responsive table tbody').append(tr);
     })
 }
@@ -115,65 +99,68 @@ function getUsuario(row) {
     });
 }
 
-function getAllBancos() {
-    $('#banco').empty();
-    $('#banco').append('<option value="null">Seleccione banco...</option>');;
-    var urlCompleta = url + 'bancos/getAll.php';
-    $.get(urlCompleta, function(response) {
-        $.each(response.data, function(index, row) {
-            $('#banco').append('<option value="' + row.id_bancos + '">' + row.nombre_bancos + '</option>');
-        });
-    });
-}
-
 function nuevoBanco() {
     $('#nuevoBanco').modal('show');
     $('#usuario').html('');
     $('#usuario').append('<option value="' + usuario.df_id_usuario + '">' + usuario.df_usuario_usuario + '</option>');
-    $('#banco').val('null');
+    $('#banco').val('');
     $('#descripcion').val('');
     $('#cuenta').val('');
+    $('#tipo-cuenta').val('null');
+    $('#tipo').val('null');
 }
 
 $('#guardar_banco').submit(function(event) {
     $('#guardar_banco').attr('disabled', true);
     event.preventDefault();
-    if ($('#banco').val() == 'null') {
+    if ($('#tipo-cuenta').val() == 'null' || $('#tipo').val() == 'null') {
         alertar('warning', '¡Advertencia!', 'Todos los campos son obligtorios');
     } else {
-        var f = $('#fecha_egreso').val();
-        var datetime = f + ' 00:00:00';
         currentdate = new Date();
-        var datelibro = currentdate.getFullYear() + "-" +
+        var datetime = currentdate.getFullYear() + "-" +
             (currentdate.getMonth() + 1) + "-" +
             currentdate.getDate() + " " +
             currentdate.getHours() + ":" +
             currentdate.getMinutes() + ":" +
-            currentdate.getSeconds();
-
-        var egreso = {
-            df_fecha_banco: datetime,
-            df_usuario_id_banco: $('#usuario_egreso').val(),
-            df_tipo_movimiento: "Egreso",
-            df_monto_banco: $('#valor_egreso').val(),
-            df_saldo_banco: $('#saldo').val(),
-            df_num_documento_banco: $('#documento_egreso').val(),
-            df_detalle_mov_banco: $('#movimiento').val()
+            currentdate.getSeconds();        
+        var banco = {
+            dp_descripcion_per_ban: $('#descripcion').val(),
+            dp_banco_per_ban: $('#banco').val(),
+            dp_cuenta_per_ban: $('#cuenta').val(),
+            dp_tipo_cuenta_per_ban: $('#tipo-cuenta').val(),
+            dp_tipo_per_ban: $('#tipo').val(),
+            dp_fecha_creacion_per_ban: datetime,
+            dp_creadoby_per_ban: $('#usuario').val()
         };
-        
-        insertEgreso(egreso);
+        console.log('insert banco ', banco);
+        insert(banco);
     }
 });
 
-function insertEgreso(egreso) {
-    /* var urlCompleta = url + 'banco/insert.php';
-    $.post(urlCompleta, JSON.stringify(egreso), function(response) {
+function insert(banco) {
+    var urlCompleta = url + 'perfil_banco/insert.php';
+    $.post(urlCompleta, JSON.stringify(banco), function(response) {
         if (response != false) {
-            alertar('success', '¡Éxito!', 'Egreso registrado exitosamente');
+            alertar('success', '¡Éxito!', 'Perfil de Banco registrado exitosamente');
         } else {
             alertar('danger', '¡Error!', 'Error al insertar, verifique que todo está bien e intente de nuevo');
-        } */
+        } 
         $('#nuevoBanco').modal('hide');
         load();
-    //});
+    });
+}
+
+function detallar(id) {
+    var urlCompleta = url + 'perfil_banco/getById.php';
+    $.post(urlCompleta, JSON.stringify({ dp_id_perfil_ban: id }), function(data, status, hrx) {
+        console.log(data);
+        $('#editaBanco').modal('show');
+        $('#usuario').html('');
+        $('#usuario').append('<option value="' + usuario.df_id_usuario + '">' + usuario.df_usuario_usuario + '</option>');
+        $('#banco').val();
+        $('#descripcion').val('');
+        $('#cuenta').val('');
+        $('#tipo-cuenta').val('null');
+        $('#tipo').val('null');
+    });
 }

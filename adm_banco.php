@@ -54,10 +54,11 @@
                         <table class="table">
                             <thead>
                                 <tr class="info">
-                                    <th style="text-align:left;">#</th>
                                     <th style="text-align:left;">Alias</th>
                                     <th style="text-align:left;">Banco</th>
                                     <th style="text-align:left;">#Cuenta</th>
+                                    <th style="text-align:left;">Tipo Cuenta</th>
+                                    <th style="text-align:left;">Tipo</th>
                                     <th class='text-right'>Acciones</th>
                                 </tr>
                             </thead>

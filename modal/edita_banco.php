@@ -4,15 +4,15 @@ $fecha = date("d/m/Y");
 
 ?>
 <!-- Modal -->
-<div class="modal fade" id="nuevoBanco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="editaBanco" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel"><i class='glyphicon glyphicon-edit'></i> Nuevo Banco</h4>
+                <h4 class="modal-title" id="myModalLabel"><i class='glyphicon glyphicon-edit'></i> Modificar Banco</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="guardar_banco" name="guardar_banco">
+                <form class="form-horizontal" id="editar_banco" name="editar_banco">
                     <div id="resultados_ajax"></div>
                         <div class="form-group">
                             <label for="usuario" class="col-sm-3 control-label" style="text-align:left;">Usuario</label>
