@@ -258,7 +258,7 @@ class Personal {
                         ".$this->df_comisiones_detper.",
                         ".$this->df_personal_cod_detper.",
                         null,
-                        now()
+                        '".$this->df_fecha_proceso."'
                     )";
         } else {
             $query = "INSERT INTO `df_detalle_personal`(`df_sueldo_detper`, `df_bono_detper`, `df_anticipo_detper`, `df_descuento_detper`, 
@@ -274,7 +274,7 @@ class Personal {
                         ".$this->df_comisiones_detper.",
                         ".$this->df_personal_cod_detper.",
                         ".$this->df_usuario_detper.",
-                        now()
+                        '".$this->df_fecha_proceso."'
                     )";
         }
         

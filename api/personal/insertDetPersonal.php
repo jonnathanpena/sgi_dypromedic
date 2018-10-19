@@ -29,7 +29,6 @@ $personal->df_anticipo_detper= $info[0]["df_anticipo_detper"];
 $personal->df_descuento_detper= $info[0]["df_descuento_detper"];
 $personal->df_decimos_detper= $info[0]["df_decimos_detper"];
 $personal->df_vacaciones_detper= $info[0]["df_vacaciones_detper"];
-$personal->df_tabala_comision_detper= $info[0]["df_tabala_comision_detper"];
 $personal->df_comisiones_detper= $info[0]["df_comisiones_detper"];
 $personal->df_personal_cod_detper= $info[0]["df_personal_cod_detper"];
 $personal->df_usuario_detper= $info[0]["df_usuario_detper"];
@@ -41,6 +40,6 @@ if($response == true){
     echo json_encode(true); 
 }else{
     // Error en caso de que no se pueda modificar
-    echo json_encode(false); 
+    echo json_encode(false);
 }
 ?>

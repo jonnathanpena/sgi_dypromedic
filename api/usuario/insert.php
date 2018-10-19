@@ -28,6 +28,11 @@ $usuario->df_personal_cod= $info[0]["df_personal_cod"];
 $usuario->df_clave_usuario= $info[0]["df_clave_usuario"];
 $usuario->df_correo = $info[0]["df_correo"];
 $usuario->df_tipo_usuario = $info[0]["df_tipo_usuario"];
+$usuario->df_tipo_documento_usuario = $info[0]["df_tipo_documento_usuario"];
+$usuario->df_documento_usuario = $info[0]["df_documento_usuario"];
+$usuario->df_apellido_usuario = $inf[0]["df_apellido_usuario"];
+$usuario->df_usuario_usuario = $inf[0]["df_usuario_usuario"];
+
 
 // insert usuario
 $response = $usuario->insert();
