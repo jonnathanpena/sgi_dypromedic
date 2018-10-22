@@ -23,23 +23,15 @@ $data = json_decode(file_get_contents('php://input'), true);
 $info = array($data);
  
 // configura los valores recibidos en post de la app
-$personal->df_sueldo_detper= $info[0]["df_sueldo_detper"];
-$personal->df_bono_detper= $info[0]["df_bono_detper"];
-$personal->df_anticipo_detper= $info[0]["df_anticipo_detper"];
-$personal->df_descuento_detper= $info[0]["df_descuento_detper"];
-$personal->df_decimos_detper= $info[0]["df_decimos_detper"];
-$personal->df_vacaciones_detper= $info[0]["df_vacaciones_detper"];
-$personal->df_comisiones_detper= $info[0]["df_comisiones_detper"];
-$personal->df_personal_cod_detper= $info[0]["df_personal_cod_detper"];
-$personal->df_usuario_detper= $info[0]["df_usuario_detper"];
-$personal->df_fecha_proceso= $info[0]["df_fecha_proceso"];
-         
-// insert personal
-$response = $personal->insertDetPersonal();
+$personal->df_activo_per= $info[0]["df_activo_per"];
+$personal->df_id_personal= $info[0]["df_id_personal"];
+
+// modificar personal
+$response = $personal->updateEdoPersonal();
 if($response == true){
     echo json_encode(true); 
 }else{
     // Error en caso de que no se pueda modificar
-    echo json_encode(false);
+    echo json_encode(false); 
 }
 ?>

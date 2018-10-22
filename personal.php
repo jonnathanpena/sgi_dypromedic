@@ -13,6 +13,7 @@
 <html lang="en">
   <head>
 	<?php include("head.php");?>
+    <link href="./css/personal.css" rel="stylesheet">
   </head>
   <body>
  	<?php
@@ -21,17 +22,17 @@
     <div class="container">
 		<div class="panel panel-info">
 		<div class="panel-heading">
-		    <div class="btn-group pull-right">
+		    <div class="btn-group pull-right">                
 				<a href="nuevo_personal.php" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus" ></span> Nuevo Personal
                 </a>
+                <button class="btn btn-info" style="margin-left: 10px;" onclick="exportar()">
+                    <span class="glyphicon glyphicon-cloud-download" ></span>
+                </button>
 			</div>
 			<h4><i class='glyphicon glyphicon-search'></i> Buscar Personal</h4>
 		</div>	
 		<div class="panel-body">
-<?php
-include("modal/nuevo_personal.php");
-?>
             <form class="form-horizontal" role="form" id="datos_cotizacion">
                 <div class="form-group row">
                     <label for="q" class="col-md-2 control-label">Documento o Nombre:</label>
@@ -55,11 +56,12 @@ include("modal/nuevo_personal.php");
                                 <th>Cargo</th>
                                 <th>Fecha Ingreso</th>
                                 <th>Tipo Contrato</th>
+                                <th>Estatus</th>
                                 <th class='text-right'>Acciones</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
-                    </table>
+                    </table>                    
                 </div>
                 <div id="pager" style="float: right;">
                     <ul id="pagination" class="pagination-sm"></ul>
