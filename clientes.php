@@ -26,6 +26,9 @@
 					<button type='button' class="btn btn-info" data-toggle="modal" data-target="#nuevoCliente" onclick="nuevoCliente()">
 						<span class="glyphicon glyphicon-plus" ></span> Nuevo Cliente
 					</button>
+					<button class="btn btn-info" style="margin-left: 10px;" onclick="exportar()">
+                    	<span class="glyphicon glyphicon-cloud-download" ></span>
+                	</button>
 				</div>
 				<h4><i class='glyphicon glyphicon-search'></i> Buscar Clientes</h4>
 			</div>

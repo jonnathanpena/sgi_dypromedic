@@ -33,12 +33,10 @@ $(document).ready(function() {
 });
 
 function load() {
-    $('#guardar_cliente').attr('disabled', false);
-    $('#editarCliente').attr('disabled', false);
     clearTimeout(timer);
     timer = setTimeout(function() {
         cargar();
-    }, 1000);
+    }, 100);
     consultarSectores();
 }
 
@@ -86,17 +84,17 @@ function generate_table() {
     $('#resultados .table-responsive table tbody').empty();
     var tr;
     $.each(displayRecords, function(index, row) {
-        $('#resultados .table-responsive table tbody').append('<tr><td>' + row.df_tipo_documento_cli + '</td><td>' + row.df_documento_cli + '</td><td>' + row.df_nombre_cli + '</td><td>' + row.df_telefono_cli + '</td><td widt="auto">'  + row.df_email_cli + '</td><td>'  + row.df_calificacion_cli + '</td><td>' + '<span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_id_cliente + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td></tr>');
+        $('#resultados .table-responsive table tbody').append('<tr><td>' + row.df_tipo_documento_cli + '</td><td>' + row.df_documento_cli + '</td><td>' + row.df_nombre_cli + '</td><td>' + row.df_telefono_cli + '</td><td widt="auto">' + row.df_email_cli + '</td><td>' + row.df_calificacion_cli + '</td><td>' + '<span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_id_cliente + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td></tr>');
     });
 }
 
 $('#guardar_cliente').submit(function(event) {
-    $('#guardar_cliente').attr('disabled', true);
+    on();
     event.preventDefault();
     var documento = "";
     if ($('#tipo_documento').val() == 'null') {
-        alertar('warning', '¡Alerta!', 'Tipo de documento y sector son campos obligatorios');
-        $('#guardar_cliente').attr('disabled', false);
+        off();
+        alertar('warning', '¡Alerta!', 'Tipo de documento es campo obligatorios');
     } else {
         switch ($('#tipo_documento').val()) {
             case 'Cedula':
@@ -112,8 +110,8 @@ $('#guardar_cliente').submit(function(event) {
                 break;
         }
         if (documento == '') {
+            off();
             alertar('warning', '¡Alerta!', 'No debe quedar ningún campo vacío');
-            $('#guardar_cliente').attr('disabled', false);
         } else {
             getCodigo(documento);
         }
@@ -144,6 +142,7 @@ function insertar(documento, codigo) {
         } else {
             alertar('danger', '¡Error!', 'Ocurrió un problema, por favor, intente de nuevo');
         }
+        off();
         $('#nombre').val('');
         $('#razon_social').val('');
         $('#tipo_documento').val('');
@@ -174,7 +173,7 @@ function getCodigo(documento) {
             if (data.data[0].df_id_cliente >= 0 && data.data[0].df_id_cliente < 10) {
                 codigo = 'CLI-00' + ((data.data[0].df_id_cliente * 1) + 1);
             } else if (data.data[0].df_id_cliente > 9 && data.data[0].df_id_cliente < 100) {
-                codigo = 'CLI-0' + ((data.data[0].df_id_cliente * 1 ) + 1);
+                codigo = 'CLI-0' + ((data.data[0].df_id_cliente * 1) + 1);
             } else if (data.data[0].df_id_cliente > 99) {
                 codigo = 'CLI-' + ((data.data[0].df_id_cliente * 1) + 1);
             }
@@ -214,7 +213,7 @@ $('#tipo_documento').change(function() {
 function detallar(id) {
     var urlCompleta = url + 'cliente/getById.php';
     $.post(urlCompleta, JSON.stringify({ df_id_cliente: id }), function(data, status, hrx) {
-        console.log('Detalle de Cliente para editar: ',data);
+        console.log('Detalle de Cliente para editar: ', data);
         $('#editTipo_documento').val(data.data[0].df_tipo_documento_cli);
         $('#editDocumento').val(data.data[0].df_documento_cli);
         $('#editRuc').val(data.data[0].df_documento_cli);
@@ -229,7 +228,7 @@ function detallar(id) {
         $('#editCelular').val(data.data[0].df_celular_cli);
         $('#editCodigo').val(data.data[0].df_codigo_cliente);
         $('#editCalificacion').val(data.data[0].df_calificacion_cli);
-        $('#id').val(id);        
+        $('#id').val(id);
         if (data.data[0].df_tipo_documento_cli == 'Pasaporte') {
             $('#editDocumento').hide();
             $('#editRuc').hide();
@@ -269,12 +268,12 @@ $('#editTipo_documento').change(function() {
 });
 
 $('#editarCliente').submit(function(event) {
-    $('#editarCliente').attr('disabled', true);
+    on();
     event.preventDefault();
     var documento = '';
     if ($('#editTipo_documento').val() == 'null') {
+        off();
         alertar('warning', '¡Alerta!', 'Ningún campo debe quedar vacío');
-        $('#editarCliente').attr('disabled', false);
     } else {
         switch ($('#editTipo_documento').val()) {
             case 'Cedula':
@@ -291,13 +290,13 @@ $('#editarCliente').submit(function(event) {
         }
     }
     if (documento == '') {
+        off();
         alertar('warning', '¡Alerta!', 'No debe quedar ningún campo vacío');
-        $('#editarCliente').attr('disabled', false);
     } else {
         var datos = {
             df_codigo_cliente: $('#editCodigo').val(),
             df_nombre_cli: $('#editNombre').val(),
-            df_razon_social_cli:  "null", // $('#editRazon_social').val(),
+            df_razon_social_cli: "null", // $('#editRazon_social').val(),
             df_tipo_documento_cli: $('#editTipo_documento').val(),
             df_documento_cli: documento,
             df_direccion_cli: $('#editDireccion').val(),
@@ -309,20 +308,20 @@ $('#editarCliente').submit(function(event) {
             df_calificacion_cli: $('#editCalificacion').val(),
             df_id_cliente: $('#id').val() * 1
         };
-        console.log('A Editar ',datos);
         update(datos);
     }
 });
 
 function update(cliente) {
     var urlCompleta = url + 'cliente/update.php';
-    console.log('Editar ',cliente);
+    console.log('Editar ', cliente);
     $.post(urlCompleta, JSON.stringify(cliente), function(data, status, hrx) {
         if (data == true) {
             alertar('success', '¡Éxito!', 'Cliente modificado exitosamente');
         } else {
             alertar('danger', '¡Error!', 'Problema al modificar, por favor, verifica la información e intenta nuevamente');
         }
+        off();
         $('#editarCliente').modal('hide');
         load();
     });
@@ -379,15 +378,84 @@ function consultarSectores() {
     $('#sector').empty();
     $('#sector').append('<option value="null">Seleccione...</option>');
     $.get(urlCompleta, function(response) {
-        $.each(response.data, function(index, row){
-            $('#sector').append('<option value="'+ row.df_codigo_sector +'">'+ row.df_nombre_sector +'</option>');
+        $.each(response.data, function(index, row) {
+            $('#sector').append('<option value="' + row.df_codigo_sector + '">' + row.df_nombre_sector + '</option>');
         });
     });
     $('#editSector').empty();
     $('#editSector').append('<option value="null">Seleccione...</option>');
     $.get(urlCompleta, function(response) {
-        $.each(response.data, function(index, row){
-            $('#editSector').append('<option value="'+ row.df_codigo_sector +'">'+ row.df_nombre_sector +'</option>');
+        $.each(response.data, function(index, row) {
+            $('#editSector').append('<option value="' + row.df_codigo_sector + '">' + row.df_nombre_sector + '</option>');
         });
+    });
+}
+
+function exportar() {
+    on();
+    var urlCompleta = url + 'cliente/getAll.php';
+    var q = $('#q').val();
+    $.post(urlCompleta, JSON.stringify({ df_nombre_cli: q }), function(response) {
+        console.log('clientes', response.data);
+        var exportar = [{
+            df_codigo_cliente: "Código",
+            df_tipo_documento_cli: "Tipo Documento",
+            df_documento_cli: "Documento",
+            df_nombre_cli: "Nombre",
+            df_razon_social_cli: "Razón Social",
+            df_celular_cli: "Teléfono",
+            df_email_cli: "Email",
+            df_direccion_cli: "Dirección",
+            df_calificacion_cli: "Clasificación",
+            df_referencia_cli: "Referencia"
+        }];
+        if (response.data.length > 0) {
+            $.each(response.data, function(index, row) {
+                var clasificacion = row.df_calificacion_cli;
+                var razon_social = row.df_razon_social_cli;
+                var referencia = row.df_referencia_cli;
+                if (row.df_calificacion_cli == 'null') {
+                    clasificacion = "";
+                }
+                if (row.df_razon_social_cli == 'null') {
+                    razon_social = '';
+                }
+                if (row.df_referencia_cli == 'null') {
+                    referencia = '';
+                }
+                exportar.push({
+                    df_codigo_cliente: row.df_codigo_cliente,
+                    df_tipo_documento_cli: row.df_tipo_documento_cli,
+                    df_documento_cli: row.df_documento_cli,
+                    df_nombre_cli: row.df_nombre_cli,
+                    df_razon_social_cli: razon_social,
+                    df_celular_cli: row.df_celular_cli,
+                    df_email_cli: row.df_email_cli,
+                    df_direccion_cli: row.df_direccion_cli,
+                    df_calificacion_cli: clasificacion,
+                    df_referencia_cli: referencia
+                })
+            });
+            var form = $(document.createElement('form'));
+            $(form).attr("action", "excel/exportar.php");
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+            $(form).attr("target", "_blank");
+            var input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "data")
+                .val(JSON.stringify(exportar));
+            $(form).append($(input));
+            input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "documento")
+                .val('clientes');
+            $(form).append($(input));
+            form.appendTo(document.body);
+            $(form).submit();
+        } else {
+            alertar('warning', '¡Alerta!', 'No existe información para exportar');
+        }
+        off();
     });
 }
