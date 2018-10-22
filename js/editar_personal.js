@@ -71,50 +71,57 @@ function load() {
 $('#form_modificar_personal').submit(function(event) {
     on();
     event.preventDefault();
-    var currentdate = new Date();
-    var datetime = currentdate.getFullYear() + "-" +
-        (currentdate.getMonth() + 1) + "-" +
-        currentdate.getDate() + " " +
-        currentdate.getHours() + ":" +
-        currentdate.getMinutes() + ":" +
-        currentdate.getSeconds();
-    var personal = {
-        df_tipo_documento_per: $('#tipo_documento').val(),
-        df_documento_per: $('#documento').val(),
-        df_nombre_per: $('#nombre').val(),
-        df_apellido_per: $('#apellido').val(),
-        df_cargo_per: $('#cargo').val(),
-        df_fecha_ingreso: $('#fecha_ingreso').val(),
-        df_correo_per: $('#email').val(),
-        df_codigo_personal: $('#codigo').val(),
-        df_telefono_per: $('#tlf').val(),
-        df_celular_per: $('#celular').val(),
-        df_fecha_nac_per: $('#fecha_nac').val(),
-        df_direccion_per: $('#direccion').val(),
-        df_contrato_per: $('#contrato').val(),
-        df_nombre_contacto: $('#nombre_contacto').val(),
-        df_telefono_contacto: $('#tlf-contacto').val(),
-        df_activo_per: personalEditar.df_activo,
-        df_id_personal: personalEditar.df_id_personal
-    };
-    var detalle = {
-        df_sueldo_detper: $('#sueldo').val(),
-        df_bono_detper: 0,
-        df_anticipo_detper: 0,
-        df_descuento_detper: 0,
-        df_decimos_detper: 0,
-        df_vacaciones_detper: 0,
-        df_tabala_comision_detper: 1,
-        df_comisiones_detper: 0,
-        df_personal_cod_detper: personal.df_id_personal,
-        df_usuario_detper: $('#usuario_id').val(),
-        df_fecha_proceso: datetime
-    };
-    if (personal.df_tipo_documento_per == 'null' || personal.df_contrato_per == 'null' || personal.df_cargo_per == 'null') {
-        off();
-        alertar('warning', '¡Alerta!', 'Los campos obligatorios no pueden estár vacíos');
+    var cargo = $('#cargo').val();
+    var contrato = $('#contrato').val();
+    if (cargo != 'null' && contrato != 'null') {
+        var currentdate = new Date();
+        var datetime = currentdate.getFullYear() + "-" +
+            (currentdate.getMonth() + 1) + "-" +
+            currentdate.getDate() + " " +
+            currentdate.getHours() + ":" +
+            currentdate.getMinutes() + ":" +
+            currentdate.getSeconds();
+        var personal = {
+            df_tipo_documento_per: $('#tipo_documento').val(),
+            df_documento_per: $('#documento').val(),
+            df_nombre_per: $('#nombre').val(),
+            df_apellido_per: $('#apellido').val(),
+            df_cargo_per: $('#cargo').val(),
+            df_fecha_ingreso: $('#fecha_ingreso').val(),
+            df_correo_per: $('#email').val(),
+            df_codigo_personal: $('#codigo').val(),
+            df_telefono_per: $('#tlf').val(),
+            df_celular_per: $('#celular').val(),
+            df_fecha_nac_per: $('#fecha_nac').val(),
+            df_direccion_per: $('#direccion').val(),
+            df_contrato_per: $('#contrato').val(),
+            df_nombre_contacto: $('#nombre_contacto').val(),
+            df_telefono_contacto: $('#tlf-contacto').val(),
+            df_activo_per: personalEditar.df_activo,
+            df_id_personal: personalEditar.df_id_personal
+        };
+        var detalle = {
+            df_sueldo_detper: $('#sueldo').val(),
+            df_bono_detper: 0,
+            df_anticipo_detper: 0,
+            df_descuento_detper: 0,
+            df_decimos_detper: 0,
+            df_vacaciones_detper: 0,
+            df_tabala_comision_detper: 1,
+            df_comisiones_detper: 0,
+            df_personal_cod_detper: personal.df_id_personal,
+            df_usuario_detper: $('#usuario_id').val(),
+            df_fecha_proceso: datetime
+        };
+        if (personal.df_tipo_documento_per == 'null' || personal.df_contrato_per == 'null' || personal.df_cargo_per == 'null') {
+            off();
+            alertar('warning', '¡Alerta!', 'Los campos obligatorios no pueden estár vacíos');
+        } else {
+            updatePersonal(personal, detalle);
+        }
     } else {
-        updatePersonal(personal, detalle);
+        off();
+        alertar('warning', '¡Alerta!', 'Todos los campos son obligatorios');
     }
 });
 

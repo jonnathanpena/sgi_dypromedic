@@ -104,12 +104,12 @@ function sleccionaCargo() {
 
 
 $('#form_nuevo_personal').submit(function(event) {
-    on();
+    //on();
     event.preventDefault();
     var tipo_documento = $('#tipo_documento').val();
     var cargo = $('#cargo').val();
     var contrato = $('#contrato').val();
-    if (cargo != 'null' || contrato != 'null') {
+    if (cargo != 'null' && contrato != 'null') {
         if (tipo_documento != 'null') {
             var es_usuario = $('#toggle-usuario').prop('checked');
             if (es_usuario == true) {
