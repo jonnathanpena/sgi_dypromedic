@@ -44,7 +44,7 @@ function cargar() {
     $.post(urlCompleta, JSON.stringify({ df_nombre_per: q }), function(data, status, hrx) {
         if (data.data.length > 0) {
             $('#resultados .table-responsive table tbody').html('');
-            data.data.sort(function (a, b){
+            data.data.sort(function(a, b) {
                 return (b.df_id_personal - a.df_id_personal)
             });
             records = data.data;
@@ -76,9 +76,21 @@ function apply_pagination() {
 
 function generate_table() {
     $('#resultados .table-responsive table tbody').empty();
+    console.log('display records', displayRecords);
     var tr;
     $.each(displayRecords, function(index, row) {
-        $('#resultados .table-responsive table tbody').append('<tr><td>' + row.df_documento_per + '</td><td>' + row.df_nombre_per + '</td><td>' + row.df_cargo_per + '</td><td>' + row.df_fecha_ingreso + '</td><td>' + row.df_contrato_per + '</td><td><span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_id_personal + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td></tr>');
+        var tr = $('<tr/>');
+        tr.append('<td>' + row.df_documento_per + '</td><td>' + row.df_nombre_per + '</td>');
+        tr.append('<td>' + row.df_cargo_per + '</td>');
+        tr.append('<td>' + row.df_fecha_ingreso + '</td>');
+        tr.append('<td>' + row.df_contrato_per + '</td>');
+        if (row.df_activo_per == 1) {
+            tr.append('<td><div class="input_wrapper"><input type="checkbox" class="switch_4" checked onclick="cambiarEsttus(`' + row.df_id_personal + '`, 0)"><svg class="is_checked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 426.67 426.67"><path d="M153.504 366.84c-8.657 0-17.323-3.303-23.927-9.912L9.914 237.265c-13.218-13.218-13.218-34.645 0-47.863 13.218-13.218 34.645-13.218 47.863 0l95.727 95.727 215.39-215.387c13.218-13.214 34.65-13.218 47.86 0 13.22 13.218 13.22 34.65 0 47.863L177.435 356.928c-6.61 6.605-15.27 9.91-23.932 9.91z"/></svg><svg class="is_unchecked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212.982 212.982"><path d="M131.804 106.49l75.936-75.935c6.99-6.99 6.99-18.323 0-25.312-6.99-6.99-18.322-6.99-25.312 0L106.49 81.18 30.555 5.242c-6.99-6.99-18.322-6.99-25.312 0-6.99 6.99-6.99 18.323 0 25.312L81.18 106.49 5.24 182.427c-6.99 6.99-6.99 18.323 0 25.312 6.99 6.99 18.322 6.99 25.312 0L106.49 131.8l75.938 75.937c6.99 6.99 18.322 6.99 25.312 0 6.99-6.99 6.99-18.323 0-25.313l-75.936-75.936z" fill-rule="evenodd" clip-rule="evenodd"/></svg></div></td>');
+        } else if (row.df_activo_per == 0) {
+            tr.append('<td><div class="input_wrapper"><input type="checkbox" class="switch_4" onclick="cambiarEsttus(`' + row.df_id_personal + '`, 1)"><svg class="is_checked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 426.67 426.67"><path d="M153.504 366.84c-8.657 0-17.323-3.303-23.927-9.912L9.914 237.265c-13.218-13.218-13.218-34.645 0-47.863 13.218-13.218 34.645-13.218 47.863 0l95.727 95.727 215.39-215.387c13.218-13.214 34.65-13.218 47.86 0 13.22 13.218 13.22 34.65 0 47.863L177.435 356.928c-6.61 6.605-15.27 9.91-23.932 9.91z"/></svg><svg class="is_unchecked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212.982 212.982"><path d="M131.804 106.49l75.936-75.935c6.99-6.99 6.99-18.323 0-25.312-6.99-6.99-18.322-6.99-25.312 0L106.49 81.18 30.555 5.242c-6.99-6.99-18.322-6.99-25.312 0-6.99 6.99-6.99 18.323 0 25.312L81.18 106.49 5.24 182.427c-6.99 6.99-6.99 18.323 0 25.312 6.99 6.99 18.322 6.99 25.312 0L106.49 131.8l75.938 75.937c6.99 6.99 18.322 6.99 25.312 0 6.99-6.99 6.99-18.323 0-25.313l-75.936-75.936z" fill-rule="evenodd" clip-rule="evenodd"/></svg></div></td>');
+        }
+        tr.append('<td><span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_id_personal + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td>');
+        $('#resultados .table-responsive table tbody').append(tr);
     });
 }
 
@@ -87,8 +99,8 @@ function detallar(documento) {
     $.post(urlCompleta, JSON.stringify({ df_id_personal: documento }), function(data, status, hrx) {
         var detalle = data.data[0];
         if (detalle.df_usuario_detper == null) {
-            localStorage.setItem('distrifar_personal_editar', JSON.stringify(detalle));
-            window.location.href = "editar_personal.php";
+            localStorage.setItem('dypromedic_personal_editar', JSON.stringify(detalle));
+            window.location.href = "editar_personal";
         } else {
             getUsuarioById(detalle);
         }
@@ -107,7 +119,21 @@ function getUsuarioById(personal) {
         personal.df_activo = user.df_activo;
         personal.df_correo = user.df_correo;
         personal.df_tipo_usuario = user.df_tipo_usuario;
-        localStorage.setItem('distrifar_personal_editar', JSON.stringify(personal));
-        window.location.href = "editar_personal.php";
+        localStorage.setItem('dypromedic_personal_editar', JSON.stringify(personal));
+        window.location.href = "editar_personal";
+    });
+}
+
+function cambiarEsttus(id, estatus) {
+    on();
+    var urlCompleta = url + 'personal/updateEdoPersonal.php';
+    $.post(urlCompleta, JSON.stringify({ df_activo_per: estatus, df_id_personal: id }), function(response) {
+        off();
+        if (response == true) {
+            alertar('success', '¡Éxito!', 'Estado personal modificado exitosamente');
+        } else {
+            alertar('danger', '¡Error!', 'Por favor, verifique su conexión a internet e intente nuevamente!');
+        }
+        cargar();
     });
 }
