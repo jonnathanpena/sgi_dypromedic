@@ -29,7 +29,10 @@
                     <button type='button' class="btn btn-info" onclick="nuevoBanco()">
                         <span class="glyphicon glyphicon-plus" ></span> 
                         Nuevo Banco
-                    </button>                    
+                    </button>    
+                    <button class="btn btn-info" style="margin-left: 10px;" onclick="exportar()">
+                        <span class="glyphicon glyphicon-cloud-download" ></span>
+                    </button>                
                 </div>
                 <h4><i class='glyphicon glyphicon-usd'></i> Bancos Empresa</h4>
             </div>
