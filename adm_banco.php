@@ -36,7 +36,8 @@
             <div class="panel-body">
 
 <?php
-	include("modal/nuevo_banco.php");
+    include("modal/nuevo_banco.php");
+    include("modal/edita_banco.php");
 ?>
 
                 <form class="form-horizontal" role="form" style="margin-bottom: 25px;">

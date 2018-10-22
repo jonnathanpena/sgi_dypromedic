@@ -36,7 +36,7 @@ $fecha = date("d/m/Y");
                         <div class="form-group">
                             <label for="cuenta" class="col-sm-3 control-label" style="text-align:left;">Número de Cuenta<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cuenta" name="cuenta" placeholder="Número de Cuenta" required>
+                                <input type="number" class="form-control" id="cuenta" name="cuenta" placeholder="Número de Cuenta" required>
                             </div>
                         </div>
                         <div class="form-group">

@@ -153,14 +153,56 @@ function insert(banco) {
 function detallar(id) {
     var urlCompleta = url + 'perfil_banco/getById.php';
     $.post(urlCompleta, JSON.stringify({ dp_id_perfil_ban: id }), function(data, status, hrx) {
-        console.log(data);
+        console.log(data);        
+        $('#editUsuario').html('');
+        $('#editUsuario').append('<option value="' + usuario.df_id_usuario + '">' + usuario.df_usuario_usuario + '</option>');
+        $('#editBanco').val(data.data[0].dp_banco_per_ban);
+        $('#editDescripcion').val(data.data[0].dp_descripcion_per_ban);
+        $('#editCuenta').val(data.data[0].dp_cuenta_per_ban);
+        $('#editTipo-cuenta').val(data.data[0].dp_tipo_cuenta_per_ban);
+        $('#editTipo').val(data.data[0].dp_tipo_per_ban);
+        $('#id').val(data.data[0].dp_id_perfil_ban);
         $('#editaBanco').modal('show');
-        $('#usuario').html('');
-        $('#usuario').append('<option value="' + usuario.df_id_usuario + '">' + usuario.df_usuario_usuario + '</option>');
-        $('#banco').val();
-        $('#descripcion').val('');
-        $('#cuenta').val('');
-        $('#tipo-cuenta').val('null');
-        $('#tipo').val('null');
+    });
+}
+
+$('#editar_banco').submit(function(event) {
+    $('#editar_banco').attr('disabled', true);
+    event.preventDefault();
+    if ($('#editTipo-cuenta').val() == 'null' || $('#editTipo').val() == 'null') {
+        alertar('warning', '¡Advertencia!', 'Todos los campos son obligtorios');
+    } else {
+        currentdate = new Date();
+        var datetime = currentdate.getFullYear() + "-" +
+            (currentdate.getMonth() + 1) + "-" +
+            currentdate.getDate() + " " +
+            currentdate.getHours() + ":" +
+            currentdate.getMinutes() + ":" +
+            currentdate.getSeconds();      
+        var edita_banco = {
+            dp_descripcion_per_ban: $('#editDescripcion').val(),
+            dp_banco_per_ban: $('#editBanco').val(),
+            dp_cuenta_per_ban: $('#editCuenta').val(), 
+            dp_tipo_cuenta_per_ban: $('#editTipo-cuenta').val(), 
+            dp_tipo_per_ban: $('#editTipo').val(), 
+            dp_fecha_modifica_per_ban: datetime,
+            dp_modificadoby_per_ban: $('#editUsuario').val(), 
+            dp_id_perfil_ban: $('#id').val()
+        }
+        console.log('editar banco ', edita_banco);
+        editar(edita_banco);
+    }
+});
+
+function editar(banco) {
+    var urlCompleta = url + 'perfil_banco/update.php';
+    $.post(urlCompleta, JSON.stringify(banco), function(response) {
+        if (response != false) {
+            alertar('success', '¡Éxito!', 'Perfil de Banco modificado exitosamente');
+        } else {
+            alertar('danger', '¡Error!', 'Error al modificar, verifique que todo está bien e intente de nuevo');
+        } 
+        $('#editaBanco').modal('hide');
+        load();
     });
 }

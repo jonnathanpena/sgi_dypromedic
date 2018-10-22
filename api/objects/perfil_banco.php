@@ -120,7 +120,7 @@ class PerfilBanco {
                     `dp_tipo_cuenta_per_ban`= '".$this->dp_tipo_cuenta_per_ban."',
                     `dp_tipo_per_ban`= '".$this->dp_tipo_per_ban."',
                     `dp_fecha_modifica_per_ban`= '".$this->dp_fecha_modifica_per_ban."',
-                    `dp_modificadoby_per_ban` = ".$this->dp_modificadoby_per_ban.",
+                    `dp_modificadoby_per_ban` = ".$this->dp_modificadoby_per_ban."
                 WHERE `dp_id_perfil_ban`= ".$this->dp_id_perfil_ban;
     
         // prepara la sentencia del query

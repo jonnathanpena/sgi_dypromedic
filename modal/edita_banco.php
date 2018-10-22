@@ -15,34 +15,35 @@ $fecha = date("d/m/Y");
                 <form class="form-horizontal" id="editar_banco" name="editar_banco">
                     <div id="resultados_ajax"></div>
                         <div class="form-group">
-                            <label for="usuario" class="col-sm-3 control-label" style="text-align:left;">Usuario</label>
+                            <label for="editUsuario" class="col-sm-3 control-label" style="text-align:left;">Usuario</label>
                             <div class="col-sm-8">
-                                <select name="usuario" id="usuario" class="form-control" disabled>
+                                <select name="editUsuario" id="editUsuario" class="form-control" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="descripcion" class="col-sm-3 control-label" style="text-align:left;">Alias<span class="obligatorio">*</span></label>
+                            <label for="editDescripcion" class="col-sm-3 control-label" style="text-align:left;">Alias<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Alias" required>                                
+                                <input type="text" class="form-control" id="editDescripcion" name="editDescripcion" placeholder="Alias" required>                                
+                                <input class="hidden" id="id" >                                
                             </div>
                         </div>
                         <div class="form-group row">
-                        <label for="banco" class="col-md-3 control-label" style="text-align:left;">Banco<span class="obligatorio">*</span></label>
+                        <label for="editBanco" class="col-md-3 control-label" style="text-align:left;">Banco<span class="obligatorio">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="banco" name="banco" placeholder="Banco" required>                                                            
+                            <input type="text" class="form-control" id="editBanco" name="editBanco" placeholder="Banco" required>                                                            
                         </div> 
                         </div>
                         <div class="form-group">
-                            <label for="cuenta" class="col-sm-3 control-label" style="text-align:left;">Número de Cuenta<span class="obligatorio">*</span></label>
+                            <label for="editCuenta" class="col-sm-3 control-label" style="text-align:left;">Número de Cuenta<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="cuenta" name="cuenta" placeholder="Número de Cuenta" required>
+                                <input type="number" class="form-control" id="editCuenta" name="editCuenta" placeholder="Número de Cuenta" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="tipo-cuenta" class="col-sm-3 control-label" style="text-align:left;">Tipo Cuenta<span class="obligatorio">*</span></label>
+                            <label for="editTipo-cuenta" class="col-sm-3 control-label" style="text-align:left;">Tipo Cuenta<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <select name="tipo-cuenta" id="tipo-cuenta" class="form-control">
+                                <select name="editTipo-cuenta" id="editTipo-cuenta" class="form-control">
                                     <option value="null">Seleccione...</option>
                                     <option value="Ahorro">Ahorro</option>
                                     <option value="Corriente">Corriente</option>
@@ -50,9 +51,9 @@ $fecha = date("d/m/Y");
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="tipo" class="col-sm-3 control-label" style="text-align:left;">Tipo<span class="obligatorio">*</span></label>
+                            <label for="editTipo" class="col-sm-3 control-label" style="text-align:left;">Tipo<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <select name="tipo" id="tipo" class="form-control">
+                                <select name="editTipo" id="editTipo" class="form-control">
                                     <option value="null">Seleccione...</option>
                                     <option value="Empresarial">Empresarial</option>
                                     <option value="Personal">Personal</option>
