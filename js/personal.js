@@ -42,11 +42,9 @@ function cargar() {
     var urlCompleta = url + 'personal/getAll.php';
     var q = $('#q').val();
     $.post(urlCompleta, JSON.stringify({ df_nombre_per: q }), function(data, status, hrx) {
+        console.log('personal', data);
         if (data.data.length > 0) {
             $('#resultados .table-responsive table tbody').html('');
-            data.data.sort(function(a, b) {
-                return (b.df_id_personal - a.df_id_personal)
-            });
             records = data.data;
             totalRecords = records.length;
             totalPages = Math.ceil(totalRecords / recPerPage);
@@ -80,7 +78,7 @@ function generate_table() {
     var tr;
     $.each(displayRecords, function(index, row) {
         var tr = $('<tr/>');
-        tr.append('<td>' + row.df_documento_per + '</td><td>' + row.df_nombre_per + '</td>');
+        tr.append('<td>' + row.df_documento_per + '</td><td>' + row.df_nombre_per + ' ' + row.df_apellido_per + '</td>');
         tr.append('<td>' + row.df_cargo_per + '</td>');
         tr.append('<td>' + row.df_fecha_ingreso + '</td>');
         tr.append('<td>' + row.df_contrato_per + '</td>');

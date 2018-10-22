@@ -353,6 +353,26 @@ class Personal {
         
     }
 
+    function updateUsuarioPersonal(){
+    
+        // query 
+        $query = "UPDATE `df_usuario` SET       
+                    df_usuario_usuario = '".$this->df_usuario_usuario."',
+                    df_tipo_usuario = '".$this->df_tipo_usuario."'                    
+                    WHERE `df_id_usuario`= ".$this->df_id_usuario;
+    
+        // prepara la sentencia del query
+        $stmt = $this->conn->prepare($query);
+        
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }       
+        
+    }
+
     function deleteUsuario(){
     
         // query 
