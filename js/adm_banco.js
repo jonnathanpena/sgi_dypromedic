@@ -37,9 +37,10 @@ function load() {
     $('#guardar_banco').attr('disabled', false);
     bancos = [];
     records = [];
+    var q = $('#q').val();
     $('#resultados .table-responsive table tbody').html('Cargando...');
     var urlCompleta = url + 'perfil_banco/getAll.php';
-    $.get(urlCompleta, function(response) {
+    $.post(urlCompleta, JSON.stringify({ dp_descripcion_per_ban: q, dp_banco_per_ban: q }), function(response) {
         if (response.data.length > 0) {
             bancos = response.data;
             console.log('Perfiles de Bancos ', bancos);
@@ -52,7 +53,7 @@ function load() {
                 totalRecords = records.length;
                 totalPages = Math.ceil(totalRecords / recPerPage);
                 apply_pagination();
-            }, 1000);
+            }, 0);
         } else {
             $('#resultados .table-responsive table tbody').html('No se encontró ningún resultado');
         }
