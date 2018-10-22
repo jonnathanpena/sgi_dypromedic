@@ -24,6 +24,9 @@
                <h4><i class='glyphicon glyphicon-edit'></i> Modificar Personal</h4>
             </div>
             <div class="panel-body">
+<?php
+    include("modal/load.php");
+?> 
                 <form style="display: none;" class="form-horizontal" role="form" id="form_modificar_externo">
                     <div class="form-group row">
                         <label for="profesion" class="col-md-1 control-label" style="text-align:left;">Profesional<span class="obligatorio">*</span></label>
@@ -132,26 +135,14 @@
                         </div>
                         <label for="sueldo" class="col-md-1 control-label" style="text-align:left;">Sueldo</label>
                         <div class="col-md-2">
-                            <input type="number" class="form-control input-sm" id="sueldo" name="sueldo" placeholder="Sueldo" min="0.01" step="0.01">
+                            <input type="number" class="form-control input-sm" id="sueldo" name="sueldo" placeholder="Sueldo" min="0" step="0.01">
                         </div>                   
                         <label for="usuario" class="col-md-1 control-label" id="label_usuario">Usuario</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control input-sm" id="usuario" name="usuario" placeholder="usuario">
+                            <input type="text" class="form-control input-sm" id="usuario" name="usuario" placeholder="usuario" required>
                             <input type="hidden" id="usuario_id" name="usuario_id">
                         </div>    
-                 </div>                                             
-                   <!--<div class="form-group row">
-                   <div class="form-group row" style="display: none;">
-                     <label for="perfil" class="col-md-1 control-label" id="label_perfil">Perfil</label>
-                     <div class="col-md-2">
-                        <select name="perfil" id="perfil" class="form-control">
-                            <option value="null">Seleccione...</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Funcionario">Funcionario</option>
-                        </select>
-                        <input type="hidden" id="clave">
-                     </div>
-                   </div> -->
+                 </div>      
                    <div class="form-group row producto">
                         <h4 style="margin-left: 2%;">Persona de Contacto</h4>
                         <label for="nombre_contacto" class="col-md-1 control-label" style="text-align:left;">Nombre</label>

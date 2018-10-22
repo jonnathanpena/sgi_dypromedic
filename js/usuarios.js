@@ -334,8 +334,8 @@ function detallarPersonal(documento) {
     $.post(urlCompleta, JSON.stringify({ df_documento_per: documento }), function(data, status, hrx) {
         var detalle = data.data[0];
         if (detalle.df_usuario_detper == null) {
-            localStorage.setItem('distrifar_personal_editar', JSON.stringify(detalle));
-            window.location.href = "editar_personal.php";
+            localStorage.setItem('dypromedic_personal_editar', JSON.stringify(detalle));
+            window.location.href = "editar_personal";
         } else {
             getUsuarioById(detalle);
         }
@@ -354,7 +354,7 @@ function getUsuarioById(personal) {
         personal.df_activo = user.df_activo;
         personal.df_correo = user.df_correo;
         personal.df_tipo_usuario = user.df_tipo_usuario;
-        localStorage.setItem('distrifar_personal_editar', JSON.stringify(personal));
-        window.location.href = "editar_personal.php";
+        localStorage.setItem('dypromedic_personal_editar', JSON.stringify(personal));
+        window.location.href = "editar_personal";
     });
 }

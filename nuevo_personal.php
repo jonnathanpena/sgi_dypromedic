@@ -36,6 +36,10 @@
                <h4 id="tituloP"><i class='glyphicon glyphicon-edit'></i> Nuevo Personal</h4>
             </div>
             <div class="panel-body">
+
+<?php
+    include("modal/load.php");
+?>  
                 <form style="display: none;" class="form-horizontal" role="form" id="form_nuevo_externo">
                     <div class="form-group row">
                         <label for="profesion" class="col-md-1 control-label" style="text-align:left;">Profesional<span class="obligatorio">*</span></label>
@@ -130,7 +134,7 @@
                     <div class="form-group row">
                         <label for="cargo" class="col-md-1 control-label" style="text-align:left;">Cargo<span class="obligatorio">*</span></label>
                         <div class="col-md-2">
-                            <select name="cargo" id="cargo" class="form-control">
+                            <select name="cargo" id="cargo" class="form-control" onchange="sleccionaCargo()">
                                 <option value="null">Seleccione...</option>
                                 <option value="Administrador">Administrador</option>
                                 <option value="Asistente">Asistente</option>
@@ -140,7 +144,7 @@
                         </div>
                         <label for="sueldo" class="col-md-1 control-label" style="text-align:left;">Sueldo</label>
                         <div class="col-md-2">
-                            <input type="number" class="form-control input-sm" id="sueldo" name="sueldo" placeholder="Sueldo" min="0.01" step="0.01">
+                            <input type="number" class="form-control input-sm" id="sueldo" name="sueldo" placeholder="Sueldo" min="0.00" step="0.01">
                         </div>                                         
                         <label for="es_usuario" class="col-md-1 control-label" style="text-align:left;">¿Usuario?</label>
                         <div class="form-check col-md-2">

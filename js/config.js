@@ -58,10 +58,39 @@ window.onpopstate = function() {
     history.go(1);
 };
 
+var $dialog = $(
+    '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+    '<div class="modal-dialog modal-m">' +
+    '<div class="modal-content">' +
+    '<div class="modal-header"><h3 style="margin:0;"></h3></div>' +
+    '<div class="modal-body">' +
+    '<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
+    '</div>' +
+    '</div></div></div>');
+
 function on() {
-    $('#loadModal').modal('show');
+    var settings = $.extend({
+        dialogSize: 'm',
+        progressType: '',
+        onHide: null // This callback runs after the dialog was hidden
+    }, { onHide: function() { /*alert('Callback!');*/ } });
+    // Configuring dialog
+    $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
+    $dialog.find('.progress-bar').attr('class', 'progress-bar');
+    if (settings.progressType) {
+        $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
+    }
+    $dialog.find('h3').text('Procesando');
+    // Adding callbacks
+    if (typeof settings.onHide === 'function') {
+        $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function(e) {
+            settings.onHide.call($dialog);
+        });
+    }
+    // Opening dialog
+    $dialog.modal();
 }
 
 function off() {
-    $('#loadModal').modal('hide');
+    $dialog.modal('hide');
 }

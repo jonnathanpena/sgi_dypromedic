@@ -1,3 +1,4 @@
+var personalEditar;
 $(document).ready(function() {
     usuario = JSON.parse(localStorage.getItem('distrifarma_test_user'));
     if (usuario.ingreso == true) {
@@ -22,17 +23,16 @@ $(document).ready(function() {
 });
 
 function load() {
-    var personal = JSON.parse(localStorage.getItem('distrifar_personal_editar'));
-    console.log('cargo ', personal);
-    var cargo = personal.df_cargo_per;
-    if ( cargo == 'Instrumentista' || cargo == 'Doctor') {
+    var personal = JSON.parse(localStorage.getItem('dypromedic_personal_editar'));
+    personalEditar = personal;
+    console.log('personal ', personal);
+    if (personal.df_cargo_per == 'Instrumentista' || personal.df_cargo_per == 'Doctor') {
         $('#form_modificar_personal').hide('slow');
         $('#form_modificar_externo').show('slow');
         $('#profesion').val(personal.df_cargo_per);
         $('#nombre-profesion').val(personal.df_nombre_per);
         $('#apellido-profesion').val(personal.df_apellido_per);
         $('#id').val(personal.df_id_personal);
-
     } else {
         $('#form_modificar_personal').show('slow');
         $('#form_modificar_externo').hide('slow');
@@ -50,7 +50,11 @@ function load() {
         $('#sueldo').val(personal.df_sueldo_detper);
         $('#codigo').val(personal.df_codigo_personal);
         $('#usuario_id').val(personal.df_usuario_detper);
-    }    
+        $('#tlf').val(personal.df_telefono_per);
+        $('#celular').val(personal.df_celular_per);
+        $('#nombre_contacto').val(personal.df_nombre_contacto);
+        $('#tlf-contacto').val(personal.df_telefono_contacto);
+    }
     if (personal.df_usuario_detper != null) {
         $('#usuario').val(personal.df_usuario_usuario);
         $('#clave').val(personal.df_clave_usuario);
@@ -65,54 +69,60 @@ function load() {
 }
 
 $('#form_modificar_personal').submit(function(event) {
-    $('#form_modificar_personal').attr('disabled', true);
+    on();
     event.preventDefault();
-    var personal = {
-        df_tipo_documento_per: $('#tipo_documento').val(),
-        df_documento_per: $('#documento').val(),
-        df_nombre_per: $('#nombre').val(),
-        df_apellido_per: $('#apellido').val(),
-        df_cargo_per: $('#cargo').val(),
-        df_fecha_ingreso: $('#fecha_ingreso').val(),
-        df_correo_per: $('#email').val(),
-        df_codigo_personal: $('#codigo').val(),
-        df_activo_per: 1,
-        df_id_personal: $('#id').val()
-    };
-    var detalle = {
-        df_sueldo_detper: $('#sueldo').val(),
-        df_bono_detper: $('#bono').val(),
-        df_anticipo_detper: $('#anticipo').val(),
-        df_descuento_detper: $('#descuento').val(),
-        df_decimos_detper: $('#decimos').val(),
-        df_vacaciones_detper: $('#vacaciones').val(),
-        df_tabala_comision_detper: 1,
-        df_comisiones_detper: $('#comisiones').val(),
-        df_personal_cod_detper: personal.df_id_personal,
-        df_usuario_detper: $('#usuario_id').val()
-    };
-    if (detalle.df_anticipo_detper == ''){
-        detalle.df_anticipo_detper = 0;
+    var cargo = $('#cargo').val();
+    var contrato = $('#contrato').val();
+    if (cargo != 'null' && contrato != 'null') {
+        var currentdate = new Date();
+        var datetime = currentdate.getFullYear() + "-" +
+            (currentdate.getMonth() + 1) + "-" +
+            currentdate.getDate() + " " +
+            currentdate.getHours() + ":" +
+            currentdate.getMinutes() + ":" +
+            currentdate.getSeconds();
+        var personal = {
+            df_tipo_documento_per: $('#tipo_documento').val(),
+            df_documento_per: $('#documento').val(),
+            df_nombre_per: $('#nombre').val(),
+            df_apellido_per: $('#apellido').val(),
+            df_cargo_per: $('#cargo').val(),
+            df_fecha_ingreso: $('#fecha_ingreso').val(),
+            df_correo_per: $('#email').val(),
+            df_codigo_personal: $('#codigo').val(),
+            df_telefono_per: $('#tlf').val(),
+            df_celular_per: $('#celular').val(),
+            df_fecha_nac_per: $('#fecha_nac').val(),
+            df_direccion_per: $('#direccion').val(),
+            df_contrato_per: $('#contrato').val(),
+            df_nombre_contacto: $('#nombre_contacto').val(),
+            df_telefono_contacto: $('#tlf-contacto').val(),
+            df_activo_per: personalEditar.df_activo,
+            df_id_personal: personalEditar.df_id_personal
+        };
+        var detalle = {
+            df_sueldo_detper: $('#sueldo').val(),
+            df_bono_detper: 0,
+            df_anticipo_detper: 0,
+            df_descuento_detper: 0,
+            df_decimos_detper: 0,
+            df_vacaciones_detper: 0,
+            df_tabala_comision_detper: 1,
+            df_comisiones_detper: 0,
+            df_personal_cod_detper: personal.df_id_personal,
+            df_usuario_detper: $('#usuario_id').val(),
+            df_fecha_proceso: datetime
+        };
+        if (personal.df_tipo_documento_per == 'null' || personal.df_contrato_per == 'null' || personal.df_cargo_per == 'null') {
+            off();
+            alertar('warning', '¡Alerta!', 'Los campos obligatorios no pueden estár vacíos');
+        } else {
+            updatePersonal(personal, detalle);
+        }
+    } else {
+        off();
+        alertar('warning', '¡Alerta!', 'Todos los campos son obligatorios');
     }
-    if (detalle.df_bono_detper == ''){
-        detalle.df_bono_detper = 0;
-    }
-    if (detalle.df_comisiones_detper == ''){
-        detalle.df_comisiones_detper = 0;
-    }
-    if (detalle.df_decimos_detper == ''){
-        detalle.df_decimos_detper = 0;
-    }
-    if (detalle.df_descuento_detper == ''){
-        detalle.df_descuento_detper = 0;
-    }
-    if (detalle.df_tabala_comision_detper == ''){
-        detalle.df_tabala_comision_detper = 0;
-    }
-    if (detalle.df_vacaciones_detper == ''){
-        detalle.df_vacaciones_detper = 0;
-    }
-    updatePersonal(personal, detalle);
 });
 
 function updatePersonal(personal, detalle) {
@@ -121,8 +131,8 @@ function updatePersonal(personal, detalle) {
         if (data == true) {
             insertDetalle(detalle);
         } else {
+            off();
             alertar('danger', '¡Error!', 'Algo malo ocurrió, verifique la información e intente nuevamente');
-            $('#form_modificar_personal').attr('disabled', false);
         }
     });
 }
@@ -131,55 +141,89 @@ function insertDetalle(detalle) {
     var urlCompleta = url + 'personal/insertDetPersonal.php';
     $.post(urlCompleta, JSON.stringify(detalle), function(data, status, hrx) {
         if (data == false) {
+            off();
             alertar('danger', '¡Error!', 'Algo malo ocurrió, verifique la información e intente nuevamente');
-            $('#form_modificar_personal').attr('disabled', false);
         } else {
-            var per = JSON.parse(localStorage.getItem('distrifar_personal_editar'));
-            console.log('per ',per);
+            var per = JSON.parse(localStorage.getItem('dypromedic_personal_editar'));
+            console.log('per ', per);
             if (per.df_usuario_detper != null) {
                 crearUsuario();
                 alertar('success', '¡Éxito!', 'Personal modificado exitosamente');
             } else {
                 alertar('success', '¡Éxito!', 'Personal modificado exitosamente');
-                $('#form_modificar_personal').attr('disabled', false);
-                //window.location.href = "personal.php";
+                off();
             }
         }
     });
 }
 
-function crearUsuario() {    
+function crearUsuario() {
     var perfil = '';
-        if ($('#cargo').val() == 'Administrador'){
-            perfil = 'Administrador';
-        } else if ($('#cargo').val() == 'Repartidor' || $('#cargo').val() == 'Vendedor') {
-            perfil = 'Ventas';
-        } else if ($('#cargo').val() == 'Secretaria' || $('#cargo').val() == 'Supervisor') {
-            perfil = 'Supervisor';
-        }
-    console.log('perfil ', perfil);
-    alert('Crear usuario', perfil);
+    if ($('#cargo').val() == 'Administrador' || $('#cargo').val() == 'Contador') {
+        perfil = 'Administrador';
+    } else if ($('#cargo').val() == 'Repartidor' || $('#cargo').val() == 'Vendedor') {
+        perfil = 'Ventas';
+    } else if ($('#cargo').val() == 'Secretaria' || $('#cargo').val() == 'Supervisor') {
+        perfil = 'Supervisor';
+    }
     var user = {
         df_usuario_usuario: $('#usuario').val(),
-        df_personal_cod: $('#id').val(),
-        df_clave_usuario: $('#clave').val(),
-        df_activo: 1,
-        df_correo: $('#email').val(),
-        df_tipo_usuario: perfil, //$('#perfil').val(),
-        df_id_usuario: $('#usuario_id').val()
+        df_tipo_usuario: perfil,
+        df_id_usuario: personalEditar.df_id_usuario
     };
     updateUsuario(user);
 }
 
 function updateUsuario(user) {
-    var urlCompleta = url + 'usuario/updateUsuario.php';
-    console.log('usuario modificar', user);
+    var urlCompleta = url + 'personal/updateUsuarioPersonal.php';
     $.post(urlCompleta, JSON.stringify(user), function(response) {
         if (response == true) {
-            alertar('success', '¡Éxito!', 'Personal modificado exitosamente');
-           // window.location.href = "personal.php";
+            alertar('success', '¡Éxito!', 'Usuario modificado exitosamente');
         } else {
             alertar('danger', '¡Error!', 'Algo malo ocurrió, verifique la información e intente nuevamente');
         }
+        off();
     })
+}
+
+$('#form_modificar_externo').submit(function(event) {
+    on();
+    event.preventDefault();
+    if ($('#profesion').val() == 'null') {
+        off();
+        alertar('warning', '¡Alerta!', 'Profesion es requerida');
+    } else {
+        var personal = {
+            df_tipo_documento_per: null,
+            df_nombre_per: $('#nombre-profesion').val(),
+            df_apellido_per: $('#apellido-profesion').val(),
+            df_cargo_per: $('#profesion').val(),
+            df_fecha_ingreso: personalEditar.df_fecha_ingreso,
+            df_documento_per: null,
+            df_correo_per: null,
+            df_codigo_personal: personalEditar.df_codigo_personal,
+            df_telefono_per: null,
+            df_celular_per: null,
+            df_fecha_nac_per: null,
+            df_direccion_per: null,
+            df_contrato_per: 'Externo',
+            df_nombre_contacto: null,
+            df_telefono_contacto: null,
+            df_activo_per: personalEditar.df_activo_per,
+            df_id_personal: personalEditar.df_id_personal
+        };
+        updatePersonalExterno(personal);
+    }
+});
+
+function updatePersonalExterno(personal) {
+    var urlCompleta = url + 'personal/updatePersonal.php';
+    $.post(urlCompleta, JSON.stringify(personal), function(response) {
+        off();
+        if (response == true) {
+            alertar('success', '¡Éxito!', 'Personal modificado exitosamente');
+        } else {
+            alertar('danger', '¡Error!', 'Algo ocurrió mal, verifique la información, y por favor, vuelva a intentar');
+        }
+    });
 }

@@ -84,7 +84,7 @@ class Personal {
                     FROM `df_personal` 
                     WHERE `df_nombre_per` like '%".$this->df_nombre_per."%' 
                     OR `df_documento_per` like '%".$this->df_nombre_per."%'
-                    order by df_id_personal desc";
+                    order by df_nombre_per asc";
         // prepare query statement
         $stmt = $this->conn->prepare($query);
     
@@ -258,7 +258,7 @@ class Personal {
                         ".$this->df_comisiones_detper.",
                         ".$this->df_personal_cod_detper.",
                         null,
-                        now()
+                        '".$this->df_fecha_proceso."'
                     )";
         } else {
             $query = "INSERT INTO `df_detalle_personal`(`df_sueldo_detper`, `df_bono_detper`, `df_anticipo_detper`, `df_descuento_detper`, 
@@ -274,7 +274,7 @@ class Personal {
                         ".$this->df_comisiones_detper.",
                         ".$this->df_personal_cod_detper.",
                         ".$this->df_usuario_detper.",
-                        now()
+                        '".$this->df_fecha_proceso."'
                     )";
         }
         
@@ -353,6 +353,26 @@ class Personal {
         
     }
 
+    function updateUsuarioPersonal(){
+    
+        // query 
+        $query = "UPDATE `df_usuario` SET       
+                    df_usuario_usuario = '".$this->df_usuario_usuario."',
+                    df_tipo_usuario = '".$this->df_tipo_usuario."'                    
+                    WHERE `df_id_usuario`= ".$this->df_id_usuario;
+    
+        // prepara la sentencia del query
+        $stmt = $this->conn->prepare($query);
+        
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }       
+        
+    }
+
     function deleteUsuario(){
     
         // query 
@@ -392,7 +412,25 @@ class Personal {
         
     }
 
-     
+    // cambia estado del personal
+    function updateEdoPersonal(){
+    
+        // query 
+        $query = "UPDATE `df_personal` SET 
+                    `df_activo_per`= ".$this->df_activo_per." 
+                    WHERE `df_id_personal` = ".$this->df_id_personal;
+    
+        // prepara la sentencia del query
+        $stmt = $this->conn->prepare($query);
+        
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }else{
+            return false;
+        }       
+        
+    }
 
 }
 ?>
