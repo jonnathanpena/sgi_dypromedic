@@ -54,13 +54,13 @@
 						<table class="table">
 							<thead>
 								<tr class="info">
-									<th>Código</th>
-									<th>Tipo Documento</th>
-									<th>Documento</th>
-									<th>Nombre</th>
-									<th style="display: none;">Razón Social</th>
-									<th>Dirección</th>
-									<th class='text-right'>Acciones</th>
+									<th class='text-left' style="width: 12%;">Tipo Documento</th>
+									<th class='text-left' style="width: 10%;">Documento</th>
+									<th class='text-left'>Nombre</th>
+									<th class='text-left' style="width: 8%;">Teléfono</th>
+									<th class='text-left' width='auto'>Email</th>
+									<th class='text-left'style="width: 8%;">Calificación</th>
+									<th class='text-right' style="width: 8%;">Acciones</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -78,6 +78,7 @@
 	include("footer.php");
 ?>		
 	<script type="text/javascript" src="js/config.js"></script>
-	<script type="text/javascript" src="js/clientes.js"></script>
+	<script type="text/javascript" src="js/clientes.js"></script>	
+	<link rel="stylesheet" href="./css/cliente.css">
 	</body>
 </html>

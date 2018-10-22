@@ -49,9 +49,9 @@ function cargar() {
     $.post(urlCompleta, JSON.stringify({ df_nombre_cli: q }), function(data, status, xhr) {
         if (data.data.length > 0) {
             $('#resultados .table-responsive table tbody').html('');
-            data.data.sort(function (a, b){
+            /* data.data.sort(function (a, b){
                 return (b.df_id_cliente - a.df_id_cliente)
-              });
+              }); */
             records = data.data;
             totalRecords = records.length;
             totalPages = Math.ceil(totalRecords / recPerPage);
@@ -86,7 +86,7 @@ function generate_table() {
     $('#resultados .table-responsive table tbody').empty();
     var tr;
     $.each(displayRecords, function(index, row) {
-        $('#resultados .table-responsive table tbody').append('<tr><td>' + row.df_codigo_cliente + '</td><td>' + row.df_tipo_documento_cli + '</td><td>' + row.df_documento_cli + '</td><td>' + row.df_nombre_cli + '</td><td>' + row.df_razon_social_cli + '</td><td>'  + row.df_direccion_cli + '</td><td>' + '<span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_id_cliente + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td></tr>');
+        $('#resultados .table-responsive table tbody').append('<tr><td>' + row.df_tipo_documento_cli + '</td><td>' + row.df_documento_cli + '</td><td>' + row.df_nombre_cli + '</td><td>' + row.df_telefono_cli + '</td><td widt="auto">'  + row.df_email_cli + '</td><td>'  + row.df_calificacion_cli + '</td><td>' + '<span class="pull-right"><a href="#" class="btn btn-default" title="Detallar" onclick="detallar(`' + row.df_id_cliente + '`)"><i class="glyphicon glyphicon-edit"></i> </a></span></td></tr>');
     });
 }
 
@@ -94,7 +94,7 @@ $('#guardar_cliente').submit(function(event) {
     $('#guardar_cliente').attr('disabled', true);
     event.preventDefault();
     var documento = "";
-    if ($('#tipo_documento').val() == 'null' || $('#sector').val() == 'null') {
+    if ($('#tipo_documento').val() == 'null') {
         alertar('warning', '¡Alerta!', 'Tipo de documento y sector son campos obligatorios');
         $('#guardar_cliente').attr('disabled', false);
     } else {
@@ -132,10 +132,13 @@ function insertar(documento, codigo) {
         df_sector_cod: $('#sector').val(),
         df_email_cli: $('#email').val(),
         df_telefono_cli: $('#telefono').val(),
-        df_celular_cli: $('#celular').val()
+        df_celular_cli: $('#celular').val(),
+        df_calificacion_cli: $('#calificacion').val()
     };
     var urlCompleta = url + 'cliente/insert.php';
+    console.log('insertar ', cliente);
     $.post(urlCompleta, JSON.stringify(cliente), function(data, status, hrx) {
+        console.log('response ', data);
         if (data == true) {
             alertar('success', '¡Éxito!', 'Cliente registrado exitosamente');
         } else {
@@ -151,6 +154,7 @@ function insertar(documento, codigo) {
         $('#telefono').val('');
         $('#celular').val('');
         $('#tipo_documento').val('null');
+        $('#calificacion').val('null');
         $('#documento').val('');
         $('#ruc').val('');
         $('#pasaporte').val('');
@@ -224,8 +228,8 @@ function detallar(id) {
         $('#editTelefono').val(data.data[0].df_telefono_cli);
         $('#editCelular').val(data.data[0].df_celular_cli);
         $('#editCodigo').val(data.data[0].df_codigo_cliente);
-        $('#id').val(id);
-        $('#editarCliente').modal('show');
+        $('#editCalificacion').val(data.data[0].df_calificacion_cli);
+        $('#id').val(id);        
         if (data.data[0].df_tipo_documento_cli == 'Pasaporte') {
             $('#editDocumento').hide();
             $('#editRuc').hide();
@@ -239,6 +243,7 @@ function detallar(id) {
             $('#editRuc').show();
             $('#editPasaporte').hide();
         }
+        $('#editarCliente').modal('show');
     });
 }
 
@@ -248,7 +253,7 @@ $('#editTipo_documento').change(function() {
         $('#editDocumento').show();
         $('#editRuc').hide();
         $('#editPasaporte').hide();
-    } else if (valor = 'Documento') {
+    } else if (valor = 'Cedula') {
         $('#editDocumento').show();
         $('#editRuc').hide();
         $('#editPasaporte').hide();
@@ -267,7 +272,7 @@ $('#editarCliente').submit(function(event) {
     $('#editarCliente').attr('disabled', true);
     event.preventDefault();
     var documento = '';
-    if ($('#editTipo_documento').val() == 'null' || $('#editSector').val() == 'null') {
+    if ($('#editTipo_documento').val() == 'null') {
         alertar('warning', '¡Alerta!', 'Ningún campo debe quedar vacío');
         $('#editarCliente').attr('disabled', false);
     } else {
@@ -292,17 +297,19 @@ $('#editarCliente').submit(function(event) {
         var datos = {
             df_codigo_cliente: $('#editCodigo').val(),
             df_nombre_cli: $('#editNombre').val(),
-            df_razon_social_cli: $('#editRazon_social').val(),
+            df_razon_social_cli:  "null", // $('#editRazon_social').val(),
             df_tipo_documento_cli: $('#editTipo_documento').val(),
             df_documento_cli: documento,
             df_direccion_cli: $('#editDireccion').val(),
-            df_referencia_cli: $('#editReferencia').val(),
-            df_sector_cod: $('#editSector').val(),
+            df_referencia_cli: "null", // $('#editReferencia').val(),
+            df_sector_cod: "null", // $('#editSector').val(),
             df_email_cli: $('#editEmail').val(),
             df_telefono_cli: $('#editTelefono').val(),
             df_celular_cli: $('#editCelular').val(),
-            df_id_cliente: $('#id').val()
+            df_calificacion_cli: $('#editCalificacion').val(),
+            df_id_cliente: $('#id').val() * 1
         };
+        console.log('A Editar ',datos);
         update(datos);
     }
 });

@@ -55,7 +55,8 @@ if($num>0){
             "df_sector_cod"=>$df_sector_cod,
             "df_email_cli"=>$df_email_cli,
             "df_telefono_cli"=>$df_telefono_cli,
-            "df_celular_cli"=>$df_celular_cli
+            "df_celular_cli"=>$df_celular_cli,
+            "df_calificacion_cli"=>$df_calificacion_cli
         );
  
         array_push($cliente_arr["data"], $cliente_item);
