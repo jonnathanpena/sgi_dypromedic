@@ -135,3 +135,77 @@ function cambiarEsttus(id, estatus) {
         cargar();
     });
 }
+
+function exportar() {
+    on();
+    var urlCompleta = url + 'personal/getAll.php';
+    var q = $('#q').val();
+    $.post(urlCompleta, JSON.stringify({ df_nombre_per: q }), function(response) {
+        var exportar = [{
+            codigo: "Código",
+            tipoDocumento: "Tipo Documento",
+            documento: "Documento",
+            nombre: "Nombre",
+            apellido: "Apellido",
+            Cargo: "Cargo",
+            fechaIngreso: "Fecha de Ingreso",
+            fechaNaicmiento: "Fecha de Nacimiento",
+            tipoContrato: "Tipo Contrato",
+            estatus: "Estado",
+            telefono: "Teléfono",
+            celular: "Celular",
+            correo: "Correo",
+            direccion: "Dirección",
+            nombreContacto: "Nombre Contacto",
+            tlfContacto: "Teléfono Contacto"
+        }];
+        if (response.data.length > 0) {
+            $.each(response.data, function(index, row) {
+                var estado;
+                if (row.df_activo_per == 1) {
+                    estado = 'Activo';
+                } else {
+                    estado = 'Inactivo';
+                }
+                exportar.push({
+                    codigo: row.df_codigo_personal,
+                    tipoDocumento: row.df_tipo_documento_per,
+                    documento: row.df_documento_per,
+                    nombre: row.df_nombre_per,
+                    apellido: row.df_apellido_per,
+                    Cargo: row.df_cargo_per,
+                    fechaIngreso: row.df_fecha_ingreso,
+                    fechaNaicmiento: row.df_fecha_nac_per,
+                    tipoContrato: row.df_contrato_per,
+                    estatus: estado,
+                    telefono: row.df_telefono_per,
+                    celular: row.df_celular_per,
+                    correo: row.df_correo_per,
+                    direccion: row.df_direccion_per,
+                    nombreContacto: row.df_nombre_contacto,
+                    tlfContacto: row.df_telefono_contacto
+                })
+            });
+            var form = $(document.createElement('form'));
+            $(form).attr("action", "excel/exportar.php");
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+            $(form).attr("target", "_blank");
+            var input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "data")
+                .val(JSON.stringify(exportar));
+            $(form).append($(input));
+            input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "documento")
+                .val('personal');
+            $(form).append($(input));
+            form.appendTo(document.body);
+            $(form).submit();
+        } else {
+            alertar('warning', '¡Alerta!', 'No existe información para exportar');
+        }
+        off();
+    });
+}

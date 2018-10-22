@@ -22,10 +22,13 @@
     <div class="container">
 		<div class="panel panel-info">
 		<div class="panel-heading">
-		    <div class="btn-group pull-right">
+		    <div class="btn-group pull-right">                
 				<a href="nuevo_personal.php" class="btn btn-info">
                     <span class="glyphicon glyphicon-plus" ></span> Nuevo Personal
                 </a>
+                <button class="btn btn-info" style="margin-left: 10px;" onclick="exportar()">
+                    <span class="glyphicon glyphicon-cloud-download" ></span>
+                </button>
 			</div>
 			<h4><i class='glyphicon glyphicon-search'></i> Buscar Personal</h4>
 		</div>	
