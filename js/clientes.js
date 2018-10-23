@@ -402,12 +402,11 @@ function exportar() {
             df_tipo_documento_cli: "Tipo Documento",
             df_documento_cli: "Documento",
             df_nombre_cli: "Nombre",
-            df_razon_social_cli: "Razón Social",
-            df_celular_cli: "Teléfono",
+            df_celular_cli: "Celular",
+            df_telefono_cli: "Teléfono",
             df_email_cli: "Email",
             df_direccion_cli: "Dirección",
-            df_calificacion_cli: "Clasificación",
-            df_referencia_cli: "Referencia"
+            df_calificacion_cli: "Clasificación"
         }];
         if (response.data.length > 0) {
             $.each(response.data, function(index, row) {
@@ -428,12 +427,11 @@ function exportar() {
                     df_tipo_documento_cli: row.df_tipo_documento_cli,
                     df_documento_cli: row.df_documento_cli,
                     df_nombre_cli: row.df_nombre_cli,
-                    df_razon_social_cli: razon_social,
                     df_celular_cli: row.df_celular_cli,
+                    df_telefono_cli: row.df_telefono_cli,
                     df_email_cli: row.df_email_cli,
                     df_direccion_cli: row.df_direccion_cli,
                     df_calificacion_cli: clasificacion,
-                    df_referencia_cli: referencia
                 })
             });
             var form = $(document.createElement('form'));
