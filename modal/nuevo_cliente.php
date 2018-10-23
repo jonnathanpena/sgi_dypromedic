@@ -9,10 +9,11 @@
             <div class="modal-body">
                 <form class="form-horizontal" id="guardar_cliente" name="guardar_cliente">
                     <div id="resultados_ajax"></div>
+                    <div class="form-group producto">
                         <div class="form-group">
-                            <label for="tipo_documento" class="col-sm-3 control-label" style="text-align:left;">Tipo Documento<span class="obligatorio">*</span></label>
+                            <label for="tipo_documento" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Tipo Documento<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <select name="tipo_documento" id="tipo_documento" class="form-control" required>
+                                <select style="width: 95%; margin-left: -8px;" name="tipo_documento" id="tipo_documento" class="form-control" required>
                                     <option value="null">Seleccione...</option>
                                     <option value="Cedula">Cédula</option>
                                     <option value="RUC">R.U.C</option>
@@ -21,20 +22,21 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="documento" class="col-sm-3 control-label" style="text-align:left;">Documento<span class="obligatorio">*</span></label>
+                            <label for="documento" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Documento<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" id="documento" name="documento" min="1" step="1" max="9999999999" onkeyup="getByRUC()" placeholder="Documento">
-                                <input type="number" class="form-control" id="ruc" name="ruc" min="1" step="1" max=9999999999999 onkeyup="getByRUC()" placeholder="Documento">
-                                <input type="text" class="form-control" id="pasaporte" name="pasaporte" onkeyup="getByRUC()" placeholder="Documento">
+                                <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="documento" name="documento" min="1" step="1" max="9999999999" onkeyup="getByRUC()" placeholder="Documento">
+                                <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="ruc" name="ruc" min="1" step="1" max=9999999999999 onkeyup="getByRUC()" placeholder="Documento">
+                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="pasaporte" name="pasaporte" onkeyup="getByRUC()" placeholder="Documento">
                                 <span style="color: red;" id="span_documento">¡Cliente ya registrado!</span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="nombre" class="col-sm-3 control-label" style="text-align:left;">Nombre<span class="obligatorio">*</span></label>
+                            <label for="nombre" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Nombre<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
                             </div>
                         </div>
+                    </div>
                         <div class="form-group" style="display: none;">
                             <label for="razon_social" class="col-sm-3 control-label">Razón Social</label>
                             <div class="col-sm-8">
@@ -50,7 +52,7 @@
                         <div class="form-group" style="display: none;">
                             <label for="referencia" class="col-sm-3 control-label">Referencia<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="referencia" name="referencia" placeholder="Referencia" required>
+                                <input type="text" class="form-control" id="referencia" name="referencia" placeholder="Referencia">
                             </div>
                         </div>
                         <div class="form-group" style="display: none;">
@@ -61,9 +63,9 @@
                             </div>
                         </div> 
                         <div class="form-group">
-                            <label for="email" class="col-sm-3 control-label" style="text-align:left;">Email</label>
+                            <label for="email" class="col-sm-3 control-label" style="text-align:left;">Email<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -78,6 +80,18 @@
                                 <input type="text" class="form-control" id="celular" name="celular" placeholder="Celular">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="calificacion" class="col-sm-3 control-label" style="text-align:left;">Calificación</label>
+                            <div class="col-sm-8">
+                                <select name="calificacion" id="calificacion" class="form-control">
+                                    <option value="null">Seleccione...</option>
+                                    <option value="Clientes A">Clientes A</option>
+                                    <option value="Clientes B">Clientes B</option>
+                                    <option value="Clientes C">Clientes C</option>
+                                    <option value="Clientes D">Clientes D</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -87,6 +101,4 @@
 </div>
 </div>
 </div>
-
-
-
+<link rel="stylesheet" href="./css/cliente.css">

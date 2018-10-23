@@ -26,6 +26,9 @@
 					<button type='button' class="btn btn-info" data-toggle="modal" data-target="#nuevoCliente" onclick="nuevoCliente()">
 						<span class="glyphicon glyphicon-plus" ></span> Nuevo Cliente
 					</button>
+					<button class="btn btn-info" style="margin-left: 10px;" onclick="exportar()">
+                    	<span class="glyphicon glyphicon-cloud-download" ></span>
+                	</button>
 				</div>
 				<h4><i class='glyphicon glyphicon-search'></i> Buscar Clientes</h4>
 			</div>
@@ -54,13 +57,13 @@
 						<table class="table">
 							<thead>
 								<tr class="info">
-									<th>Código</th>
-									<th>Tipo Documento</th>
-									<th>Documento</th>
-									<th>Nombre</th>
-									<th style="display: none;">Razón Social</th>
-									<th>Dirección</th>
-									<th class='text-right'>Acciones</th>
+									<th class='text-left' style="width: 12%;">Tipo Documento</th>
+									<th class='text-left' style="width: 10%;">Documento</th>
+									<th class='text-left'>Nombre</th>
+									<th class='text-left' style="width: 8%;">Teléfono</th>
+									<th class='text-left' width='auto'>Email</th>
+									<th class='text-left'style="width: 8%;">Calificación</th>
+									<th class='text-right' style="width: 8%;">Acciones</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -78,6 +81,7 @@
 	include("footer.php");
 ?>		
 	<script type="text/javascript" src="js/config.js"></script>
-	<script type="text/javascript" src="js/clientes.js"></script>
+	<script type="text/javascript" src="js/clientes.js"></script>	
+	<link rel="stylesheet" href="./css/cliente.css">
 	</body>
 </html>

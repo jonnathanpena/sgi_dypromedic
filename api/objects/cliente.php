@@ -18,6 +18,7 @@ class Cliente {
     public $df_email_cli;
     public $df_telefono_cli;
     public $df_celular_cli;
+    public $df_calificacion_cli;
 
     //constructor con base de datos como conexión
     public function __construct($db){
@@ -45,11 +46,11 @@ class Cliente {
         // select all query
         $query = "SELECT `df_id_cliente`, `df_codigo_cliente`, `df_nombre_cli`, `df_razon_social_cli`, `df_tipo_documento_cli`, 
                     `df_documento_cli`, `df_direccion_cli`, `df_referencia_cli`, `df_sector_cod`, `df_email_cli`, `df_telefono_cli`, 
-                    `df_celular_cli` FROM `df_cliente` 
+                    `df_celular_cli`, df_calificacion_cli FROM `df_cliente` 
                     WHERE `df_nombre_cli` like '%".$this->df_nombre_cli."%' 
                     OR `df_razon_social_cli` like '%".$this->df_nombre_cli."%' 
                     OR `df_documento_cli` like '%".$this->df_nombre_cli."%'
-                    ORDER BY df_id_cliente DESC";
+                    ORDER BY df_nombre_cli ASC";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -67,7 +68,7 @@ class Cliente {
         // select all query
         $query = "SELECT `df_id_cliente`, `df_codigo_cliente`, `df_nombre_cli`, `df_razon_social_cli`, 
                     `df_tipo_documento_cli`, `df_documento_cli`, `df_direccion_cli`, `df_referencia_cli`, 
-                    `df_sector_cod`, `df_email_cli`, `df_telefono_cli`, `df_celular_cli` 
+                    `df_sector_cod`, `df_email_cli`, `df_telefono_cli`, `df_celular_cli`, df_calificacion_cli
                     FROM `df_cliente` 
                     WHERE df_nombre_cli = '".$this->df_nombre_cli."'";
     
@@ -85,7 +86,7 @@ class Cliente {
         // select all query
         $query = "SELECT `df_id_cliente`, `df_codigo_cliente`, `df_nombre_cli`, `df_razon_social_cli`, `df_tipo_documento_cli`, 
                     `df_documento_cli`, `df_direccion_cli`, `df_referencia_cli`, `df_sector_cod`, `df_email_cli`, `df_telefono_cli`, 
-                    `df_celular_cli` FROM `df_cliente` 
+                    `df_celular_cli`, df_calificacion_cli FROM `df_cliente` 
                     WHERE `df_id_cliente` = ".$this->df_id_cliente."  
                     OR `df_codigo_cliente` = '".$this->df_codigo_cliente."'";
     
@@ -103,7 +104,7 @@ class Cliente {
         // select all query
         $query = "SELECT `df_id_cliente`, `df_codigo_cliente`, `df_nombre_cli`, `df_razon_social_cli`, `df_tipo_documento_cli`, 
                     `df_documento_cli`, `df_direccion_cli`, `df_referencia_cli`, `df_sector_cod`, `df_email_cli`, `df_telefono_cli`, 
-                    `df_celular_cli` FROM `df_cliente` 
+                    `df_celular_cli`, df_calificacion_cli FROM `df_cliente` 
                     WHERE `df_documento_cli` = '".$this->df_documento_cli."'";
     
         // prepare query statement
@@ -121,7 +122,7 @@ class Cliente {
         // query to insert record
         $query = "INSERT INTO `df_cliente`(`df_codigo_cliente`, `df_nombre_cli`, `df_razon_social_cli`, 
                     `df_tipo_documento_cli`, `df_documento_cli`, `df_direccion_cli`, `df_referencia_cli`, 
-                    `df_sector_cod`, `df_email_cli`, `df_telefono_cli`, `df_celular_cli`) VALUES (
+                    `df_sector_cod`, `df_email_cli`, `df_telefono_cli`, `df_celular_cli`, `df_calificacion_cli`) VALUES (
                         '".$this->df_codigo_cliente."',
                         '".$this->df_nombre_cli."',
                         '".$this->df_razon_social_cli."',
@@ -132,7 +133,8 @@ class Cliente {
                         ".$this->df_sector_cod.",
                         '".$this->df_email_cli."',
                         '".$this->df_telefono_cli."',
-                        '".$this->df_celular_cli."')";
+                        '".$this->df_celular_cli."',
+                        '".$this->df_calificacion_cli."')";
 
         // prepara la sentencia del query
         $stmt = $this->conn->prepare($query);    
@@ -161,7 +163,8 @@ class Cliente {
                 `df_sector_cod`= ".$this->df_sector_cod.",
                 `df_email_cli`= '".$this->df_email_cli."',
                 `df_telefono_cli`= '".$this->df_telefono_cli."',
-                `df_celular_cli`= '".$this->df_celular_cli."'
+                `df_celular_cli`= '".$this->df_celular_cli."',
+                df_calificacion_cli= '".$this->df_calificacion_cli."'
                 WHERE df_id_cliente = ".$this->df_id_cliente;                        
 
         // prepara la sentencia del query

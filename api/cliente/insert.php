@@ -23,7 +23,6 @@ $data = json_decode(file_get_contents('php://input'), true);
 $info = array($data);
  
 // configura los valores recibidos en post de la app
-$cliente->df_id_cliente= $info[0]["df_id_cliente"];
 $cliente->df_codigo_cliente= $info[0]["df_codigo_cliente"];
 $cliente->df_nombre_cli= $info[0]["df_nombre_cli"];
 $cliente->df_razon_social_cli= $info[0]["df_razon_social_cli"];
@@ -35,6 +34,7 @@ $cliente->df_sector_cod= $info[0]["df_sector_cod"];
 $cliente->df_email_cli= $info[0]["df_email_cli"];
 $cliente->df_telefono_cli= $info[0]["df_telefono_cli"];
 $cliente->df_celular_cli= $info[0]["df_celular_cli"];
+$cliente->df_calificacion_cli= $info[0]["df_calificacion_cli"];
 
 // insert cliente
 $response = $cliente->insert();

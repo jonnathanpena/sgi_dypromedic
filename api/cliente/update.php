@@ -34,6 +34,7 @@ $cliente->df_sector_cod= $info[0]["df_sector_cod"];
 $cliente->df_email_cli= $info[0]["df_email_cli"];
 $cliente->df_telefono_cli= $info[0]["df_telefono_cli"];
 $cliente->df_celular_cli= $info[0]["df_celular_cli"];
+$cliente->df_calificacion_cli= $info[0]["df_calificacion_cli"];
 $cliente->df_id_cliente= $info[0]["df_id_cliente"];
 
 // modificar cliente
