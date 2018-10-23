@@ -113,7 +113,7 @@ class Sector {
     
         // query 
         $query = "UPDATE `df_sector` SET 
-                df_nombre_sector`= '".$this->df_nombre_sector."'
+                df_nombre_sector= '".$this->df_nombre_sector."'
                 WHERE `df_codigo_sector`= ".$this->df_codigo_sector;
     
         // prepara la sentencia del query

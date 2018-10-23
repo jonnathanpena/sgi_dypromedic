@@ -29,18 +29,26 @@
                     <button type='button' class="btn btn-info" onclick="nuevoBanco()">
                         <span class="glyphicon glyphicon-plus" ></span> 
                         Nuevo Banco
-                    </button>                    
+                    </button>    
+                    <button class="btn btn-info" style="margin-left: 10px;" onclick="exportar()">
+                        <span class="glyphicon glyphicon-cloud-download" ></span>
+                    </button>                
                 </div>
                 <h4><i class='glyphicon glyphicon-usd'></i> Bancos Empresa</h4>
             </div>
             <div class="panel-body">
 
 <?php
-	include("modal/nuevo_banco.php");
+    include("modal/nuevo_banco.php");
+    include("modal/edita_banco.php");
 ?>
 
                 <form class="form-horizontal" role="form" style="margin-bottom: 25px;">
                     <div class="form-group row">
+                        <label for="q" class="col-md-2 control-label"  style="text-align:left;">Alias o Banco:</label>
+						<div class="col-md-5"  style="text-align:left;">
+							<input type="text" class="form-control" id="q" placeholder="Nombre o Documento" onkeyup='load();'>
+						</div>
                         <div class="col-md-3">
                             <button type="button" class="btn btn-default" onclick='load();' style="display: none;">
                                 <span class="glyphicon glyphicon-search" ></span> Buscar
@@ -54,10 +62,11 @@
                         <table class="table">
                             <thead>
                                 <tr class="info">
-                                    <th style="text-align:left;">#</th>
                                     <th style="text-align:left;">Alias</th>
                                     <th style="text-align:left;">Banco</th>
                                     <th style="text-align:left;">#Cuenta</th>
+                                    <th style="text-align:left;">Tipo Cuenta</th>
+                                    <th style="text-align:left;">Tipo</th>
                                     <th class='text-right'>Acciones</th>
                                 </tr>
                             </thead>
