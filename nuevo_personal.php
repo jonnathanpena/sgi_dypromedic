@@ -72,7 +72,7 @@
                 </form>
                <form style="display: none;" class="form-horizontal" role="form" id="form_nuevo_personal">
                     <div class="form-group row">
-                        <label for="tipo_documento" class="col-md-1 control-label" style="text-align:left;">Tipo Documento</label>
+                        <label for="tipo_documento" class="col-md-1 control-label" style="text-align:left;">Tipo Documento<span class="obligatorio">*</span></label>
                         <div class="col-md-2">
                             <select name="tipo_documento" id="tipo_documento" class="form-control">
                                 <option value="null">Seleccione...</option>
@@ -81,9 +81,9 @@
                                 <option value="Pasaporte">Pasaporte</option>
                             </select>
                         </div>
-                        <label for="documento" class="col-md-1 control-label" style="text-align:left;">Documento</label>
+                        <label for="documento" class="col-md-1 control-label" style="text-align:left;">Documento<span class="obligatorio">*</span></label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control input-sm" id="documento" name="documento" placeholder="Documento del cliente" onkeyup="getDocumento()" >
+                            <input type="text" class="form-control input-sm" id="documento" name="documento" placeholder="Documento del cliente" required>
                             <span style="color: red;" id="span_documento">¡Documento ya registrado!</span>
                         </div>
                         <label for="nombre" class="col-md-1 control-label" style="text-align:left;">Nombre<span class="obligatorio">*</span></label>
@@ -126,8 +126,8 @@
                         <div class="col-md-2">
                             <select name="cargo" id="contrato" class="form-control">
                                 <option value="null">Seleccione...</option>
-                                <option value="Nómina">Nómina</option>
                                 <option value="Externo">Externo</option>
+                                <option value="Nómina">Nómina</option>
                             </select>
                         </div>                        
                     </div>
@@ -178,7 +178,7 @@
                         </div>-->
                     </div>                            
                     <div class="form-group row producto">
-                        <h4 style="margin-left: 2%;">Persona de Contacto</h4>
+                        <h4 style="margin-left: 1.2%;">Persona de Contacto</h4>
                         <label for="nombre_contacto" class="col-md-1 control-label" style="text-align:left;">Nombre</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control input-sm" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre" autofocus>

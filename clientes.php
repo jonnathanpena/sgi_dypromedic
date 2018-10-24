@@ -57,13 +57,13 @@
 						<table class="table">
 							<thead>
 								<tr class="info">
-									<th class='text-left' style="width: 12%;">Tipo Documento</th>
-									<th class='text-left' style="width: 10%;">Documento</th>
-									<th class='text-left'>Nombre</th>
-									<th class='text-left' style="width: 8%;">Teléfono</th>
-									<th class='text-left' width='auto'>Email</th>
-									<th class='text-left'style="width: 8%;">Calificación</th>
-									<th class='text-right' style="width: 8%;">Acciones</th>
+									<th>Tipo Documento</th>
+									<th>Documento</th>
+									<th>Nombre</th>
+									<th>Teléfono</th>
+									<th>Email</th>
+									<th>Calificación</th>
+									<th class='text-right'>Acciones</th>
 								</tr>
 							</thead>
 							<tbody></tbody>

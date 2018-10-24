@@ -68,12 +68,12 @@ $('#form_nuevo_externo').submit(function(event) {
     var profesion = $('#profesion').val();
     if (profesion != 'null') {
         selectMaxID({
-            df_tipo_documento_per: null,
+            df_tipo_documento_per: 'Cedula',
             df_nombre_per: $('#nombre-profesion').val(),
             df_apellido_per: $('#apellido-profesion').val(),
             df_cargo_per: $('#profesion').val(),
             df_fecha_ingreso: '',
-            df_documento_per: null,
+            df_documento_per: '9999999999',
             df_correo_per: null,
             df_codigo_personal: null,
             df_telefono_per: null,
