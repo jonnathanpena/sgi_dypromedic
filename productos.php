@@ -62,7 +62,7 @@ include("modal/editar_producto.php");
                                 <!--<th class="text-center">PPP</th>-->
                                 <th class="text-center">Precio 1</th>
                                 <th class="text-center">Precio 2</th>
-                                <th class="text-center">Categoría</th>
+                                <th>Categoría</th>
                                 <!--<th class="text-center">PVP</th>-->
                                 <!--<th class="text-center">IVA</th>-->
                                 <!--<th class="text-center">Min Sugerido</th>-->

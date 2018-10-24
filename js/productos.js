@@ -81,13 +81,13 @@ function generate_table() {
         tr.append("<td>" + displayRecords[i].dp_codigo_iess_pro + "</td>");
         tr.append("<td>" + displayRecords[i].df_nombre_producto + "</td>");
         //tr.append("<td class='text-center'>" + displayRecords[i].df_ppp + "</td>");
-        tr.append("<td class='text-right'> $ " + Number(displayRecords[i].df_pvt1).toFixed(2) + "</td>");
-        tr.append("<td class='text-right'> $ " + Number(displayRecords[i].df_pvt2).toFixed(2) + "</td>");
+        tr.append("<td class='text-center'> $ " + Number(displayRecords[i].df_pvt1).toFixed(2) + "</td>");
+        tr.append("<td class='text-center'> $ " + Number(displayRecords[i].df_pvt2).toFixed(2) + "</td>");
         //tr.append("<td class='text-right'> $ " + Number(displayRecords[i].df_pvp).toFixed(2) + "</td>");
         //tr.append("<td class='text-right'>" + displayRecords[i].df_valor_impuesto + "%</td>");
         //tr.append("<td class='text-center'>" + displayRecords[i].df_min_sugerido + "</td>");
         //tr.append("<td class='text-right'>" + displayRecords[i].df_und_caja + "</td>");
-        tr.append("<td class='text-right'>" + displayRecords[i].dp_categoria_pro + "</td>");
+        tr.append("<td>" + displayRecords[i].dp_categoria_pro + "</td>");
         //tr.append("<td class='text-center'>" + displayRecords[i].df_utilidad + "</td>");
         tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallar(" + displayRecords[i].df_id_producto + ")'><i class='glyphicon glyphicon-edit'></i></button></td>");
         $('#resultados .table-responsive table tbody').append(tr);
@@ -176,7 +176,7 @@ function nuevoProducto() {
 }
 
 $('#guardar_producto').submit(function(event) {
-    $('#guardar_producto').attr('disabled', true);
+    on();
     event.preventDefault();
     var producto = {
         df_nombre_producto: $('#nombre').val(),
@@ -184,8 +184,8 @@ $('#guardar_producto').submit(function(event) {
         dp_codigo_iess_pro: $('#codigoiess').val(),
         dp_tipo_pro: $('#tipo').val(),
         dp_categoria_pro: $('#categoria').val(),
-        dp_materia_prima_pro: 'NO', 
-        dp_producto_final_pro: 'SI', 
+        dp_materia_prima_pro: 'NO',
+        dp_producto_final_pro: 'SI',
         dp_servicio_pro: 0.00,
         dp_impuesto_compra_pro: 0.00
     };
@@ -233,6 +233,7 @@ function insertProducto(producto, productoPrecio) {
             productoPrecio.df_producto_id = response;
             insertPrecioProducto(productoPrecio);
         } else {
+            off();
             alertar('danger', '¡Error!', 'Error al insertar, verifique que todo está bien e intente de nuevo');
         }
     });
@@ -247,6 +248,7 @@ function insertPrecioProducto(productoPrecio) {
         } else {
             alertar('danger', '¡Error!', 'Error al insertar, verifique que todo está bien e intente de nuevo');
         }
+        off();
         $('#tipo').val('Producto');
         $('#categoria').val('');
         $('#codigop').val('');
@@ -318,18 +320,16 @@ function getIvasDetalle(producto) {
         $('#editUnidad_caja').val(producto.df_und_caja);
         $('#editUtilidad').val(producto.df_utilidad);
         $('#editarProducto').modal('show');
-        if( producto.df_unidad_prop == 'UND'){
+        if (producto.df_unidad_prop == 'UND') {
             $('#edit_und_caja').hide('slow');
-            $('#editUnidad_caja').val('1');
         } else {
             $('#edit_und_caja').show('slow');
-            $('#editUnidad_caja').val('');
         }
     });
 }
 
 $('#modificar_producto').submit(function(event) {
-    $('#modificar_producto').attr('disabled', true);
+    on();
     event.preventDefault();
     var producto = {
         df_nombre_producto: $('#editNombre').val(),
@@ -337,8 +337,8 @@ $('#modificar_producto').submit(function(event) {
         dp_codigo_iess_pro: $('#editcodigoiess').val(),
         dp_tipo_pro: $('#editipo').val(),
         dp_categoria_pro: $('#editcategoria').val(),
-        dp_materia_prima_pro: 'NO', 
-        dp_producto_final_pro: 'SI', 
+        dp_materia_prima_pro: 'NO',
+        dp_producto_final_pro: 'SI',
         dp_servicio_pro: 0.00,
         dp_impuesto_compra_pro: 0.00,
         df_id_producto: $('#id').val()
@@ -373,6 +373,7 @@ function updatePrecio() {
         } else {
             alertar('danger', '¡Error!', 'Ocurrió un error, por favor, intenta nuevamente');
         }
+        off();
         $('#editarProducto').modal('hide');
         load();
     });
@@ -419,9 +420,9 @@ function insertInventario(producto) {
     $.post(urlCompleta, JSON.stringify(inventario), function(response) {});
 }
 
-$('#unidad').change(function (){
+$('#unidad').change(function() {
     var opcion = $('#unidad').val();
-    if( opcion == 'UND'){
+    if (opcion == 'UND') {
         $('#und_caja').hide('slow');
         $('#unidad_caja').val('1');
     } else {
@@ -430,9 +431,9 @@ $('#unidad').change(function (){
     }
 });
 
-$('#editunidad').change(function (){
+$('#editunidad').change(function() {
     var opcion = $('#editunidad').val();
-    if( opcion == 'UND'){
+    if (opcion == 'UND') {
         $('#edit_und_caja').hide('slow');
         $('#editUnidad_caja').val('1');
     } else {
@@ -448,7 +449,7 @@ function todasCategorias() {
         $.each(response.data, function(index, row) {
             if (row.dp_categoria_pro != null) {
                 categorias.push(row.dp_categoria_pro);
-            }            
+            }
         });
         autocomplete(document.getElementById("categoria"), categorias);
         autocomplete(document.getElementById("editcategoria"), categorias);
@@ -473,7 +474,7 @@ function exportar() {
             df_und_caja: "Und x Caja"
         }];
         if (response.data.length > 0) {
-            $.each(response.data, function(index, row) {                
+            $.each(response.data, function(index, row) {
                 exportar.push({
                     dp_tipo_pro: row.dp_tipo_pro,
                     dp_categoria_pro: row.dp_categoria_pro,
@@ -483,7 +484,7 @@ function exportar() {
                     df_pvt1: row.df_pvt1,
                     df_pvt2: row.df_pvt2,
                     df_unidad_prop: row.df_unidad_prop,
-                    df_und_caja: df_und_caja,
+                    df_und_caja: row.df_und_caja,
                 })
             });
             var form = $(document.createElement('form'));

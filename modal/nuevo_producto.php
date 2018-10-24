@@ -23,7 +23,7 @@
                         <div class="form-group">
                             <label for="categoria" class="col-sm-3 control-label" style="text-align: left;">Categoría<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Categoría" autofocus required> 
+                                <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Categoría" autocomplete="off" autofocus required> 
                             </div>
                         </div>
                         <div class="form-group" style="display: none;">
@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label for="pvt2" class="col-sm-3 control-label" style="text-align: left;">Precio 2</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" id="pvt2" name="pvt2" min="0.01" step="0.01" placeholder="Precio Descuento x Caja">
+                                <input type="number" class="form-control" id="pvt2" name="pvt2" min="0.00" step="0.01" placeholder="Precio Descuento x Caja">
                             </div>
                         </div>
                         <div class="form-group" style="display: none;">
