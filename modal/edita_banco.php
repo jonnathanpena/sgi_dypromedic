@@ -14,6 +14,7 @@ $fecha = date("d/m/Y");
             <div class="modal-body">
                 <form class="form-horizontal" id="editar_banco" name="editar_banco">
                     <div id="resultados_ajax"></div>
+                    <div class="form-group producto">
                         <div class="form-group">
                             <label for="editUsuario" class="col-sm-3 control-label" style="text-align:left;">Usuario</label>
                             <div class="col-sm-8">
@@ -28,6 +29,7 @@ $fecha = date("d/m/Y");
                                 <input class="hidden" id="id" >                                
                             </div>
                         </div>
+                    </div>
                         <div class="form-group row">
                         <label for="editBanco" class="col-md-3 control-label" style="text-align:left;">Banco<span class="obligatorio">*</span></label>
                         <div class="col-md-8">
@@ -69,3 +71,4 @@ $fecha = date("d/m/Y");
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="./css/cliente.css">

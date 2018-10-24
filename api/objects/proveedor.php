@@ -14,6 +14,8 @@ class Proveedor {
     public $df_nombre_contacto;
     public $df_tlf_contacto;
     public $df_documento_prov;
+    public $df_correo_prov;
+    public $df_pag_web;
 
     //constructor con base de datos como conexión
     public function __construct($db){
@@ -40,7 +42,7 @@ class Proveedor {
     
         // select all query
         $query = "SELECT `df_id_proveedor`, `df_codigo_proveedor`, `df_nombre_empresa`, `df_tlf_empresa`, `df_direccion_empresa`, 
-                    `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov` 
+                    `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov`, `df_correo_prov`, `df_pag_web` 
                     FROM `df_proveedor` WHERE `df_nombre_empresa` like '%".$this->df_nombre_empresa."%' 
                     OR `df_documento_prov` like '%".$this->df_nombre_empresa."%' 
                     OR `df_codigo_proveedor` like '%".$this->df_nombre_empresa."%'";
@@ -60,7 +62,8 @@ class Proveedor {
     
         // select all query
         $query = "SELECT `df_id_proveedor`, `df_codigo_proveedor`, `df_nombre_empresa`, `df_tlf_empresa`, 
-                    `df_direccion_empresa`, `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov` 
+                    `df_direccion_empresa`, `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov`,
+                    `df_correo_prov`, `df_pag_web` 
                     FROM `df_proveedor` 
                     WHERE df_nombre_empresa = '".$this->df_nombre_empresa."'";
     
@@ -78,7 +81,8 @@ class Proveedor {
     
         // select all query
         $query = "SELECT `df_id_proveedor`, `df_codigo_proveedor`, `df_nombre_empresa`, `df_tlf_empresa`, 
-                    `df_direccion_empresa`, `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov` 
+                    `df_direccion_empresa`, `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov`,
+                    `df_correo_prov`, `df_pag_web` 
                     FROM `df_proveedor` 
                     WHERE df_documento_prov = '".$this->df_documento_prov."'";
     
@@ -95,7 +99,8 @@ class Proveedor {
     
         // select all query
         $query = "SELECT `df_id_proveedor`, `df_codigo_proveedor`, `df_nombre_empresa`, `df_tlf_empresa`, 
-                    `df_direccion_empresa`, `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov` 
+                    `df_direccion_empresa`, `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov`,
+                    `df_correo_prov`, `df_pag_web` 
                     FROM `df_proveedor` 
                     WHERE df_codigo_proveedor = '".$this->df_codigo_proveedor."'
                     OR df_documento_prov ='".$this->df_documento_prov."'";
@@ -113,12 +118,15 @@ class Proveedor {
     function insert(){
     
         // query to insert record
-        $query = "INSERT INTO `df_proveedor`(`df_codigo_proveedor`, `df_nombre_empresa`, `df_tlf_empresa`, `df_direccion_empresa`, 
-                    `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov`) VALUES (
+        $query = "INSERT INTO `df_proveedor`(`df_codigo_proveedor`, `df_nombre_empresa`, `df_tlf_empresa`, 
+                    `df_direccion_empresa`, `df_correo_prov`, `df_pag_web`, `df_nombre_contacto`, 
+                    `df_tlf_contacto`, `df_documento_prov`) VALUES (
                         '".$this->df_codigo_proveedor."',
                         '".$this->df_nombre_empresa."',
                         '".$this->df_tlf_empresa."',
                         '".$this->df_direccion_empresa."',
+                        '".$this->df_correo_prov."',
+                        '".$this->df_pag_web."',
                         '".$this->df_nombre_contacto."',
                         '".$this->df_tlf_contacto."',
                         '".$this->df_documento_prov."'
@@ -145,6 +153,8 @@ class Proveedor {
                     `df_nombre_empresa`= '".$this->df_nombre_empresa."',
                     `df_tlf_empresa`= '".$this->df_tlf_empresa."',
                     `df_direccion_empresa`= '".$this->df_direccion_empresa."',
+                    `df_correo_prov`= '".$this->df_correo_prov."', 
+                    `df_pag_web`= '".$this->df_pag_web."',
                     `df_nombre_contacto`= '".$this->df_nombre_contacto."',
                     `df_tlf_contacto`= '".$this->df_tlf_contacto."',
                     `df_documento_prov`= '".$this->df_documento_prov."'

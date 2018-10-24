@@ -14,19 +14,21 @@ $fecha = date("d/m/Y");
             <div class="modal-body">
                 <form class="form-horizontal" id="guardar_banco" name="guardar_banco">
                     <div id="resultados_ajax"></div>
+                    <div class="form-group producto">
                         <div class="form-group">
-                            <label for="usuario" class="col-sm-3 control-label" style="text-align:left;">Usuario</label>
+                            <label for="usuario" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Usuario</label>
                             <div class="col-sm-8">
-                                <select name="usuario" id="usuario" class="form-control" disabled>
+                                <select style="width: 95%; margin-left: -8px;" name="usuario" id="usuario" class="form-control" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="descripcion" class="col-sm-3 control-label" style="text-align:left;">Alias<span class="obligatorio">*</span></label>
+                            <label for="descripcion" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Alias<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Alias" required>                                
+                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Alias" required>                                
                             </div>
                         </div>
+                    </div>
                         <div class="form-group row">
                         <label for="banco" class="col-md-3 control-label" style="text-align:left;">Banco<span class="obligatorio">*</span></label>
                         <div class="col-md-8">
@@ -68,3 +70,4 @@ $fecha = date("d/m/Y");
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="./css/cliente.css">

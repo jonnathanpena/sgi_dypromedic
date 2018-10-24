@@ -27,21 +27,21 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="editDocumento" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Documento<span class="obligatorio">*</span></label>
-                            <div class="col-sm-8">
-                                <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="editDocumento" name="editDocumento" min="1" step="1" max="9999999999" placeholder="Documento">
-                                <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="editRuc" name="editRuc" min="1" step="1" max=9999999999999 placeholder="Documento">
-                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="editPasaporte" name="editPasaporte" placceholder="Documento">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editNombre" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Nombre<span class="obligatorio">*</span></label>
-                            <div class="col-sm-8">
-                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="editNombre" name="editNombre" placeholder="Nombre" required>
-                            </div>
-                        </div>
                     </div>
+                        <div class="form-group">
+                            <label for="editDocumento" class="col-sm-3 control-label" style="text-align:left;">Documento<span class="obligatorio">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="editDocumento" name="editDocumento" min="1" step="1" max="9999999999" placeholder="Documento">
+                                <input type="number" class="form-control" id="editRuc" name="editRuc" min="1" step="1" max=9999999999999 placeholder="Documento">
+                                <input type="text" class="form-control" id="editPasaporte" name="editPasaporte" placceholder="Documento">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editNombre" class="col-sm-3 control-label" style="text-align:left;">Nombre<span class="obligatorio">*</span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="editNombre" name="editNombre" placeholder="Nombre" required>
+                            </div>
+                        </div>                    
                         <div class="form-group" style="display: none;">
                             <label for="editRazon_social" class="col-sm-3 control-label">Razón Social</label>
                             <div class="col-sm-8">
