@@ -24,6 +24,14 @@ $info = array($data);
  
 // configura los valores recibidos en post de la app
 $producto->df_nombre_producto= $info[0]["df_nombre_producto"];
+$producto->df_codigo_prod= $info[0]["df_codigo_prod"];
+$producto->dp_codigo_iess_pro= $info[0]["dp_codigo_iess_pro"];
+$producto->dp_tipo_pro= $info[0]["dp_tipo_pro"];
+$producto->dp_categoria_pro= $info[0]["dp_categoria_pro"];
+$producto->dp_materia_prima_pro= $info[0]["dp_materia_prima_pro"];
+$producto->dp_producto_final_pro= $info[0]["dp_producto_final_pro"];
+$producto->dp_servicio_pro= $info[0]["dp_servicio_pro"];
+$producto->dp_impuesto_compra_pro= $info[0]["dp_impuesto_compra_pro"];
 $producto->df_id_producto= $info[0]["df_id_producto"];
 
 // modificar producto

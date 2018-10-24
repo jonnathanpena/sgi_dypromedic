@@ -10,6 +10,13 @@ class Producto {
     public $df_nombre_producto;
     public $df_codigo_prod;
     public $df_prod_precio_detfac;
+    public $dp_codigo_iess_pro;
+    public $dp_tipo_pro;
+    public $dp_categoria_pro;
+    public $dp_materia_prima_pro;
+    public $dp_producto_final_pro;
+    public $dp_servicio_pro;
+    public $dp_impuesto_compra_pro;
 
     public $codigo;
     public $df_id_precio;
@@ -34,9 +41,27 @@ class Producto {
     function read(){
     
         // select all query
-        $query = "SELECT `df_id_producto`, `df_nombre_producto`, `df_codigo_prod` FROM `df_producto` 
+        $query = "SELECT `df_id_producto`, `df_nombre_producto`, `df_codigo_prod`, `dp_codigo_iess_pro`, `dp_tipo_pro`, `dp_categoria_pro`, 
+                    `dp_materia_prima_pro`, `dp_producto_final_pro`, `dp_servicio_pro`, `dp_impuesto_compra_pro` 
+                    FROM `df_producto` 
                     WHERE `df_codigo_prod` like '%".$this->df_nombre_producto."%' OR `df_nombre_producto` like '%".$this->df_nombre_producto."%'
-                    ORDER BY df_id_producto DESC";
+                    ORDER BY df_nombre_producto ASC";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+    
+        // execute query
+        $stmt->execute();
+    
+        return $stmt;
+    }
+
+    function readCategoria(){
+    
+        // select all query
+        $query = "SELECT DISTINCT dp_categoria_pro
+                    FROM `df_producto` 
+                    ORDER BY dp_categoria_pro ASC";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -51,14 +76,16 @@ class Producto {
     
         // select all query
         $query = "SELECT prod.`df_id_producto`, prod.`df_nombre_producto`, prod.`df_codigo_prod`,
+        prod.`dp_codigo_iess_pro`, prod.`dp_tipo_pro`, prod.`dp_categoria_pro`, 
+        prod.`dp_materia_prima_pro`, prod.`dp_producto_final_pro`, prod.`dp_servicio_pro`, prod.`dp_impuesto_compra_pro`, 
         pp.`df_id_precio`, pp.`df_producto_id`, pp.`df_ppp`, pp.`df_pvt1`, 
-        pp.`df_pvt2`, pp.`df_pvp`, pp.`df_iva`, pp.`df_min_sugerido`, pp.`df_und_caja`, 
+        pp.`df_pvt2`, pp.`df_pvp`, pp.`df_iva`, pp.`df_min_sugerido`, pp.`df_unidad_prop`, pp.`df_und_caja`, 
         pp.`df_utilidad`, iva.`df_valor_impuesto`
         FROM `df_producto` as prod
         JOIN `df_producto_precio` as pp ON (prod.`df_id_producto` = pp.`df_producto_id`)
         JOIN `df_impuesto` as iva ON (pp.`df_iva` = iva.`df_id_impuesto`)
         WHERE prod.`df_codigo_prod` like '%".$this->df_codigo_prod."%' OR prod.`df_nombre_producto` like '%".$this->df_nombre_producto."%'
-        ORDER BY prod.df_id_producto DESC";
+        ORDER BY prod.df_nombre_producto ASC";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -73,7 +100,10 @@ class Producto {
     function readById(){
     
         // select all query
-        $query = "SELECT `df_id_producto`, `df_nombre_producto`, `df_codigo_prod` FROM `df_producto` 
+        $query = "SELECT `df_id_producto`, `df_nombre_producto`, `df_codigo_prod`, `dp_codigo_iess_pro`, 
+                    `dp_tipo_pro`, `dp_categoria_pro`, `dp_materia_prima_pro`, `dp_producto_final_pro`, 
+                    `dp_servicio_pro`, `dp_impuesto_compra_pro`
+                    FROM `df_producto` 
                     WHERE df_id_producto = ".$this->df_id_producto;
     
         // prepare query statement
@@ -90,6 +120,8 @@ class Producto {
     
         // select all query
         $query = "SELECT prod.`df_id_producto`, prod.`df_nombre_producto`, prod.`df_codigo_prod`,
+                    prod.`dp_codigo_iess_pro`, prod.`dp_tipo_pro`, prod.`dp_categoria_pro`, 
+                    prod.`dp_materia_prima_pro`, prod.`dp_producto_final_pro`, prod.`dp_servicio_pro`, prod.`dp_impuesto_compra_pro`, 
                     pp.`df_id_precio`, pp.`df_producto_id`, pp.`df_ppp`, pp.`df_pvt1`, 
                     pp.`df_pvt2`, pp.`df_pvp`, pp.`df_iva`, pp.`df_min_sugerido`, pp.`df_und_caja`, 
                     pp.`df_utilidad`, iva.`df_valor_impuesto`, inv.`df_cant_bodega`
@@ -112,7 +144,10 @@ class Producto {
     function readByName(){
     
         // select all query
-        $query = "SELECT `df_id_producto`, `df_nombre_producto`, `df_codigo_prod` FROM `df_producto` 
+        $query = "SELECT `df_id_producto`, `df_nombre_producto`, `df_codigo_prod`, `dp_codigo_iess_pro`, 
+                    `dp_tipo_pro`, `dp_categoria_pro`, `dp_materia_prima_pro`, `dp_producto_final_pro`, 
+                    `dp_servicio_pro`, `dp_impuesto_compra_pro`
+                    FROM `df_producto` 
                     WHERE df_nombre_producto like '%".$this->df_nombre_producto."%'";
     
         // prepare query statement
@@ -159,9 +194,18 @@ class Producto {
     function insert(){
     
         // query to insert record
-        $query = "INSERT INTO `df_producto`(`df_nombre_producto`, `df_codigo_prod`) VALUES (
+        $query = "INSERT INTO `df_producto`(`df_nombre_producto`, `df_codigo_prod`, `dp_codigo_iess_pro`, 
+                    `dp_tipo_pro`, `dp_categoria_pro`, `dp_materia_prima_pro`, `dp_producto_final_pro`, 
+                    `dp_servicio_pro`, `dp_impuesto_compra_pro`) VALUES (
                         '".$this->df_nombre_producto."',
-                        '".$this->df_codigo_prod."')";
+                        '".$this->df_codigo_prod."',
+                        '".$this->dp_codigo_iess_pro."',
+                        '".$this->dp_tipo_pro."',
+                        '".$this->dp_categoria_pro."',
+                        '".$this->dp_materia_prima_pro."',
+                        '".$this->dp_producto_final_pro."',
+                        ".$this->dp_servicio_pro.",
+                        ".$this->dp_impuesto_compra_pro.")";
         // prepara la sentencia del query
         $stmt = $this->conn->prepare($query);    
         
@@ -179,7 +223,15 @@ class Producto {
     
         // query 
         $query = "UPDATE `df_producto` SET                     
-                    `df_nombre_producto`= '".$this->df_nombre_producto."'
+                    `df_nombre_producto`= '".$this->df_nombre_producto."',
+                    `df_codigo_prod`= '".$this->df_codigo_prod."', 
+                    `dp_codigo_iess_pro`= '".$this->dp_codigo_iess_pro."', 
+                    `dp_tipo_pro`= '".$this->dp_tipo_pro."', 
+                    `dp_categoria_pro`= '".$this->dp_categoria_pro."', 
+                    `dp_materia_prima_pro`= '".$this->dp_materia_prima_pro."', 
+                    `dp_producto_final_pro` = '".$this->dp_producto_final_pro."', 
+                    `dp_servicio_pro`= ".$this->dp_servicio_pro.", 
+                    `dp_impuesto_compra_pro` = ".$this->dp_impuesto_compra_pro."
                     WHERE `df_id_producto`= ".$this->df_id_producto;                          
 
         // prepara la sentencia del query

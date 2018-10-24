@@ -30,6 +30,7 @@ $productoPrecio->df_pvt2= $info[0]["df_pvt2"];
 $productoPrecio->df_pvp= $info[0]["df_pvp"];
 $productoPrecio->df_iva= $info[0]["df_iva"];
 $productoPrecio->df_min_sugerido= $info[0]["df_min_sugerido"];
+$productoPrecio->df_unidad_prop= $info[0]["df_unidad_prop"];
 $productoPrecio->df_und_caja= $info[0]["df_und_caja"];
 $productoPrecio->df_utilidad= $info[0]["df_utilidad"];
 $productoPrecio->df_id_precio= $info[0]["df_id_precio"];

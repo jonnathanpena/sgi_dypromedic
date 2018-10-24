@@ -52,6 +52,7 @@ if($num>0){
             "df_pvp"=>$df_pvp,
             "df_iva"=>$df_iva,
             "df_min_sugerido"=>$df_min_sugerido,
+            "df_unidad_prop"=>$df_unidad_prop,
             "df_und_caja"=>$df_und_caja,
             "df_utilidad"=>$df_utilidad
         );
