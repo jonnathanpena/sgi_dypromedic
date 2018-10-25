@@ -9,10 +9,11 @@
             <div class="modal-body">
                 <form class="form-horizontal" id="modificar_usuario" name="modificar_usuario">
                     <input type="hidden" id="id">
+                    <div class="form-group producto">
                     <div class="form-group">
-                        <label for="editTipo_documento" class="col-sm-3 control-label">Tipo Documento<span class="obligatorio">*</span></label>
+                        <label for="editTipo_documento" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Tipo Documento<span class="obligatorio">*</span></label>
                         <div class="col-sm-8">
-                            <select name="editTipo_documento" id="editTipo_documento" class="form-control" required>
+                            <select style="width: 95%; margin-left: -8px;" name="editTipo_documento" id="editTipo_documento" class="form-control" required>
                                 <option value="null">Seleccione...</option>
                                 <option value="Cedula">Cédula</option>
                                 <option value="Pasaporte">Pasaporte</option>
@@ -20,38 +21,39 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editDocumento" class="col-sm-3 control-label">Documento<span class="obligatorio">*</span></label>
+                        <label for="editDocumento" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Documento<span class="obligatorio">*</span></label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" id="editDocumento" name="editDocumento" min="1" step="1" max="9999999999" placeholder="Documento">
-                            <input type="text" class="form-control" id="editPasaporte" name="editPasaporte" placeholder="Documento">
+                            <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="editDocumento" name="editDocumento" min="1" step="1" max="9999999999" placeholder="Documento">
+                            <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="editPasaporte" name="editPasaporte" placeholder="Documento">
                         </div>
                     </div>
+                    </div>
                     <div class="form-group">
-                        <label for="editNombre" class="col-sm-3 control-label">Nombre<span class="obligatorio">*</span></label>
+                        <label for="editNombre" class="col-sm-3 control-label" style="text-align:left;">Nombre<span class="obligatorio">*</span></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="editNombre" name="editNombre" placeholder="Nombre" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editApellido" class="col-sm-3 control-label">Apellido<span class="obligatorio">*</span></label>
+                        <label for="editApellido" class="col-sm-3 control-label" style="text-align:left;">Apellido<span class="obligatorio">*</span></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="editApellido" name="editApellido" placeholder="Apellido" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editUsuario" class="col-sm-3 control-label">Usuario<span class="obligatorio">*</span></label>
+                        <label for="editUsuario" class="col-sm-3 control-label" style="text-align:left;">Usuario<span class="obligatorio">*</span></label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="editUsuario" name="editUsuario" placeholder="Usuario" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editMail" class="col-sm-3 control-label">Email</label>
+                        <label for="editMail" class="col-sm-3 control-label" style="text-align:left;">Email</label>
                         <div class="col-sm-8">
                             <input type="editMail" class="form-control" id="editMail" name="editMail" placeholder="Email" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editPerfil" class="col-sm-3 control-label">Perfil<span class="obligatorio">*</span></label>
+                        <label for="editPerfil" class="col-sm-3 control-label" style="text-align:left;">Perfil<span class="obligatorio">*</span></label>
                         <div class="col-sm-8">
                             <select name="editPerfil" id="editPerfil" class="form-control">
                                 <option value="null">Seleccione...</option>
@@ -62,7 +64,7 @@
                         </div>
 					</div>
                     <div class="form-group">
-                        <label for="editPerfil" class="col-sm-3 control-label">Activo</label>
+                        <label for="editPerfil" class="col-sm-3 control-label" style="text-align:left;">Activo</label>
                         <div class="col-sm-8">
                             <div class="form-check">
                                 <input type="checkbox" data-toggle="toggle" id="toggle-activo" data-on="SI" data-off="NO" data-onstyle="info" data-size="small">
@@ -81,12 +83,4 @@
         </div>
     </div>
 </div>
-
-
-
-						
-                        
-                
-
-
-
+<link rel="stylesheet" href="./css/cliente.css">
