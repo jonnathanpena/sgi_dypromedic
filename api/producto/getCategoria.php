@@ -5,22 +5,22 @@ header("Content-Type: application/json; charset=UTF-8");
  
 // incluye la configuración de la base de datos y la conexión
 include_once '../config/database.php';
-include_once '../objects/productoPrecio.php';
+include_once '../objects/producto.php';
  
 // inicia la conexión a la base de datos
 $database = new Database();
 $db = $database->getConnection();
  
 // inicia el objeto
-$productoPrecio = new ProductoPrecio($db);
+$producto = new Producto($db);
  
 // query de lectura
-$stmt = $productoPrecio->read();
+$stmt = $producto->readCategoria();
 $num = $stmt->rowCount();
 
-//productoPrecio array
-$productoPrecio_arr=array();
-$productoPrecio_arr["data"]=array();
+//producto array
+$producto_arr=array();
+$producto_arr["data"]=array();
  
 // check if more than 0 record found
 if($num>0){ 
@@ -34,27 +34,17 @@ if($num>0){
         extract($row);
         
         //Los nombres acá son iguales a los de la clase iguales a las columnas de la BD
-        $productoPrecio_item=array(
-            "df_id_precio"=>$df_id_precio, 
-            "df_producto_id"=>$df_producto_id,
-            "df_ppp"=>$df_ppp,
-            "df_pvt1"=>$df_pvt1,
-            "df_pvt2"=>$df_pvt2,
-            "df_pvp"=>$df_pvp,
-            "df_iva"=>$df_iva,
-            "df_min_sugerido"=>$df_min_sugerido,
-            "df_unidad_prop"=>$df_unidad_prop,
-            "df_und_caja"=>$df_und_caja,
-            "df_utilidad"=>$df_utilidad
+        $producto_item=array(
+            "dp_categoria_pro"=>$dp_categoria_pro
         );
  
-        array_push($productoPrecio_arr["data"], $productoPrecio_item);
+        array_push($producto_arr["data"], $producto_item);
     }
  
-    echo json_encode($productoPrecio_arr);
+    echo json_encode($producto_arr);
 }
  
 else{
-    echo json_encode($productoPrecio_arr);
+    echo json_encode($producto_arr);
 }
 ?>

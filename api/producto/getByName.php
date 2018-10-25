@@ -46,7 +46,14 @@ if($num>0){
         $producto_item=array(
             "df_id_producto"=>$df_id_producto, 
             "df_nombre_producto"=>$df_nombre_producto,
-            "df_codigo_prod"=>$df_codigo_prod
+            "df_codigo_prod"=>$df_codigo_prod,
+            "dp_codigo_iess_pro"=>$dp_codigo_iess_pro, 
+            "dp_tipo_pro"=>$dp_tipo_pro, 
+            "dp_categoria_pro"=>$dp_categoria_pro, 
+            "dp_materia_prima_pro"=>$dp_materia_prima_pro, 
+            "dp_producto_final_pro"=>$dp_producto_final_pro, 
+            "dp_servicio_pro"=>$dp_servicio_pro, 
+            "dp_impuesto_compra_pro"=>$dp_impuesto_compra_pro
         );
  
         array_push($producto_arr["data"], $producto_item);
