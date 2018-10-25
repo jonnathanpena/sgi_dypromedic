@@ -45,7 +45,8 @@ class Proveedor {
                     `df_nombre_contacto`, `df_tlf_contacto`, `df_documento_prov`, `df_correo_prov`, `df_pag_web` 
                     FROM `df_proveedor` WHERE `df_nombre_empresa` like '%".$this->df_nombre_empresa."%' 
                     OR `df_documento_prov` like '%".$this->df_nombre_empresa."%' 
-                    OR `df_codigo_proveedor` like '%".$this->df_nombre_empresa."%'";
+                    OR `df_codigo_proveedor` like '%".$this->df_nombre_empresa."%'
+                    ORDER BY df_nombre_empresa ASC";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);

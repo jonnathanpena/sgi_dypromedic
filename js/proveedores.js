@@ -71,10 +71,10 @@ function cargar() {
     $('#resultados .table-responsive table tbody').html('Cargando...');
     $.post(url + 'proveedor/getAll.php', JSON.stringify({ df_nombre_empresa: q }), function(data, status, hrx) {
         if (data.data.length > 0) {
-            data.data.sort(function (a, b){
+            /* data.data.sort(function (a, b){
                 return (b.df_id_proveedor - a.df_id_proveedor)
-              });
-            records = data.data;
+              }); */
+            records = data.data; 
             totalRecords = records.length;
             totalPages = Math.ceil(totalRecords / recPerPage);
             apply_pagination();
@@ -87,11 +87,14 @@ function cargar() {
 $('#guardar_proveedor').submit(function(event) {
     $('#guardar_proveedor').attr('disabled', true);
     event.preventDefault();
+    on();
     var data = {
         df_codigo_proveedor: "",
         df_nombre_empresa: $('#nombre').val(),
         df_tlf_empresa: $('#telefono').val(),
         df_direccion_empresa: $('#direccion').val(),
+        df_correo_prov: $('#Correo').val(),
+        df_pag_web: $('#Pagweb').val(),
         df_nombre_contacto: $('#nombre_contacto').val(),
         df_tlf_contacto: $('#telefono_contacto').val(),
         df_documento_prov: $('#ruc').val()
@@ -116,9 +119,11 @@ function insertar(proveedor) {
         console.log('proveedor', proveedor);
         $.post(urlCompleta, JSON.stringify(proveedor), function(datos, status, xhr) {
             if (datos == false) {
+                off();
                 alertar('danger', '¡Error!', 'Por favor intente de nuevo, si persiste, contacte al administrador del sistema');
                 $('#guardar_proveedor').attr('disabled', false);
             } else {
+                off();
                 alertar('success', '¡Éxito!', '¡Proveedor insertado exitosamente!');
             }
             $('#nombre').val("");
@@ -128,6 +133,8 @@ function insertar(proveedor) {
             $('#telefono_contacto').val('');
             $('#ruc').val('');
             $('#nuevoProveedor').modal('hide');
+            $('#Correo').val('');
+            $('#Pagweb').val('');
             load();
         });
     });
@@ -147,6 +154,8 @@ function detallar(codigo, documento) {
         $('#editTelefono_contacto').val(data.data[0].df_tlf_contacto);
         $('#editRuc').val(data.data[0].df_documento_prov);
         $('#codigo').val(data.data[0].df_codigo_proveedor);
+        $('#editCorreo').val(data.data[0].df_correo_prov);
+        $('#editPagweb').val(data.data[0].df_pag_web);
         $('#id').val(data.data[0].df_id_proveedor);
     });
 }
@@ -154,11 +163,14 @@ function detallar(codigo, documento) {
 $('#modificar_proveedor').submit(function(event) {
     $('#modificar_proveedor').attr('disabled', true);
     event.preventDefault();
+    on();
     var data = {
         df_codigo_proveedor: $('#codigo').val(),
         df_nombre_empresa: $('#editNombre').val(),
         df_tlf_empresa: $('#editTelefono').val(),
         df_direccion_empresa: $('#editDireccion').val(),
+        df_correo_prov: $('#editCorreo').val(),
+        df_pag_web: $('#editPagweb').val(),
         df_nombre_contacto: $('#editNombre_contacto').val(),
         df_tlf_contacto: $('#editTelefono_contacto').val(),
         df_documento_prov: $('#editRuc').val(),
@@ -171,8 +183,10 @@ function modificar(proveedor) {
     var urlCompleta = url + 'proveedor/update.php';
     $.post(urlCompleta, JSON.stringify(proveedor), function(data, status, xhr) {
         if (data == true) {
-            alertar('success', '¡Éxito!', '¡Proveedor insertado exitosamente!');
+            off();
+            alertar('success', '¡Éxito!', '¡Proveedor modificado exitosamente!');
         } else {
+            off();
             alertar('danger', '¡Error!', 'Por favor intente de nuevo, si persiste, contacte al administrador del sistema');
             $('#modificar_proveedor').attr('disabled', false);
         }
@@ -213,4 +227,59 @@ function consultarRUC() {
             }
         });
     }, 1000);
+}
+
+function exportar() {
+    on();
+    var urlCompleta = url + 'proveedor/getAll.php';
+    var q = $('#q').val();
+    $.post(urlCompleta, JSON.stringify({ df_nombre_empresa: q }), function(response) {
+        console.log('clientes', response.data);
+        var exportar = [{
+            df_codigo_proveedor: "Código", 
+            df_documento_prov: "RUC",
+            df_nombre_empresa: "Proveedor", 
+            df_tlf_empresa: "Teléfono Empresa", 
+            df_direccion_empresa: "Dirección", 
+            df_correo_prov: "Email", 
+            df_pag_web: "Pág Web",
+            df_nombre_contacto: "Nombre Contacto", 
+            df_tlf_contacto: "Teléfono Contacto"
+        }];
+        if (response.data.length > 0) {
+            $.each(response.data, function(index, row) {
+                exportar.push({
+                    df_codigo_proveedor: row.df_codigo_proveedor,
+                    df_documento_prov: row.df_documento_prov,
+                    df_nombre_empresa: row.df_nombre_empresa,
+                    df_tlf_empresa: row.df_tlf_empresa,
+                    df_direccion_empresa: row.df_direccion_empresa,
+                    df_correo_prov: row.df_correo_prov,
+                    df_pag_web: row.df_pag_web,
+                    df_nombre_contacto: row.df_nombre_contacto,
+                    df_tlf_contacto: row.df_tlf_contacto,
+                })
+            });
+            var form = $(document.createElement('form'));
+            $(form).attr("action", "excel/exportar.php");
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+            $(form).attr("target", "_blank");
+            var input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "data")
+                .val(JSON.stringify(exportar));
+            $(form).append($(input));
+            input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "documento")
+                .val('proveedores');
+            $(form).append($(input));
+            form.appendTo(document.body);
+            $(form).submit();
+        } else {
+            alertar('warning', '¡Alerta!', 'No existe información para exportar');
+        }
+        off();
+    });
 }
