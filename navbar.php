@@ -59,9 +59,9 @@
 					Bodega 
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="productos.php">Productos</a></li>
-					<li><a href="kardex.php">Kardex</a></li>
 					<li><a href="inventario.php">Inventario</a></li>
+					<li><a href="kardex.php">Kardex</a></li>
+					<li><a href="productos.php">Productos</a></li>
 				</ul>
 			</li>
 
