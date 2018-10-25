@@ -18,14 +18,14 @@
                                     <option value="Servicio">Servicio</option>
                                 </select>
                             </div>
-                        </div>
-                    </div>
+                        </div>                    
                         <div class="form-group">
-                            <label for="editcategoria" class="col-sm-3 control-label" style="text-align: left;">Categoría<span class="obligatorio">*</span></label>
+                            <label for="editcategoria" class="col-sm-3 control-label" style="text-align: left; margin-left:15px;">Categoría<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="editcategoria" name="editcategoria" placeholder="Categoría" autocomplete="off" autofocus required> 
+                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="editcategoria" name="editcategoria" placeholder="Categoría" autocomplete="off" autofocus required> 
                             </div>
                         </div>
+                    </div>
                         <div class="form-group">
                             <label for="codigo" class="col-sm-3 control-label" style="text-align: left;">Código</label>
                             <div class="col-sm-8">
