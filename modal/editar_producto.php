@@ -27,7 +27,7 @@
                         </div>
                     </div>
                         <div class="form-group">
-                            <label for="codigo" class="col-sm-3 control-label" style="text-align: left;">Código</label>
+                            <label for="codigo" class="col-sm-3 control-label" style="text-align: left;">Código<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="codigo" name="codigo" required>
                             </div>
@@ -64,7 +64,7 @@
                         <div class="form-group" style="display:none;">
                             <label for="editPvp" class="col-sm-3 control-label" style="text-align: left;">PVP<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" id="editPvp" name="editPvp" placeholder="PVP">
+                                <input type="number" class="form-control" id="editPvp" name="editPvp" min="0.00" step="0.01" placeholder="PVP">
                             </div>
                         </div>
                         <div class="form-group">
