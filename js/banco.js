@@ -105,6 +105,7 @@ function getUsuario(row) {
 function nuevoEgreso() {
     document.getElementById("valor_egreso").max = saldo;
     $('#nuevoEgresoBanco').modal('show');
+    $('#perfilEg').val(perfil);
     $('#saldo').val(saldo);
     $('#usuario_egreso').html('');
     $('#usuario_egreso').append('<option value="' + usuario.df_id_usuario + '">' + usuario.df_usuario_usuario + '</option>');
@@ -123,6 +124,7 @@ function nuevoEgreso() {
 function nuevoIngreso() {
     $('#nuevoIngresoBanco').modal('show');
     $('#saldo_ingreso').val(saldo);
+    $('#perfilIng').val(perfil);
     $('#usuario').html('');
     $('#usuario').append('<option value="' + usuario.df_id_usuario + '">' + usuario.df_usuario_usuario + '</option>');
     var urlCompleta = url + 'catMovimiento/getAll.php';
@@ -172,7 +174,8 @@ $('#guardar_egreso').submit(function(event) {
             df_monto_banco: $('#valor_egreso').val(),
             df_saldo_banco: $('#saldo').val(),
             df_num_documento_banco: $('#documento_egreso').val(),
-            df_detalle_mov_banco: $('#movimiento').val()
+            df_detalle_mov_banco: $('#movimiento').val(),
+            dp_perfil_banco_id: $('#perfilEg').val()
         };
         var egresoLibro = {
             df_fuente_ld: 'Banco',
@@ -181,7 +184,7 @@ $('#guardar_egreso').submit(function(event) {
             df_descipcion_ld: $('#movimiento').val(),
             df_ingreso_ld: 0,
             df_egreso_ld: $('#valor_egreso').val(),
-            df_usuario_id_ld: $('#usuario_egreso').val(),
+            df_usuario_id_ld: $('#usuario_egreso').val()
         };
         insertEgresoLibro(egresoLibro);
         insertEgreso(egreso);
@@ -211,8 +214,9 @@ function insertEgreso(egreso) {
         $('#movimiento').val('');
         $('#documento_egreso').val('');
         $('#valor_egreso').val('');
+        $('#fecha_egreso').val('');
         $('#nuevoEgreso').modal('hide');
-        load();
+        consultaMovimientoBanco(perfil);
     });
     selectDetalles();
 }
@@ -240,7 +244,8 @@ $('#guardar_ingreso').submit(function(event) {
             df_monto_banco: $('#valor').val(),
             df_saldo_banco: $('#saldo_ingreso').val(),
             df_num_documento_banco: $('#documento').val(),
-            df_detalle_mov_banco: $('#detalle').val()
+            df_detalle_mov_banco: $('#detalle').val(),
+            dp_perfil_banco_id: $('#perfilIng').val()
         };
         var ingresoLibro = {
             df_fuente_ld: 'Banco',
@@ -261,7 +266,7 @@ function insertIngresoLibro(ingresoLibro) {
     console.log('insert ingreso de CC en libro diario');
     $.post(urlCompleta, JSON.stringify(ingresoLibro), function(response) {
         if (response != false) {
-            alertar('success', '¡Éxito!', 'Ingreso de Caja Chica en Libro Diario registrado exitosamente');
+            alertar('success', '¡Éxito!', 'Ingreso de Banco en Libro Diario registrado exitosamente');
         } else {
             alertar('danger', '¡Error!', 'Error al insertar, verifique que todo está bien e intente de nuevo');
         }
@@ -279,8 +284,9 @@ function insertIngreso(ingreso) {
         $('#detalle').val('');
         $('#documento').val('');
         $('#valor').val('');
+        $('#fecha').val('');
         $('#nuevoIngreso').modal('hide');
-        load();
+        consultaMovimientoBanco(perfil);
     });
     selectDetallesIngreso();
 }
@@ -317,9 +323,13 @@ function consultarPerfilesBanco() {
     var urlCompleta = url + 'perfil_banco/getAll.php';
     var q = '';
     $('#perfil').empty();
+    $('#perfilIng').empty();
+    $('#perfilEg').empty();
     $.post(urlCompleta, JSON.stringify({ dp_descripcion_per_ban: q, dp_banco_per_ban: q }), function(data, status, xhr) {
         $.each(data.data, function(index, row) {
             $('#perfil').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
+            $('#perfilIng').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
+            $('#perfilEg').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
         });
         perfil = $('#perfil').val() * 1;
         console.log('Perfil Banco select ',perfil);
@@ -328,7 +338,7 @@ function consultarPerfilesBanco() {
 }
 
 $('#perfil').change(function() {
-    $('#resultados .table-responsive table tbody').empty();
+    $('#resultados .table-responsive table tbody').empty(); 
     perfil = $('#perfil').val() * 1;
     console.log('Perfil Banco select ',perfil);
     consultaMovimientoBanco(perfil);
@@ -336,6 +346,7 @@ $('#perfil').change(function() {
 
 function consultaMovimientoBanco(perfil) {
     var urlCompleta = url + 'banco/getAll.php';
+    bancos = [];
     $.post(urlCompleta, JSON.stringify({ dp_perfil_banco_id: perfil }), function(response, status, xhr) {    
         if (response.data.length > 0) {
             $('#saldo_banco').val('$' + (response.data[0].df_saldo_banco * 1).toFixed(2));
@@ -357,6 +368,8 @@ function consultaMovimientoBanco(perfil) {
                 apply_pagination();
             }, 1000);
         } else {
+            $('#saldo_banco').val('');
+            saldo = 0;
             $('#resultados .table-responsive table tbody').html('No se encontró ningún resultado');
         }
     });
