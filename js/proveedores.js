@@ -146,6 +146,13 @@ function detallar(codigo, documento) {
         df_codigo_proveedor: codigo,
         df_documento_prov: documento
     }), function(data, status, xhr) {
+        var web = '';
+        var webBD = data.data[0].df_pag_web;
+        if (webBD != '' || webBD != null || webBD != 'null') {
+            web = webBD;
+        } else {
+            web = 'http://';
+        }
         $('#editarProveedor').modal('show');
         $('#editNombre').val(data.data[0].df_nombre_empresa);
         $('#editTelefono').val(data.data[0].df_tlf_empresa);
@@ -155,7 +162,7 @@ function detallar(codigo, documento) {
         $('#editRuc').val(data.data[0].df_documento_prov);
         $('#codigo').val(data.data[0].df_codigo_proveedor);
         $('#editCorreo').val(data.data[0].df_correo_prov);
-        $('#editPagweb').val(data.data[0].df_pag_web);
+        $('#editPagweb').val(web);
         $('#id').val(data.data[0].df_id_proveedor);
     });
 }
