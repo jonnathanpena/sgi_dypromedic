@@ -30,6 +30,7 @@ $banco->df_monto_banco= $info[0]["df_monto_banco"];
 $banco->df_saldo_banco= $info[0]["df_saldo_banco"];
 $banco->df_num_documento_banco= $info[0]["df_num_documento_banco"];
 $banco->df_detalle_mov_banco= $info[0]["df_detalle_mov_banco"];
+$banco->dp_perfil_banco_id= $info[0]["dp_perfil_banco_id"];
 
 // insert banco
 $response = $banco->insert();

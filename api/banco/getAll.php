@@ -2,6 +2,9 @@
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
  
 // incluye la configuración de la base de datos y la conexión
 include_once '../config/database.php';
@@ -13,7 +16,15 @@ $db = $database->getConnection();
  
 // inicia el objeto
 $banco = new Banco($db);
+
+// get posted data
+$data = json_decode(file_get_contents('php://input'), true);
+
+$info = array($data);
  
+// configura los valores recibidos en post de la app
+$banco->dp_perfil_banco_id= $info[0]["dp_perfil_banco_id"];
+
 // query de lectura
 $stmt = $banco->read();
 $num = $stmt->rowCount();
@@ -43,7 +54,13 @@ if($num>0){
             "df_saldo_banco"=>$df_saldo_banco,
             "df_num_documento_banco"=>$df_num_documento_banco,
             "df_detalle_mov_banco"=>$df_detalle_mov_banco,
-            "df_modificadoBy_banco"=>$df_modificadoBy_banco
+            "df_modificadoBy_banco"=>$df_modificadoBy_banco,
+            "dp_perfil_banco_id"=>$dp_perfil_banco_id,
+            "dp_descripcion_per_ban"=>$dp_descripcion_per_ban, 
+            "dp_banco_per_ban"=>$dp_banco_per_ban, 
+            "dp_cuenta_per_ban"=>$dp_cuenta_per_ban, 
+            "dp_tipo_cuenta_per_ban"=>$dp_tipo_cuenta_per_ban, 
+            "dp_tipo_per_ban"=>$dp_tipo_per_ban
         );
  
         array_push($banco_arr["data"], $banco_item);

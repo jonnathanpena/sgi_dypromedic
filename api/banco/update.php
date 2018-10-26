@@ -31,6 +31,7 @@ $banco->df_saldo_banco= $info[0]["df_saldo_banco"];
 $banco->df_num_documento_banco= $info[0]["df_num_documento_banco"];
 $banco->df_detalle_mov_banco= $info[0]["df_detalle_mov_banco"];
 $banco->df_modificadoBy_banco= $info[0]["df_modificadoBy_banco"];
+$banco->dp_perfil_banco_id= $info[0]["dp_perfil_banco_id"];
 $banco->df_id_banco= $info[0]["df_id_banco"];
 
 // modificar banco
