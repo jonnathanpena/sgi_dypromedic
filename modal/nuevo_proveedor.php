@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label for="telefono" class="col-sm-3 control-label" style="text-align:left;">Teléfono</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono">
+                                <input type="number" class="form-control" id="telefono" name="telefono" placeholder="Teléfono">
                             </div>
                         </div>
                         <div class="form-group">
@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label for="Pagweb" class="col-sm-3 control-label" style="text-align:left;">Pág Web</label>
                             <div class="col-sm-8">
-                                <input type="url" class="form-control" id="Pagweb" name="Pagweb" placeholder="http://www.pagweb.com">
+                                <input type="url" class="form-control"  value="http://" id="Pagweb" name="Pagweb" placeholder="http://www.pagweb.com">
                             </div>
                         </div>
                         <h4 style="text-align:left; ">Persona de Contacto</h4>                        
