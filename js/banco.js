@@ -11,6 +11,7 @@ var bancos = [];
 var saldo = 0;
 var detalles = [];
 var libro = 0;
+var perfil = 0;
 
 $(document).ready(function() {
     usuario = JSON.parse(localStorage.getItem('distrifarma_test_user'));
@@ -36,6 +37,7 @@ $(document).ready(function() {
 });
 
 function load() {
+    consultarPerfilesBanco();
     $('#guardar_egreso').attr('disabled', false);
     $('#guardar_ingreso').attr('disabled', false);
     bancos = [];
@@ -48,32 +50,7 @@ function load() {
             $('#valor_libro').val(response.data[0].df_saldo * 1);
         }
     });
-    $('#resultados .table-responsive table tbody').html('Cargando...');
-    var urlCompleta = url + 'banco/getAll.php';
-    $.get(urlCompleta, function(response) {
-        if (response.data.length > 0) {
-            $('#saldo_banco').val('$' + (response.data[0].df_saldo_banco * 1).toFixed(2));
-            saldo = response.data[0].df_saldo_banco * 1;
-            libro = ($('#valor_libro').val() * 1) + saldo;
-            $('#valor_libro').val(libro);
-            console.log('valor inicial', libro);
-            $.each(response.data, function(index, row) {
-                getUsuario(row);
-            })
-            clearTimeout(timer);
-            timer = setTimeout(function() {
-                bancos.sort(function(a, b) {
-                    return (b.df_id_banco - a.df_id_banco)
-                });
-                records = bancos;
-                totalRecords = records.length;
-                totalPages = Math.ceil(totalRecords / recPerPage);
-                apply_pagination();
-            }, 1000);
-        } else {
-            $('#resultados .table-responsive table tbody').html('No se encontró ningún resultado');
-        }
-    });
+    $('#resultados .table-responsive table tbody').html('Cargando...');    
 }
 
 function apply_pagination() {
@@ -335,3 +312,52 @@ var opcionesing = {
 
 $('#detalle').easyAutocomplete(opcionesing);
 $('div .easy-autocomplete').removeAttr("style");
+
+function consultarPerfilesBanco() {
+    var urlCompleta = url + 'perfil_banco/getAll.php';
+    var q = '';
+    $('#perfil').empty();
+    $.post(urlCompleta, JSON.stringify({ dp_descripcion_per_ban: q, dp_banco_per_ban: q }), function(data, status, xhr) {
+        $.each(data.data, function(index, row) {
+            $('#perfil').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
+        });
+        perfil = $('#perfil').val() * 1;
+        console.log('Perfil Banco select ',perfil);
+        consultaMovimientoBanco(perfil);
+    });
+}
+
+$('#perfil').change(function() {
+    $('#resultados .table-responsive table tbody').empty();
+    perfil = $('#perfil').val() * 1;
+    console.log('Perfil Banco select ',perfil);
+    consultaMovimientoBanco(perfil);
+});
+
+function consultaMovimientoBanco(perfil) {
+    var urlCompleta = url + 'banco/getAll.php';
+    $.post(urlCompleta, JSON.stringify({ dp_perfil_banco_id: perfil }), function(response, status, xhr) {    
+        if (response.data.length > 0) {
+            $('#saldo_banco').val('$' + (response.data[0].df_saldo_banco * 1).toFixed(2));
+            saldo = response.data[0].df_saldo_banco * 1;
+            libro = ($('#valor_libro').val() * 1) + saldo;
+            $('#valor_libro').val(libro);
+            console.log('valor inicial', libro);
+            $.each(response.data, function(index, row) {
+                getUsuario(row);
+            })
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                bancos.sort(function(a, b) {
+                    return (b.df_id_banco - a.df_id_banco)
+                });
+                records = bancos;
+                totalRecords = records.length;
+                totalPages = Math.ceil(totalRecords / recPerPage);
+                apply_pagination();
+            }, 1000);
+        } else {
+            $('#resultados .table-responsive table tbody').html('No se encontró ningún resultado');
+        }
+    });
+}

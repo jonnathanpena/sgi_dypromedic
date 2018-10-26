@@ -52,7 +52,8 @@ if($num>0){
             "df_saldo_banco"=>$df_saldo_banco,
             "df_num_documento_banco"=>$df_num_documento_banco,
             "df_detalle_mov_banco"=>$df_detalle_mov_banco,
-            "df_modificadoBy_banco"=>$df_modificadoBy_banco
+            "df_modificadoBy_banco"=>$df_modificadoBy_banco,
+            "dp_perfil_banco_id"=>$dp_perfil_banco_id
         );
  
         array_push($banco_arr["data"], $banco_item);
