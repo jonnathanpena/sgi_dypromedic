@@ -14,39 +14,47 @@ $fecha = date("d/m/Y");
             <div class="modal-body">
                 <form class="form-horizontal" id="guardar_ingreso" name="guardar_ingreso">
                     <div id="resultados_ajax"></div>
+                    <div class="form-group producto">
                         <div class="form-group">
-                            <label for="usuario" class="col-sm-3 control-label">Usuario</label>
+                            <label for="usuario" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Usuario</label>
                             <div class="col-sm-8">
-                                <select name="usuario" id="usuario" class="form-control" disabled>
+                                <select  style="width: 95%; margin-left: -8px;" name="usuario" id="usuario" class="form-control" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="fecha" class="col-sm-3 control-label">Fecha<span class="obligatorio">*</span></label>
+                            <label for="fecha" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Fecha<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha; ?>" require>
+                                <input  style="width: 95%; margin-left: -8px;" type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $fecha; ?>" require>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <label for="perfilIng" class="col-sm-3 control-label" style="text-align:left;">Banco<span class="obligatorio">*</span></label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="perfilIng" name="perfilIng" disabled></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="detalle" class="col-sm-3 control-label">Detalle<span class="obligatorio">*</span></label>
+                            <label for="detalle" class="col-sm-3 control-label" style="text-align:left;">Detalle<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="detalle" name="detalle"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="documento" class="col-sm-3 control-label">Número documento<span class="obligatorio">*</span></label>
+                            <label for="documento" class="col-sm-3 control-label" style="text-align:left;">Número documento<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" id="documento" name="documento" placeholder="Número documento" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="valor" class="col-sm-3 control-label">Valor<span class="obligatorio">*</span></label>
+                            <label for="valor" class="col-sm-3 control-label" style="text-align:left;">Valor<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="valor" name="valor" placeholder="Valor" min="0.01" step="0.01" onkeyup="calcularIngreso()" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="saldo_ingreso" class="col-sm-3 control-label">Saldo</label>
+                            <label for="saldo_ingreso" class="col-sm-3 control-label" style="text-align:left;">Saldo</label>
                             <div class="col-sm-8">
                                 <input type="number" class="form-control" id="saldo_ingreso" name="saldo_ingreso" min="0.01" step="0.01" disabled>
                             </div>
@@ -60,6 +68,4 @@ $fecha = date("d/m/Y");
 </div>
 </div>
 </div>
-
-
-
+<link rel="stylesheet" href="./css/cliente.css">

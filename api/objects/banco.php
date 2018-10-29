@@ -15,6 +15,7 @@ class Banco {
     public $df_num_documento_banco;
     public $df_detalle_mov_banco;
     public $df_modificadoBy_banco;
+    public $dp_perfil_banco_id;
     
     //constructor con base de datos como conexión
     public function __construct($db){
@@ -25,10 +26,14 @@ class Banco {
     function read(){
     
         // select all query
-        $query = "SELECT `df_id_banco`, `df_fecha_banco`, `df_usuario_id_banco`, `df_tipo_movimiento`, `df_monto_banco` ,
-                    `df_saldo_banco`, `df_num_documento_banco`, `df_detalle_mov_banco`, `df_modificadoBy_banco` 
-                    FROM `df_banco`
-                    order by df_id_banco desc";
+        $query = "SELECT `df_id_banco`, `df_fecha_banco`, `df_usuario_id_banco`, `df_tipo_movimiento`, 
+                    `df_monto_banco`, `df_saldo_banco`, `df_num_documento_banco`, `df_detalle_mov_banco`, 
+                    `df_modificadoBy_banco`, `dp_perfil_banco_id`,  `dp_descripcion_per_ban`, 
+                    `dp_banco_per_ban`, `dp_cuenta_per_ban`, `dp_tipo_cuenta_per_ban`, `dp_tipo_per_ban`
+                FROM `df_banco` as ban
+                INNER JOIN `dp_perfil_banco` as perban ON (ban.`dp_perfil_banco_id` = perban.dp_id_perfil_ban)
+                WHERE ban.`dp_perfil_banco_id` = ".$this->dp_perfil_banco_id."
+                order by df_id_banco desc";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -45,7 +50,7 @@ class Banco {
     
         // select all query
         $query = "SELECT `df_id_banco`, `df_fecha_banco`, `df_usuario_id_banco`, `df_tipo_movimiento`, `df_monto_banco`,
-                    `df_saldo_banco`, `df_num_documento_banco`, `df_detalle_mov_banco`, `df_modificadoBy_banco` 
+                    `df_saldo_banco`, `df_num_documento_banco`, `df_detalle_mov_banco`, `df_modificadoBy_banco`, `dp_perfil_banco_id`
                     FROM `df_banco`
                     WHERE df_id_banco = ".$this->df_id_banco;
     
@@ -97,7 +102,7 @@ class Banco {
     
         // query to insert record
         $query = "INSERT INTO `df_banco`(`df_fecha_banco`, `df_usuario_id_banco`, `df_tipo_movimiento`, `df_monto_banco`,
-                    `df_saldo_banco`, `df_num_documento_banco`, `df_detalle_mov_banco`, `df_modificadoBy_banco`) 
+                    `df_saldo_banco`, `df_num_documento_banco`, `df_detalle_mov_banco`, `df_modificadoBy_banco`, `dp_perfil_banco_id`) 
                     VALUES (
                             '".$this->df_fecha_banco."',
                             ".$this->df_usuario_id_banco.",
@@ -106,7 +111,8 @@ class Banco {
                             ".$this->df_saldo_banco.",
                             '".$this->df_num_documento_banco."',
                             '".$this->df_detalle_mov_banco."',
-                            0)";
+                            0,
+                            ".$this->dp_perfil_banco_id.")";
 
         // prepara la sentencia del query
         $stmt = $this->conn->prepare($query);   
@@ -133,6 +139,7 @@ class Banco {
                 `df_num_documento_banco`= '".$this->df_num_documento_banco."',
                 `df_detalle_mov_banco`= '".$this->df_detalle_mov_banco."',
                 `df_modificadoBy_banco`= ".$this->df_modificadoBy_banco."
+                `dp_perfil_banco_id` = ".$this->dp_perfil_banco_id."
                 WHERE `df_id_banco` = ".$this->df_id_banco;
 
         // prepara la sentencia del query

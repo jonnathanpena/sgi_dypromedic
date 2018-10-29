@@ -55,6 +55,15 @@
                         </div>
 					</div>
                     <div class="for-group row">
+                        <div class="col-md-2 pull-left">
+                            <label class="pull-left">
+                                Perfil de Banco
+                            </label>
+                        </div>
+                        <div class="col-md-5 pull-left">
+                            <select name="perfil" id="perfil" class="form-control">
+                            </select>
+                        </div>                        
                         <div class="col-md-2 pull-right"> 
                             <input type="text" id="saldo_banco" name="saldo_banco" class="form-control" readonly>        
                             <input type="hidden" id="valor_libro" >
