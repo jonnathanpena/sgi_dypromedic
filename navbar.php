@@ -45,11 +45,11 @@
 					Egresos 
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="proveedores.php">Proveedores</a></li>
-					<li><a href="caja_chica.php">Caja Chica</a></li>
 					<li><a href="banco.php">Banco</a></li>
+					<li><a href="caja_chica.php">Caja Chica</a></li>
 					<li><a href="compras.php">Compras</a></li>
 					<li><a href="libro_diario.php">Libros Diario</a></li>
+					<li><a href="proveedores.php">Proveedores</a></li>
 				</ul>
 			</li>
 
@@ -59,9 +59,9 @@
 					Bodega 
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="productos.php">Productos</a></li>
-					<li><a href="kardex.php">Kardex</a></li>
 					<li><a href="inventario.php">Inventario</a></li>
+					<li><a href="kardex.php">Kardex</a></li>
+					<li><a href="productos.php">Productos</a></li>
 				</ul>
 			</li>
 

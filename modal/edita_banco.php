@@ -14,20 +14,22 @@ $fecha = date("d/m/Y");
             <div class="modal-body">
                 <form class="form-horizontal" id="editar_banco" name="editar_banco">
                     <div id="resultados_ajax"></div>
+                    <div class="form-group producto">
                         <div class="form-group">
-                            <label for="editUsuario" class="col-sm-3 control-label" style="text-align:left;">Usuario</label>
+                            <label for="editUsuario" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Usuario</label>
                             <div class="col-sm-8">
-                                <select name="editUsuario" id="editUsuario" class="form-control" disabled>
+                                <select style="width: 95%; margin-left: -8px;" name="editUsuario" id="editUsuario" class="form-control" disabled>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editDescripcion" class="col-sm-3 control-label" style="text-align:left;">Alias<span class="obligatorio">*</span></label>
+                            <label for="editDescripcion" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Alias<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="editDescripcion" name="editDescripcion" placeholder="Alias" required>                                
+                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="editDescripcion" name="editDescripcion" placeholder="Alias" required>                                
                                 <input class="hidden" id="id" >                                
                             </div>
                         </div>
+                    </div>
                         <div class="form-group row">
                         <label for="editBanco" class="col-md-3 control-label" style="text-align:left;">Banco<span class="obligatorio">*</span></label>
                         <div class="col-md-8">
@@ -69,3 +71,4 @@ $fecha = date("d/m/Y");
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="./css/cliente.css">

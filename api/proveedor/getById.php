@@ -52,7 +52,9 @@ if($num>0){
             "df_direccion_empresa"=>$df_direccion_empresa,
             "df_nombre_contacto"=>$df_nombre_contacto,
             "df_tlf_contacto"=>$df_tlf_contacto,
-            "df_documento_prov"=>$df_documento_prov
+            "df_documento_prov"=>$df_documento_prov,
+            "df_correo_prov"=>$df_correo_prov,
+            "df_pag_web"=>$df_pag_web
         );
  
         array_push($proveedor_arr["data"], $proveedor_item);

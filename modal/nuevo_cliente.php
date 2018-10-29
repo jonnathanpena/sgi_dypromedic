@@ -30,13 +30,14 @@
                                 <span style="color: red;" id="span_documento">¡Cliente ya registrado!</span>
                             </div>
                         </div>
+                    </div>
                         <div class="form-group">
-                            <label for="nombre" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Nombre<span class="obligatorio">*</span></label>
+                            <label for="nombre" class="col-sm-3 control-label" style="text-align:left;">Nombre<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input style="width: 95%; margin-left: -8px;" type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
                             </div>
                         </div>
-                    </div>
+                    
                         <div class="form-group" style="display: none;">
                             <label for="razon_social" class="col-sm-3 control-label">Razón Social</label>
                             <div class="col-sm-8">
