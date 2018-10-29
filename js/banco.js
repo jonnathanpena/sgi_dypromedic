@@ -87,8 +87,8 @@ function generate_table() {
         tr.append("<td>" + row.df_tipo_movimiento + "</td>");
         tr.append("<td>" + row.df_detalle_mov_banco + "</td>");
         tr.append("<td>" + row.df_num_documento_banco + "</td>");
-        tr.append("<td class='text-center'> $ " + Number(row.df_monto_banco).toFixed(2) + "</td>");
-        tr.append("<td class='text-center'> $ " + Number(row.df_saldo_banco).toFixed(2) + "</td>");
+        tr.append("<td class='text-right'> $ " + Number(row.df_monto_banco).toFixed(2) + "</td>");
+        tr.append("<td class='text-right'> $ " + Number(row.df_saldo_banco).toFixed(2) + "</td>");
         //tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallar(" + row.df_id_gasto + ",`" + row.tipo + "`, `"+ row.df_movimiento +"`)'><i class='glyphicon glyphicon-edit'></i></button></td>");
         $('#resultados .table-responsive table tbody').append(tr);
     })
@@ -157,6 +157,7 @@ $('#guardar_egreso').submit(function(event) {
     if ($('#fecha_egreso').val() == '' || $('#movimiento').val() == 'null') {
         alertar('warning', '¡Advertencia!', 'Todos los campos son obligtorios');
     } else {
+        var perfil_banco = $('#perfilEg').val();
         var f = $('#fecha_egreso').val();
         var datetime = f + ' 00:00:00';
         currentdate = new Date();
@@ -175,10 +176,10 @@ $('#guardar_egreso').submit(function(event) {
             df_saldo_banco: $('#saldo').val(),
             df_num_documento_banco: $('#documento_egreso').val(),
             df_detalle_mov_banco: $('#movimiento').val(),
-            dp_perfil_banco_id: $('#perfilEg').val()
+            dp_perfil_banco_id: perfil_banco.split('-')[0]
         };
         var egresoLibro = {
-            df_fuente_ld: 'Banco',
+            df_fuente_ld: 'Banco ' + perfil_banco.split('-')[1],
             df_valor_inicial_ld: $('#valor_libro').val(),
             df_fecha_ld: datelibro,
             df_descipcion_ld: $('#movimiento').val(),
@@ -216,7 +217,7 @@ function insertEgreso(egreso) {
         $('#valor_egreso').val('');
         $('#fecha_egreso').val('');
         $('#nuevoEgreso').modal('hide');
-        consultaMovimientoBanco(perfil);
+        consultaMovimientoBanco(perfil.split('-')[0]);
     });
     selectDetalles();
 }
@@ -227,6 +228,7 @@ $('#guardar_ingreso').submit(function(event) {
     if ($('#fecha').val() == '' || $('#detalle').val() == 'null') {
         alertar('warning', '¡Advertencia!', 'Todos los campos son obligtorios');
     } else {
+        var perfil_banco = $('#perfilIng').val();
         var f = $('#fecha').val();
         var datetime = f + ' 00:00:00';
         currentdate = new Date();
@@ -245,10 +247,10 @@ $('#guardar_ingreso').submit(function(event) {
             df_saldo_banco: $('#saldo_ingreso').val(),
             df_num_documento_banco: $('#documento').val(),
             df_detalle_mov_banco: $('#detalle').val(),
-            dp_perfil_banco_id: $('#perfilIng').val()
+            dp_perfil_banco_id: perfil_banco.split('-')[0]
         };
         var ingresoLibro = {
-            df_fuente_ld: 'Banco',
+            df_fuente_ld: 'Banco ' + perfil_banco.split('-')[1],
             df_valor_inicial_ld: $('#valor_libro').val(),
             df_fecha_ld: datelibro,
             df_descipcion_ld: $('#detalle').val(),
@@ -268,7 +270,7 @@ function insertIngresoLibro(ingresoLibro) {
         if (response != false) {
             alertar('success', '¡Éxito!', 'Ingreso de Banco en Libro Diario registrado exitosamente');
         } else {
-            alertar('danger', '¡Error!', 'Error al insertar, verifique que todo está bien e intente de nuevo');
+            alertar('danger', '¡Error!', 'Error al insertar LB, verifique que todo está bien e intente de nuevo');
         }
     });
 }
@@ -286,7 +288,7 @@ function insertIngreso(ingreso) {
         $('#valor').val('');
         $('#fecha').val('');
         $('#nuevoIngreso').modal('hide');
-        consultaMovimientoBanco(perfil);
+        consultaMovimientoBanco(perfil.split('-')[0]);
     });
     selectDetallesIngreso();
 }
@@ -327,21 +329,21 @@ function consultarPerfilesBanco() {
     $('#perfilEg').empty();
     $.post(urlCompleta, JSON.stringify({ dp_descripcion_per_ban: q, dp_banco_per_ban: q }), function(data, status, xhr) {
         $.each(data.data, function(index, row) {
-            $('#perfil').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
-            $('#perfilIng').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
-            $('#perfilEg').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
+            $('#perfil').append('<option value="' + row.dp_id_perfil_ban + '-' + row.dp_descripcion_per_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
+            $('#perfilIng').append('<option value="' + row.dp_id_perfil_ban + '-' + row.dp_descripcion_per_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
+            $('#perfilEg').append('<option value="' + row.dp_id_perfil_ban + '-' + row.dp_descripcion_per_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');
         });
-        perfil = $('#perfil').val() * 1;
-        console.log('Perfil Banco select ',perfil);
-        consultaMovimientoBanco(perfil);
+        perfil = $('#perfil').val();
+        console.log('Perfil Banco select ',perfil.split('-')[0]);
+        consultaMovimientoBanco(perfil.split('-')[0]);
     });
 }
 
 $('#perfil').change(function() {
     $('#resultados .table-responsive table tbody').empty(); 
-    perfil = $('#perfil').val() * 1;
-    console.log('Perfil Banco select ',perfil);
-    consultaMovimientoBanco(perfil);
+    perfil = $('#perfil').val();
+    console.log('Perfil Banco select ',perfil.split('-')[0]);
+    consultaMovimientoBanco(perfil.split('-')[0]);
 });
 
 function consultaMovimientoBanco(perfil) {
