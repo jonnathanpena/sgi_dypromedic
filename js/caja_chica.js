@@ -7,6 +7,7 @@ var $pagination = $('#pagination'),
     totalPages = 0;
 var items = [];
 var timer;
+var perfil;
 
 $(document).ready(function() {
     usuario = JSON.parse(localStorage.getItem('distrifarma_test_user'));
@@ -49,20 +50,20 @@ function load() {
     valorLibro = 0;
     banco = 0;
     selectMovimientos();
-    var urlCompleta = url + 'banco/getAll.php';
+    /* var urlCompleta = url + 'banco/getAll.php';
     $.get(urlCompleta, function(response) {
         if (response.data.length > 0) {
             $('#saldo_banco').val(response.data[0].df_saldo_banco * 1);
             banco = response.data[0].df_saldo_banco * 1;
         }
-    });
+    }); */
     $('#resultados .table-responsive table tbody').html('Cargando...');
     var urlCompleta = url + 'cajaChicaGasto/getMes.php';
     $.get(urlCompleta, function(response) {
         console.log('response ', response.data);
         if (response.data.length > 0) {
             $('#saldo_caja').val('$' + response.data[0].df_saldo * 1);
-            saldo = response.data[0].df_saldo * 1;
+            saldo = response.data[0].df_saldo * 1; 
             caja = response.data;
             valorLibro = ($('#saldo_banco').val() * 1) + saldo;
             $('#valor_libro').val(valorLibro);
@@ -159,13 +160,13 @@ function generate_table() {
             tr.append("<td>" + row.df_usuario_usuario + "</td>");
             tr.append("<td>" + row.df_movimiento + "</td>");
             if (row.tipo == 'E') {
-                tr.append("<td class='text-center'>$ 0.00</td>");
-                tr.append("<td class='text-center'>$ " + row.df_gasto + "</td>");
+                tr.append("<td class='text-right'>$ 0.00</td>");
+                tr.append("<td class='text-right'>$ " + row.df_gasto + "</td>");
             } else {
-                tr.append("<td class='text-center'>$ " + row.df_gasto + "</td>");
-                tr.append("<td class='text-center'>$ 0.00</td>");
+                tr.append("<td class='text-right'>$ " + row.df_gasto + "</td>");
+                tr.append("<td class='text-right'>$ 0.00</td>");
             }
-            tr.append("<td>$ " + row.df_saldo + "</td>");
+            tr.append("<td class='text-right'>$ " + row.df_saldo + "</td>");
             $('#resultados .table-responsive table tbody').append(tr);
         })
         /*cajasChicas = [];
@@ -191,13 +192,13 @@ function poblarTabla() {
         tr.append("<td>" + row.personal + "</td>");
         tr.append("<td>" + row.movimiento + "</td>");
         if (row.tipo == 'E') {
-            tr.append("<td class='text-center'>$ 0.00</td>");
-            tr.append("<td class='text-center'>$ " + row.gasto + "</td>");
+            tr.append("<td class='text-right'>$ 0.00</td>");
+            tr.append("<td class='text-right'>$ " + row.gasto + "</td>");
         } else {
-            tr.append("<td class='text-center'>$ " + row.gasto + "</td>");
-            tr.append("<td class='text-center'>$ 0.00</td>");
+            tr.append("<td class='text-right'>$ " + row.gasto + "</td>");
+            tr.append("<td class='text-right'>$ 0.00</td>");
         }
-        tr.append("<td class='text-center'>$ " + row.saldo + "</td>");
+        tr.append("<td class='text-right'>$ " + row.saldo + "</td>");
         //tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallarEgreso(" + row.df_id_gasto + ",`" + row.tipo + "`, `"+ row.df_movimiento +"`)'><i class='glyphicon glyphicon-edit'></i></button></td>");
         $('#resultados .table-responsive table tbody').append(tr);
     });
@@ -282,9 +283,9 @@ function insertarTablaEgreso(item) {
             tr.append("<td>" + item.df_fecha_gasto.split(' ')[0] + "</td>");
             tr.append("<td>" + response.data[0].df_usuario_usuario + "</td>");
             tr.append("<td>" + item.df_movimiento + "</td>");
-            tr.append("<td class='text-center'>$ 0.00</td>");
-            tr.append("<td class='text-center'>$ " + Number(item.df_gasto).toFixed(2) + "</td>");
-            tr.append("<td class='text-center'>$ " + Number(item.df_saldo).toFixed(2) + "</td>");
+            tr.append("<td class='text-right'>$ 0.00</td>");
+            tr.append("<td class='text-right'>$ " + Number(item.df_gasto).toFixed(2) + "</td>");
+            tr.append("<td class='text-right'>$ " + Number(item.df_saldo).toFixed(2) + "</td>");
             tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallar(" + item.df_id_gasto + ")'><i class='glyphicon glyphicon-edit'></i></button></td>");
             $('#resultados .table-responsive table tbody').append(tr);
         }
@@ -307,9 +308,9 @@ function insertarTablaIngreso(item) {
             tr.append("<td>" + item.df_fecha_ingreso.split(' ')[0] + "</td>");
             tr.append("<td>" + response.data[0].df_usuario_usuario + /* response.data[0].df_nombre_usuario + ' ' + response.data[0].df_apellido_usuario +*/ "</td>");
             tr.append("<td>Ingreso</td>");
-            tr.append("<td class='text-center'> $ " + Number(item.df_valor_cheque).toFixed(2) + "</td>");
-            tr.append("<td class='text-center'>$ 0.00</td>");
-            tr.append("<td class='text-center'>$ " + Number(item.df_saldo_cc).toFixed(2) + "</td>");
+            tr.append("<td class='text-right'> $ " + Number(item.df_valor_cheque).toFixed(2) + "</td>");
+            tr.append("<td class='text-right'>$ 0.00</td>");
+            tr.append("<td class='text-right'>$ " + Number(item.df_saldo_cc).toFixed(2) + "</td>");
             tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallar(" + item.df_id_gasto + ")'><i class='glyphicon glyphicon-edit'></i></button></td>");
             $('#resultados .table-responsive table tbody').append(tr);
         }
@@ -325,9 +326,9 @@ function insertarPersonalEnTablaEgreso(item, personalId) {
         tr.append("<td>" + item.df_fecha_gasto.split(' ')[0] + "</td>");
         tr.append("<td>" + response.data[0].df_usuario_usuario + "</td>");
         tr.append("<td>" + item.df_movimiento + "</td>");
-        tr.append("<td class='text-center'>$ 0.00</td>");
-        tr.append("<td class='text-center'> $ " + Number(item.df_gasto).toFixed(2) + "</td>");
-        tr.append("<td class='text-center'> $ " + Number(item.df_saldo).toFixed(2) + "</td>");
+        tr.append("<td class='text-right'>$ 0.00</td>");
+        tr.append("<td class='text-right'> $ " + Number(item.df_gasto).toFixed(2) + "</td>");
+        tr.append("<td class='text-right'> $ " + Number(item.df_saldo).toFixed(2) + "</td>");
         tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallar(" + item.df_id_gasto + ")'><i class='glyphicon glyphicon-edit'></i></button></td>");
         $('#resultados .table-responsive table tbody').append(tr);
     });
@@ -342,9 +343,9 @@ function insertarPersonalEnTablaIngreso(item, personalId) {
         tr.append("<td>" + item.df_fecha_ingreso.split(' ')[0] + "</td>");
         tr.append("<td>" + response.data[0].df_usuario_usuario + "</td>");
         tr.append("<td>Ingreso</td>");
-        tr.append("<td class='text-center'> $ " + Number(item.df_valor_cheque).toFixed(2) + "</td>");
-        tr.append("<td class='text-center'> $ 0.00</td>");
-        tr.append("<td class='text-center'> $ " + Number(item.df_saldo_cc).toFixed(2) + "</td>");
+        tr.append("<td class='text-right'> $ " + Number(item.df_valor_cheque).toFixed(2) + "</td>");
+        tr.append("<td class='text-right'> $ 0.00</td>");
+        tr.append("<td class='text-right'> $ " + Number(item.df_saldo_cc).toFixed(2) + "</td>");
         tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallar(" + item.df_id_ingreso_cc + ")'><i class='glyphicon glyphicon-edit'></i></button></td>");
         $('#resultados .table-responsive table tbody').append(tr);
     });
@@ -369,6 +370,7 @@ function nuevoGasto() {
 }
 
 function nuevoIngreso() {
+    consultarPerfilesBanco();
     $('#nuevoIngreso').modal('show');
     $('#saldo_ingresoCC').val(saldo);
     $('#usuario').html('');
@@ -390,6 +392,7 @@ function calcularEgreso() {
 $('#guardar_ingreso').submit(function(event) {
     $('#guardar_ingreso').attr('disabled', true);
     event.preventDefault();
+    var perfil_banco = $('#perfilBanco').val();
     currentdate = new Date();
     datetime = currentdate.getFullYear() + "-" +
         (currentdate.getMonth() + 1) + "-" +
@@ -411,10 +414,11 @@ $('#guardar_ingreso').submit(function(event) {
         df_monto_banco: $('#valor').val(),
         df_saldo_banco: ($('#saldo_banco').val() * 1) - ($('#valor').val() * 1),
         df_num_documento_banco: $('#documento').val(),
-        df_detalle_mov_banco: "Ingreso a Caja Chica"
+        df_detalle_mov_banco: "Ingreso a Caja Chica",
+        dp_perfil_banco_id: perfil_banco.split('-')[0]
     };
     var egresoLibro = {
-        df_fuente_ld: 'Banco',
+        df_fuente_ld: 'Banco ' + perfil_banco.split('-')[1],
         df_valor_inicial_ld: $('#valor_libro').val(),
         df_fecha_ld: datetime,
         df_descipcion_ld: "Fondos para ingreso de Caja Chica",
@@ -606,3 +610,43 @@ var opciones = {
 
 $('#movimiento').easyAutocomplete(opciones);
 $('div .easy-autocomplete').removeAttr("style");
+
+function consultarPerfilesBanco() {
+    var urlCompleta = url + 'perfil_banco/getAll.php';
+    var q = '';
+    $('#perfilBanco').empty();
+    $.post(urlCompleta, JSON.stringify({ dp_descripcion_per_ban: q, dp_banco_per_ban: q }), function(data, status, xhr) {
+        $.each(data.data, function(index, row) {
+            $('#perfilBanco').append('<option value="' + row.dp_id_perfil_ban + '-' + row.dp_descripcion_per_ban + '">' + row.dp_descripcion_per_ban + ' - ' + row.dp_banco_per_ban + '</option>');           
+        });
+        perfil = $('#perfilBanco').val();
+        consultaMovimientoBanco(perfil.split('-')[0]);
+        console.log('Perfil Banco select ',perfil);
+    });
+}
+
+$('#perfilBanco').change(function() {    
+    perfil = $('#perfilBanco').val();
+    console.log('Perfil Banco select ',perfil);
+    consultaMovimientoBanco(perfil.split('-')[0]);
+    console.log('perfil 0', perfil.split('-')[0]);
+    console.log('perfil 1', perfil.split('-')[1]);
+});
+
+function consultaMovimientoBanco(perfil) {
+    var urlCompleta = url + 'banco/getAll.php';
+    var saldo = 0;
+    $.post(urlCompleta, JSON.stringify({ dp_perfil_banco_id: perfil }), function(response, status, xhr) {    
+        if (response.data.length > 0) {
+            $('#saldo_banco').val((response.data[0].df_saldo_banco * 1).toFixed(2));
+            saldo = response.data[0].df_saldo_banco * 1;
+            libro = ($('#valor_libro').val() * 1) + saldo;
+            $('#valor_libro').val(libro);
+            console.log('valor inicial', libro);
+            console.log('Saldo Banco', saldo);
+        } else {
+            $('#saldo_banco').val('');
+            saldo = 0;           
+        }
+    });
+}

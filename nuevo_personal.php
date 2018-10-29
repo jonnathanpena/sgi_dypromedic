@@ -178,7 +178,7 @@
                         </div>-->
                     </div>                            
                     <div class="form-group row producto">
-                        <h4 style="margin-left: 2%;">Persona de Contacto</h4>
+                        <h4 style="margin-left: 1.2%;">Persona de Contacto</h4>
                         <label for="nombre_contacto" class="col-md-1 control-label" style="text-align:left;">Nombre</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control input-sm" id="nombre_contacto" name="nombre_contacto" placeholder="Nombre" autofocus>
