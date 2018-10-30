@@ -60,7 +60,8 @@ if($num>0){
             "dp_banco_per_ban"=>$dp_banco_per_ban, 
             "dp_cuenta_per_ban"=>$dp_cuenta_per_ban, 
             "dp_tipo_cuenta_per_ban"=>$dp_tipo_cuenta_per_ban, 
-            "dp_tipo_per_ban"=>$dp_tipo_per_ban
+            "dp_tipo_per_ban"=>$dp_tipo_per_ban,
+            "df_usuario_usuario"=>$df_usuario_usuario
         );
  
         array_push($banco_arr["data"], $banco_item);

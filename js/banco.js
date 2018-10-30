@@ -376,3 +376,57 @@ function consultaMovimientoBanco(perfil) {
         }
     });
 }
+
+function exportar() {
+    on();
+    var id =  perfil.split('-')[0];
+    var alias = perfil.split('-')[1];
+    var urlCompleta = url + 'banco/getAll.php';
+    $.post(urlCompleta, JSON.stringify({ dp_perfil_banco_id: id }), function(response, status, xhr) {  
+    console.log('Exportar Banco', response.data);
+        var exportar = [{
+            df_fecha_banco: "Fecha",
+            df_usuario_usuario: "Usuario",
+            df_tipo_movimiento: "Movimiento",
+            df_detalle_mov_banco: "Detalle",
+            df_num_documento_banco: "#Documento",
+            df_monto_banco: "Valor",
+            df_saldo_banco: "Saldo",
+            dp_descripcion_per_ban: "Alias"          
+        }];
+        if (response.data.length > 0) {
+            $.each(response.data, function(index, row) {
+                    exportar.push({
+                        df_fecha_banco: row.df_fecha_banco,
+                        df_usuario_usuario: row.df_usuario_usuario,
+                        df_tipo_movimiento: row.df_tipo_movimiento,
+                        df_detalle_mov_banco: row.df_detalle_mov_banco,
+                        df_num_documento_banco: row.df_num_documento_banco,
+                        df_monto_banco: row.df_monto_banco,
+                        df_saldo_banco: row.df_saldo_banco,
+                        dp_descripcion_per_ban: row.dp_descripcion_per_ban + ' - ' +row.dp_banco_per_ban
+                    })                
+            });
+            var form = $(document.createElement('form'));
+            $(form).attr("action", "excel/exportar.php");
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+            $(form).attr("target", "_blank");
+            var input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "data")
+                .val(JSON.stringify(exportar));
+            $(form).append($(input));
+            input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "documento")
+                .val('Banco ' + alias);
+            $(form).append($(input));
+            form.appendTo(document.body);
+            $(form).submit();
+        } else {
+            alertar('warning', '¡Alerta!', 'No existe información para exportar');
+        }
+        off();
+    });
+}

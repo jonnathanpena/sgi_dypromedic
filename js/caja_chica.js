@@ -161,12 +161,12 @@ function generate_table() {
             tr.append("<td>" + row.df_movimiento + "</td>");
             if (row.tipo == 'E') {
                 tr.append("<td class='text-right'>$ 0.00</td>");
-                tr.append("<td class='text-right'>$ " + row.df_gasto + "</td>");
+                tr.append("<td class='text-right'>$ " + Number(row.df_gasto).toFixed(2) + "</td>");
             } else {
-                tr.append("<td class='text-right'>$ " + row.df_gasto + "</td>");
+                tr.append("<td class='text-right'>$ " + Number(row.df_gasto).toFixed(2) + "</td>");
                 tr.append("<td class='text-right'>$ 0.00</td>");
             }
-            tr.append("<td class='text-right'>$ " + row.df_saldo + "</td>");
+            tr.append("<td class='text-right'>$ " +  Number(row.df_saldo).toFixed(2) + "</td>");
             $('#resultados .table-responsive table tbody').append(tr);
         })
         /*cajasChicas = [];
@@ -193,12 +193,12 @@ function poblarTabla() {
         tr.append("<td>" + row.movimiento + "</td>");
         if (row.tipo == 'E') {
             tr.append("<td class='text-right'>$ 0.00</td>");
-            tr.append("<td class='text-right'>$ " + row.gasto + "</td>");
+            tr.append("<td class='text-right'>$ " + Number(row.gasto).toFixed(2) + "</td>");
         } else {
-            tr.append("<td class='text-right'>$ " + row.gasto + "</td>");
+            tr.append("<td class='text-right'>$ " + Number(row.gasto).toFixed(2) + "</td>");
             tr.append("<td class='text-right'>$ 0.00</td>");
         }
-        tr.append("<td class='text-right'>$ " + row.saldo + "</td>");
+        tr.append("<td class='text-right'>$ " + Number(row.saldo).toFixed(2) + "</td>");
         //tr.append("<td><button class='btn btn-default pull-right' title='Detallar' onclick='detallarEgreso(" + row.df_id_gasto + ",`" + row.tipo + "`, `"+ row.df_movimiento +"`)'><i class='glyphicon glyphicon-edit'></i></button></td>");
         $('#resultados .table-responsive table tbody').append(tr);
     });
@@ -648,5 +648,68 @@ function consultaMovimientoBanco(perfil) {
             $('#saldo_banco').val('');
             saldo = 0;           
         }
+    });
+}
+
+function exportar() {
+    on();
+    var urlCompleta = url + 'cajaChicaGasto/getMes.php';
+    $.get(urlCompleta, function(response) {
+    console.log('Caja Chica', response.data);
+        var exportar = [{
+            df_fecha_gasto: "Fecha",
+            df_usuario_usuario: "Usuario",
+            df_movimiento: "Detalle",
+            df_num_documento: "#Documento",
+            tipo: "Ingreso",
+            df_gasto: "Egreso",
+            df_saldo: "Saldo"            
+        }];
+        if (response.data.length > 0) {
+            $.each(response.data, function(index, row) {
+                if (row.tipo == 'E'){
+                    exportar.push({
+                        df_fecha_gasto: row.df_fecha_gasto,
+                        df_usuario_usuario: row.df_usuario_usuario,
+                        df_movimiento: row.df_movimiento,
+                        df_num_documento: row.df_num_documento,
+                        tipo: 0.00,
+                        df_gasto: row.df_gasto,
+                        df_saldo: row.df_saldo
+                    })
+                } else {
+                    exportar.push({
+                        df_fecha_gasto: row.df_fecha_gasto,
+                        df_usuario_usuario: row.df_usuario_usuario,
+                        df_movimiento: row.df_movimiento,
+                        df_num_documento: row.df_num_documento,
+                        tipo: row.df_gasto,
+                        df_gasto: 0.00,
+                        df_saldo: row.df_saldo
+                    })
+                }
+                
+            });
+            var form = $(document.createElement('form'));
+            $(form).attr("action", "excel/exportar.php");
+            $(form).attr("method", "POST");
+            $(form).css("display", "none");
+            $(form).attr("target", "_blank");
+            var input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "data")
+                .val(JSON.stringify(exportar));
+            $(form).append($(input));
+            input = $("<input>")
+                .attr("type", "text")
+                .attr("name", "documento")
+                .val('caja-chica');
+            $(form).append($(input));
+            form.appendTo(document.body);
+            $(form).submit();
+        } else {
+            alertar('warning', '¡Alerta!', 'No existe información para exportar');
+        }
+        off();
     });
 }

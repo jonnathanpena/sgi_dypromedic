@@ -29,9 +29,11 @@ class Banco {
         $query = "SELECT `df_id_banco`, `df_fecha_banco`, `df_usuario_id_banco`, `df_tipo_movimiento`, 
                     `df_monto_banco`, `df_saldo_banco`, `df_num_documento_banco`, `df_detalle_mov_banco`, 
                     `df_modificadoBy_banco`, `dp_perfil_banco_id`,  `dp_descripcion_per_ban`, 
-                    `dp_banco_per_ban`, `dp_cuenta_per_ban`, `dp_tipo_cuenta_per_ban`, `dp_tipo_per_ban`
+                    `dp_banco_per_ban`, `dp_cuenta_per_ban`, `dp_tipo_cuenta_per_ban`, `dp_tipo_per_ban`,
+                    us.`df_usuario_usuario`
                 FROM `df_banco` as ban
                 INNER JOIN `dp_perfil_banco` as perban ON (ban.`dp_perfil_banco_id` = perban.dp_id_perfil_ban)
+                INNER JOIN `df_usuario` AS us on (us.`df_id_usuario` = ban.df_usuario_id_banco)
                 WHERE ban.`dp_perfil_banco_id` = ".$this->dp_perfil_banco_id."
                 order by df_id_banco desc";
     
