@@ -128,8 +128,8 @@ class Producto {
                     FROM `df_producto` as prod
                     JOIN `df_producto_precio` as pp ON (prod.`df_id_producto` = pp.`df_producto_id`)
                     JOIN `df_impuesto` as iva ON (pp.`df_iva` = iva.`df_id_impuesto`)
-                    JOIN `df_inventario` as inv ON (prod.`df_id_producto` = inv.`df_producto`)
-                    WHERE prod.`df_codigo_prod` = 'PRO-".$this->codigo."'";
+                    LEFT JOIN `df_inventario` as inv ON (prod.`df_id_producto` = inv.`df_producto`)
+                    WHERE prod.`df_codigo_prod` = '".$this->codigo."'";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);

@@ -38,10 +38,10 @@ $cliente->df_calificacion_cli= $info[0]["df_calificacion_cli"];
 
 // insert cliente
 $response = $cliente->insert();
-if($response == true){
-    echo json_encode(true); 
+if($response != false){
+    $response = $response * 1;
+    echo json_encode($response); 
 }else{
-    // Error en caso de que no se pueda modificar
     echo json_encode(false); 
 }
 ?>

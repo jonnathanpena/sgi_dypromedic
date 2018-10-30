@@ -14,7 +14,7 @@
                             <label for="tipo_documento" class="col-sm-3 control-label" style="text-align:left; margin-left:15px;">Tipo Documento<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
                                 <select style="width: 95%; margin-left: -8px;" name="tipo_documento" id="tipo_documento" class="form-control" required>
-                                    <option value="null">Seleccione...</option>
+                                    <option value="null" selected>Seleccione...</option>
                                     <option value="Cedula">Cédula</option>
                                     <option value="RUC">R.U.C</option>
                                     <option value="Pasaporte">Pasaporte</option>

@@ -17,6 +17,7 @@
 }
 .autocomplete-items div {
   padding: 10px;
+  color: #000000;
   cursor: pointer;
   background-color: #fff; 
   border-bottom: 1px solid #d4d4d4; 

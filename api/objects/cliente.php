@@ -140,10 +140,10 @@ class Cliente {
         $stmt = $this->conn->prepare($query);    
         
         if($stmt->execute()){
-            return true;
+            return $this->conn->lastInsertId();
         }else{
-            return false;
-        }   
+            return $stmt;
+        }
         
         
     }

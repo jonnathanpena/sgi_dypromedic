@@ -137,7 +137,7 @@ function insertar(documento, codigo) {
     console.log('insertar ', cliente);
     $.post(urlCompleta, JSON.stringify(cliente), function(data, status, hrx) {
         console.log('response ', data);
-        if (data == true) {
+        if (data != false) {
             alertar('success', '¡Éxito!', 'Cliente registrado exitosamente');
         } else {
             alertar('danger', '¡Error!', 'Ocurrió un problema, por favor, intente de nuevo');
