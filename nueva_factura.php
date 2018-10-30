@@ -113,8 +113,8 @@ include("modal/nuevo_cliente.php");
                         <label for="cdigo_producto" class="col-md-1 control-label">Unidad</label>
                         <div class="col-md-2">
                             <select name="unidad_producto" id="unidad_producto" class="form-control" onchange="seleccionaUnidad()">
-                                <option value="CAJA" selected>Caja</option>
-                                <option value="UND">Unidad</option>
+                                <option value="CAJA">Caja</option>
+                                <option value="UND" selected>Unidad</option>
                             </select>
                         </div> 
                         <label for="cdigo_producto" class="col-md-1 control-label">Cant</label>
