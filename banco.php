@@ -33,7 +33,10 @@
                     <button type='button' class="btn btn-info" onclick="nuevoIngreso()">
                         <span class="glyphicon glyphicon-plus" ></span> 
                         Nuevo Ingreso
-                    </button>                    
+                    </button> 
+                    <button class="btn btn-info" style="margin-left: 10px;" onclick="exportar()">
+                        <span class="glyphicon glyphicon-cloud-download" ></span>
+                    </button>                     
                 </div>
                 <h4><i class='glyphicon glyphicon-usd'></i> Banco</h4>
             </div>
