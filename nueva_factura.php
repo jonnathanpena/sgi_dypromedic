@@ -9,6 +9,7 @@
    $active_reportes_usuarios = "";
    $title="Nueva Factura | SGI";  
    $fecha = Date('d/m/Y');
+   $fact = '001-001-000012234';
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +26,11 @@
       <div class="container">
          <div class="panel panel-info">
             <div class="panel-heading">
+               <div class="pull-right">
+                    <input style="text-align:right; font-weight: bold; font-size: 15px;" type="text" class="form-control input-sm" id="fact" name="fact" value="<?php echo $fact; ?>" readonly>
+                </div>
                <h4><i class='glyphicon glyphicon-edit'></i> Nueva Factura</h4>
+
             </div>
             <div class="panel-body">
 <?php
@@ -34,6 +39,7 @@ include("modal/consultar_productos.php");
 include("modal/load.php");
 include("modal/nuevo_producto.php");
 include("modal/nuevo_cliente.php");
+include("modal/editar_cliente.php");
 ?>
                <form class="form-horizontal" role="form" id="form_nueva_factura">
                   <div class="form-group row">
@@ -46,7 +52,7 @@ include("modal/nuevo_cliente.php");
                      <div class="col-md-2">
                         <input type="text" class="form-control input-sm" id="fecha" name="fecha" value="<?php echo $fecha; ?>" readonly>
                      </div>
-                     <label for="personal" class="col-md-2 control-label">Vendedor <span class="obligatorio">*</span></label>
+                     <label for="personal" class="col-md-2 control-label" style="text-align:left">Vendedor <span class="obligatorio">*</span></label>
                      <div class="col-md-4">
                         <select name="personal" id="personal" class="form-control"></select>
                      </div>                     
@@ -62,17 +68,24 @@ include("modal/nuevo_cliente.php");
 						    <span class="glyphicon glyphicon-plus" ></span> Nuevo Cliente
 					    </button>
                      </div>
-                    <label for="nombre_cliente" class="col-md-2 control-label">Nombre Cliente</label>
+                    <label for="nombre_cliente" class="col-md-2 control-label" style="text-align:left">Nombre Cliente</label>
                      <div class="col-md-4">
                         <input type="text" class="form-control input-sm" id="nombre_cliente" name="nombre_cliente" placeholder="Nombre Cliente" readonly>
                      </div>                                                                                                                      
                   </div>  
                   <div class="form-group row">
                     <label for="direccion_cliente" class="col-md-2 control-label" style="text-align:left">Dirección Cliente <span class="obligatorio">*</span></label>
-                     <div class="col-md-10">
+                     <div class="col-md-4">
                         <input type="text" class="form-control input-sm" id="direccion_cliente" name="direccion_cliente" placeholder="Dirección Cliente" readonly>
                         <input type="hidden" id="cliente_id" >
-                     </div>                                                                                                                     
+                     </div> 
+                     <label for="telefono_cliente" class="col-md-2 control-label" style="text-align:left">Teléfono Cliente <span class="obligatorio">*</span></label>
+                     <div class="col-md-3">
+                        <input type="text" class="form-control input-sm" id="telefono_cliente" name="telefono_cliente" placeholder="Teléfono Cliente" readonly>                       
+                     </div>    
+                     <div class="col-md-1">
+                        <span class="pull-right"><a href="#" class="btn btn-warning" title="Modificar Cliente" onclick="detallar()"><i class="glyphicon glyphicon-edit"></i> </a></span>
+                     </div>
                   </div>   
                   <div class="form-group row">
                   <label for="sector" class="col-md-2 control-label" style="text-align:left; display: none;">Sector</label>
@@ -81,10 +94,59 @@ include("modal/nuevo_cliente.php");
                             <option value="null">Seleccione...</option>
                         </select>
                      </div>
-                    <label for="fecha_entrega" class="col-md-2 control-label" style="text-align:left; ">Fecha Entrega <span class="obligatorio">*</span></label>
+                     <label for="correo_cliente" class="col-md-2 control-label" style="text-align:left">Email Cliente <span class="obligatorio">*</span></label>
+                     <div class="col-md-4">
+                        <input type="text" class="form-control input-sm" id="correo_cliente" name="correo_cliente" placeholder="Email Cliente" readonly>                           
+                     </div> 
+                     <label for="fecha_cirugia" class="col-md-2 control-label" style="text-align:left; ">Fecha Cirugía <span class="obligatorio">*</span></label>
+                     <div class="col-md-2">
+                        <input type="date" class="form-control input-sm" id="fecha_cirugia" name="fecha_cirugia" required>
+                     </div>
+                  </div>
+                   <div class="form-group row">
+                    <label for="documento_paciente" class="col-md-2 control-label" style="text-align:left; ">Documento Paciente<span class="obligatorio">*</span></label>
                     <div class="col-md-2">
-                        <input type="date" class="form-control input-sm" id="fecha_entrega" name="fecha_entrega" required>
+                        <input type="text" class="form-control input-sm" id="documento_paciente" name="documento_paciente" placeholder="Documento Paciente" required >
                     </div>
+                    <div class="col-md-2">
+                    </div>
+                    <label for="paciente" class="col-md-2 control-label" style="text-align:left; ">Nombre Paciente <span class="obligatorio">*</span></label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control input-sm" id="paciente" name="paciente" placeholder="Paciente" required >
+                    </div>                    
+                  </div>
+                  <div class="form-group row">
+                    <label for="doctor" class="col-md-1 control-label" style="text-align:left; ">Doctor <span class="obligatorio">*</span></label>
+                    <div class="col-md-2">
+                        <select name="doctor" id="doctor" class="form-control" required>                            
+                        </select>
+                    </div>
+                    <label for="instrumentista" class="col-md-2 control-label" style="text-align:left; ">Instrumentista <span class="obligatorio">*</span></label>
+                    <div class="col-md-2">
+                        <select name="instrumentista" id="instrumentista" class="form-control" required>                            
+                        </select>
+                    </div>
+                    <label for="cirugia" class="col-md-2 control-label" style="text-align:left; ">Tipo de Cirugía <span class="obligatorio">*</span></label>
+                    <div class="col-md-3">
+                        <select name="cirugia" id="cirugia" class="form-control" required>
+                            <option value="null">Seleccione...</option>
+                            <option value="OSTEOSINTESIS">OSTEOSINTESIS</option>
+                            <option value="OSTEOSINTESIS + INJERTO">OSTEOSINTESIS + INJERTO</option>
+                            <option value="OSTEOSINTESIS + INJERTO + KIT">OSTEOSINTESIS + INJERTO + KIT</option>
+                            <option value="SOLO INJERTO">SOLO INJERTO</option>
+                            <option value="CADERA PARCIAL">CADERA PARCIAL</option>
+                            <option value="PROTESIS DE CADERA">PROTESIS DE CADERA</option>
+                            <option value="PROTESIS DE RODILLA">PROTESIS DE RODILLA</option>
+                            <option value="SOLO TORNILLOS - KIRSCHNER">SOLO TORNILLOS - KIRSCHNER</option>
+                            <option value="MALLA DE EXANGUINACION">MALLA DE EXANGUINACION</option>
+                        </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="observacion" class="col-md-2 control-label" style="text-align:left; ">Observación</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control input-sm" id="observacion" name="observacion" placeholder="Observaciones">
+                    </div> 
                   </div>
                     <div class="col-md-2">
                         <select name="forma_pago" id="forma_pago" class="form-control" style="display: none;">

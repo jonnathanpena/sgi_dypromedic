@@ -173,6 +173,25 @@ class Personal {
         return $stmt;
     }
 
+    // obtener personal por cargo
+    function readByCargo(){
+    
+        // select all query
+        $query = "SELECT `df_id_personal`, `df_tipo_documento_per`, `df_nombre_per`, `df_apellido_per`, `df_cargo_per`, `df_fecha_ingreso`, 
+                `df_documento_per`, `df_correo_per`, `df_codigo_personal`, `df_telefono_per`, df_celular_per, `df_fecha_nac_per`, `df_direccion_per`,
+                `df_contrato_per`, `df_nombre_contacto`, `df_telefono_contacto`, `df_activo_per` 
+                FROM `df_personal` 
+                WHERE `df_cargo_per` LIKE '".$this->df_cargo_per."'";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+    
+        // execute query
+        $stmt->execute();
+    
+        return $stmt;
+    }
+
     // insertar un personal
     function insertPersonal(){
     

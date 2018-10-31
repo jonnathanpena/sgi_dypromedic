@@ -7,6 +7,7 @@ var total_iva = 0;
 var descuento = 0;
 var total = 0;
 var categorias = [];
+var fact = '001-001-0000121212';
 
 var $pagination = $('#pagination'),
     totalRecords = 0,
@@ -58,6 +59,8 @@ function cargar() {
     $('#personal').empty();
     consultarPersonal();
     consultarSectores();
+    consultarMedico();
+    consultarInstrumentista();
 }
 
 function consultarPersonal() {
@@ -91,7 +94,7 @@ function consultarCliente() {
             var tr;
             if (response.data.length > 0) {
                 $.each(response.data, function(index, row) {
-                    tr = $('<tr style="cursor: pointer;" onclick="seleccionarCliente(' + row.df_id_cliente + ', ' + row.df_documento_cli + ', ' + row.df_sector_cod + ', `' + row.df_nombre_cli + '`, `' + row.df_direccion_cli + '` )"/>');
+                    tr = $('<tr style="cursor: pointer;" onclick="seleccionarCliente(' + row.df_id_cliente + ', ' + row.df_documento_cli + ', ' + row.df_sector_cod + ', `' + row.df_nombre_cli + '`, `' + row.df_direccion_cli + '`, `' + row.df_telefono_cli + '`, `' + row.df_email_cli + '` )"/>');
                     tr.append("<td>" + row.df_codigo_cliente + "</td>");
                     tr.append("<td>" + row.df_tipo_documento_cli + "</td>");
                     tr.append("<td>" + row.df_documento_cli + "</td>");
@@ -106,19 +109,25 @@ function consultarCliente() {
     }, 0);
 }
 
-function seleccionarCliente(id_cliente, documento, sector, nombre, direccion) {
+function seleccionarCliente(id_cliente, documento, sector, nombre, direccion, telefono, correo) {
     $('#consultarClientes').modal('hide');
     $('#documento_cliente').val(documento);
     $('#cliente_id').val(id_cliente);
     $('#nombre_cliente').val(nombre);
     $('#sector').val(sector);
     $('#direccion_cliente').val(direccion);
+    $('#telefono_cliente').val(telefono);
+    $('#correo_cliente').val(correo);
 
     if (documento == '9999999999') {
         $('#direccion_cliente').attr('readonly', false);
+        $('#telefono_cliente').attr('readonly', false);
+        $('#correo_cliente').attr('readonly', false);
         $('#sector').attr('disabled', false);
     } else {
         $('#direccion_cliente').attr('readonly', 'readonly');
+        $('#telefono_cliente').attr('readonly', 'readonly');
+        ('#correo_cliente').attr('readonly', 'readonly');
         $('#sector').attr('disabled', 'disabled');
     }
 }
@@ -1013,4 +1022,158 @@ function getByRUC() {
 
 function nuevoCliente() {
     $('#span_documento').hide('slow');
+}
+
+/* EDITAR CLIENTE DESDE LA FACTURA */
+function detallar() {
+    var id = $('#cliente_id').val();
+    var urlCompleta = url + 'cliente/getById.php';
+    $.post(urlCompleta, JSON.stringify({ df_id_cliente: id }), function(data, status, hrx) {
+        console.log('Detalle de Cliente para editar: ', data);
+        if (data.data.length > 0) {            
+            $('#editTipo_documento').val(data.data[0].df_tipo_documento_cli);
+            $('#editDocumento').val(data.data[0].df_documento_cli);
+            $('#editRuc').val(data.data[0].df_documento_cli);
+            $('#editPasaporte').val(data.data[0].df_documento_cli);
+            $('#editNombre').val(data.data[0].df_nombre_cli);
+            $('#editRazon_social').val(data.data[0].df_razon_social_cli);
+            $('#editDireccion').val(data.data[0].df_direccion_cli);
+            $('#editReferencia').val(data.data[0].df_referencia_cli);
+            $('#editSector').val(data.data[0].df_sector_cod);
+            $('#editEmail').val(data.data[0].df_email_cli);
+            $('#editTelefono').val(data.data[0].df_telefono_cli);
+            $('#editCelular').val(data.data[0].df_celular_cli);
+            $('#editCodigo').val(data.data[0].df_codigo_cliente);
+            $('#editCalificacion').val(data.data[0].df_calificacion_cli);
+            $('#id').val(id);
+            if (data.data[0].df_tipo_documento_cli == 'Pasaporte') {
+                $('#editDocumento').hide();
+                $('#editRuc').hide();
+                $('#editPasaporte').show();
+            } else if (data.data[0].df_tipo_documento_cli == 'Cedula') {
+                $('#editDocumento').show();
+                $('#editRuc').hide();
+                $('#editPasaporte').hide();
+            } else if (data.data[0].df_tipo_documento_cli == 'RUC') {
+                $('#editDocumento').hide();
+                $('#editRuc').show();
+                $('#editPasaporte').hide();
+            }
+            $('#editarCliente').modal('show');
+        } else {
+            alertar('warning', '¡Alerta!', 'Debe seleccionar un Cliente');
+        }
+    });
+}
+
+$('#editTipo_documento').change(function() {
+    var valor = $('#editTipo_documento').val();
+    if (valor == 'null') {
+        $('#editDocumento').show();
+        $('#editRuc').hide();
+        $('#editPasaporte').hide();
+    } else if (valor = 'Cedula') {
+        $('#editDocumento').show();
+        $('#editRuc').hide();
+        $('#editPasaporte').hide();
+    } else if (valor == 'Pasaporte') {
+        $('#editDocumento').hide();
+        $('#editRuc').hide();
+        $('#editPasaporte').show();
+    } else if (valor == 'RUC') {
+        $('#editDocumento').hide();
+        $('#editRuc').show();
+        $('#editPasaporte').hide();
+    }
+});
+
+$('#editarCliente').submit(function(event) {
+    on();
+    event.preventDefault();
+    var documento = '';
+    if ($('#editTipo_documento').val() == 'null') {
+        off();
+        alertar('warning', '¡Alerta!', 'Ningún campo debe quedar vacío');
+    } else {
+        switch ($('#editTipo_documento').val()) {
+            case 'Cedula':
+                documento = $('#editDocumento').val();
+                break;
+
+            case 'RUC':
+                documento = $('#editRuc').val();
+                break;
+
+            case 'Pasaporte':
+                documento = $('#editPasaporte').val();
+                break;
+        }
+    }
+    if (documento == '') {
+        off();
+        alertar('warning', '¡Alerta!', 'No debe quedar ningún campo vacío');
+    } else {
+        var datos = {
+            df_codigo_cliente: $('#editCodigo').val(),
+            df_nombre_cli: $('#editNombre').val(),
+            df_razon_social_cli: "null", // $('#editRazon_social').val(),
+            df_tipo_documento_cli: $('#editTipo_documento').val(),
+            df_documento_cli: documento,
+            df_direccion_cli: $('#editDireccion').val(),
+            df_referencia_cli: "null", // $('#editReferencia').val(),
+            df_sector_cod: "null", // $('#editSector').val(),
+            df_email_cli: $('#editEmail').val(),
+            df_telefono_cli: $('#editTelefono').val(),
+            df_celular_cli: $('#editCelular').val(),
+            df_calificacion_cli: $('#editCalificacion').val(),
+            df_id_cliente: $('#id').val() * 1
+        };
+        update(datos);
+    }
+});
+
+function update(cliente) {
+    var urlCompleta = url + 'cliente/update.php';
+    console.log('Editar ', cliente);
+    $.post(urlCompleta, JSON.stringify(cliente), function(data, status, hrx) {
+        if (data == true) {
+            alertar('success', '¡Éxito!', 'Cliente modificado exitosamente');
+            off();
+            $('#editarCliente').modal('hide');
+            seleccionarCliente(cliente.df_id_cliente, cliente.df_documento_cli, cliente.df_sector_cod, cliente.df_nombre_cli, cliente.df_direccion_cli, cliente.df_telefono_cli, cliente.df_email_cli);            
+        } else {
+            alertar('danger', '¡Error!', 'Problema al modificar, por favor, verifica la información e intenta nuevamente');
+        }
+        off();
+        $('#editarCliente').modal('hide');
+        
+    });
+}
+
+function consultarMedico() {
+    var cargo = 'Doctor';
+    var urlCompleta = url + 'personal/getByCargo.php';
+    $('#doctor').append('<option value="null">Seleccione...</option>');
+    $.post(urlCompleta, JSON.stringify({ df_cargo_per: cargo }), function(data, status, hrx) {
+        console.log('Medico ',data);
+        if (data.data.length > 0) {
+            $.each(data.data, function(index, row) {
+                $('#doctor').append('<option value="' + row.df_id_personal + '">' + row.df_nombre_per + ' ' + row.df_apellido_per + '</option>');
+            });
+        }
+    });
+}
+
+function consultarInstrumentista() {
+    var cargo = 'Instrumentista';
+    var urlCompleta = url + 'personal/getByCargo.php';
+    $('#instrumentista').append('<option value="null">Seleccione...</option>');
+    $.post(urlCompleta, JSON.stringify({ df_cargo_per: cargo }), function(data, status, hrx) {
+        console.log('Instrumentista ',data);
+        if (data.data.length > 0) {
+            $.each(data.data, function(index, row) {
+                $('#instrumentista').append('<option value="' + row.df_id_personal + '">' + row.df_nombre_per + ' ' + row.df_apellido_per + '</option>');
+            });
+        }
+    });
 }

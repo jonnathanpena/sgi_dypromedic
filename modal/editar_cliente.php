@@ -31,9 +31,9 @@
                         <div class="form-group">
                             <label for="editDocumento" class="col-sm-3 control-label" style="text-align:left;">Documento<span class="obligatorio">*</span></label>
                             <div class="col-sm-8">
-                                <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="editDocumento" name="editDocumento" min="1" step="1" placeholder="Documento">
-                                <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="editRuc" name="editRuc" min="1" step="1" placeholder="Documento">
-                                <input style="width: 95%; margin-left: -8px;" type="number" class="form-control" id="editPasaporte" name="editPasaporte" placceholder="Documento">
+                                <input type="number" class="form-control" id="editDocumento" name="editDocumento" min="1" step="1" placeholder="Documento">
+                                <input type="number" class="form-control" id="editRuc" name="editRuc" min="1" step="1" placeholder="Documento">
+                                <input type="number" class="form-control" id="editPasaporte" name="editPasaporte" placceholder="Documento">
                             </div>
                         </div>
                         <div class="form-group">
