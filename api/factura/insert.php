@@ -25,6 +25,7 @@ $info = array($data);
 // configura los valores recibidos en post de la app
 $factura->df_fecha_fac= $info[0]["df_fecha_fac"];
 $factura->df_cliente_cod_fac= $info[0]["df_cliente_cod_fac"];
+$factura->df_cliente_tipo_doc_fac= $info[0]["df_cliente_tipo_doc_fac"];
 $factura->df_personal_cod_fac= $info[0]["df_personal_cod_fac"];
 $factura->df_sector_cod_fac= $info[0]["df_sector_cod_fac"];
 $factura->df_forma_pago_fac= $info[0]["df_forma_pago_fac"];

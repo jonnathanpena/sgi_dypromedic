@@ -37,9 +37,14 @@ class Factura {
 
     function read(){
         // select all query
-        $query = "SELECT `df_num_factura`, `df_fecha_fac`, `df_cliente_cod_fac`, `df_personal_cod_fac`, `df_sector_cod_fac`, `df_forma_pago_fac`, `df_subtotal_fac`, 
-                    `df_descuento_fac`, `df_iva_fac`, `df_valor_total_fac`, `df_creadaBy`, `df_fecha_creacion`,
-                    `df_edo_factura_fac`, `df_fecha_entrega_fac` 
+        $query = "SELECT `df_num_factura`, `df_fecha_fac`, `df_cliente_cod_fac`, `df_cliente_tipo_doc_fac`, 
+                    `df_cliente_documento`, `df_cliente_nombre_fac`, `df_cliente_direccion_fac`, 
+                    `df_cliente_telefono_fac`, `df_cliente_correo_fac`, `df_fecha_cirugia_fac`, 
+                    `df_paciente_documento_fac`, `df_paciente_nombre_fac`, `df_doctor_nombre_fac`, `df_doctor_id_fac`,
+                    `df_instrumentista_nombre_fac`, `df_instrumentista_id_fac`, `df_tipo_cirugia_fac`, `df_observacion_fac`, 
+                    `df_personal_cod_fac`, `df_personal_nombre_fac`, `df_sector_cod_fac`, `df_forma_pago_fac`, 
+                    `df_subtotal_fac`, `df_descuento_fac`, `df_iva_fac`, `df_valor_total_fac`, `df_creadaBy`, 
+                    `df_fecha_creacion`, `df_edo_factura_fac`, `df_fecha_entrega_fac` 
                     FROM `df_factura` WHERE `df_num_factura` like '%".$this->df_num_factura."%'
                     ORDER BY df_num_factura DESC";
 
@@ -57,10 +62,16 @@ class Factura {
 
         // select all query
 
-        $query = "SELECT `df_num_factura`, `df_fecha_fac`, `df_cliente_cod_fac`, `df_personal_cod_fac`, `df_sector_cod_fac`, `df_forma_pago_fac`, 
-                        `df_subtotal_fac`, `df_descuento_fac`, `df_iva_fac`, `df_valor_total_fac`, `df_creadaBy`, 
-                        `df_fecha_creacion`, `df_edo_factura_fac`, `df_fecha_entrega_fac` FROM `df_factura` 
-                        WHERE `df_num_factura` = ".$this->df_num_factura;
+        $query = "SELECT `df_num_factura`, `df_fecha_fac`, `df_cliente_cod_fac`, `df_cliente_tipo_doc_fac`, 
+                    `df_cliente_documento`, `df_cliente_nombre_fac`, `df_cliente_direccion_fac`, 
+                    `df_cliente_telefono_fac`, `df_cliente_correo_fac`, `df_fecha_cirugia_fac`, 
+                    `df_paciente_documento_fac`, `df_paciente_nombre_fac`, `df_doctor_nombre_fac`, `df_doctor_id_fac`,
+                    `df_instrumentista_nombre_fac`, `df_instrumentista_id_fac`, `df_tipo_cirugia_fac`, `df_observacion_fac`, 
+                    `df_personal_cod_fac`, `df_personal_nombre_fac`, `df_sector_cod_fac`, `df_forma_pago_fac`, 
+                    `df_subtotal_fac`, `df_descuento_fac`, `df_iva_fac`, `df_valor_total_fac`, `df_creadaBy`, 
+                    `df_fecha_creacion`, `df_edo_factura_fac`, `df_fecha_entrega_fac`
+                    FROM `df_factura` 
+                    WHERE `df_num_factura` = ".$this->df_num_factura;
 
         // prepare query statement
 
@@ -76,10 +87,14 @@ class Factura {
     function readFacturaGEnt(){    
         // select all query
 
-        $query = "SELECT fac.`df_num_factura`, fac.`df_fecha_fac`, fac.`df_cliente_cod_fac`, 
-                    fac.`df_personal_cod_fac`, fac.`df_sector_cod_fac`, fac.`df_forma_pago_fac`, 
-                    fac.`df_subtotal_fac`, fac.`df_descuento_fac`, fac.`df_iva_fac`, fac.`df_valor_total_fac`, 
-                    fac.`df_creadaBy`, fac.`df_fecha_creacion`, fac.`df_edo_factura_fac`, fac.`df_fecha_entrega_fac`
+        $query = "SELECT `df_num_factura`, `df_fecha_fac`, `df_cliente_cod_fac`, `df_cliente_tipo_doc_fac`, 
+                `df_cliente_documento`, `df_cliente_nombre_fac`, `df_cliente_direccion_fac`, 
+                `df_cliente_telefono_fac`, `df_cliente_correo_fac`, `df_fecha_cirugia_fac`, 
+                `df_paciente_documento_fac`, `df_paciente_nombre_fac`, `df_doctor_nombre_fac`, `df_doctor_id_fac`,
+                `df_instrumentista_nombre_fac`, `df_instrumentista_id_fac`, `df_tipo_cirugia_fac`, `df_observacion_fac`, 
+                `df_personal_cod_fac`, `df_personal_nombre_fac`, `df_sector_cod_fac`, `df_forma_pago_fac`, 
+                `df_subtotal_fac`, `df_descuento_fac`, `df_iva_fac`, `df_valor_total_fac`, `df_creadaBy`, 
+                `df_fecha_creacion`, `df_edo_factura_fac`, `df_fecha_entrega_fac`
                 FROM `df_sector` as sec
                 INNER JOIN `df_cliente` as cli on (sec.`df_codigo_sector` = cli.`df_sector_cod`)
                 INNER JOIN `df_factura` as fac on (fac.df_cliente_cod_fac = cli.df_id_cliente and 
@@ -101,13 +116,33 @@ class Factura {
     // insertar un factura
     function insert(){
         // query to insert record
-        $query = "INSERT INTO `df_factura`(`df_fecha_fac`, `df_cliente_cod_fac`, 
-                    `df_personal_cod_fac`, `df_sector_cod_fac`, `df_forma_pago_fac`, `df_subtotal_fac`, 
-                    `df_descuento_fac`, `df_iva_fac`, `df_valor_total_fac`, `df_creadaBy`, `df_fecha_creacion`,
-                    `df_edo_factura_fac`, `df_fecha_entrega_fac`) VALUES (
+        $query = "INSERT INTO `df_factura`( `df_fecha_fac`, `df_cliente_cod_fac`, `df_cliente_tipo_doc_fac`, 
+                `df_cliente_documento`, `df_cliente_nombre_fac`, `df_cliente_direccion_fac`, `df_cliente_telefono_fac`,
+                `df_cliente_correo_fac`, `df_fecha_cirugia_fac`, `df_paciente_documento_fac`, `df_paciente_nombre_fac`, 
+                `df_doctor_nombre_fac`, `df_doctor_id_fac`, `df_instrumentista_nombre_fac`, `df_instrumentista_id_fac`, 
+                `df_tipo_cirugia_fac`, `df_observacion_fac`, `df_personal_cod_fac`, `df_personal_nombre_fac`, 
+                `df_sector_cod_fac`, `df_forma_pago_fac`, `df_subtotal_fac`, `df_descuento_fac`, `df_iva_fac`, 
+                `df_valor_total_fac`, `df_creadaBy`, `df_fecha_creacion`, `df_edo_factura_fac`, `df_fecha_entrega_fac`) 
+                VALUES (
                         '".$this->df_fecha_fac."',
                         ".$this->df_cliente_cod_fac.",
+                        '".$this->df_cliente_tipo_doc_fac."',
+                        '".$this->df_cliente_documento."',
+                        '".$this->df_cliente_nombre_fac."',
+                        '".$this->df_cliente_direccion_fac."',
+                        '".$this->df_cliente_telefono_fac."',
+                        '".$this->df_cliente_correo_fac."',
+                        '".$this->df_fecha_cirugia_fac."',
+                        '".$this->df_paciente_documento_fac."',
+                        '".$this->df_paciente_nombre_fac."',
+                        '".$this->df_doctor_nombre_fac."',
+                        '".$this->df_doctor_id_fac."',
+                        '".$this->df_instrumentista_nombre_fac."',
+                        '".$this->df_instrumentista_id_fac."',
+                        '".$this->df_tipo_cirugia_fac."',
+                        '".$this->df_observacion_fac."',
                         ".$this->df_personal_cod_fac.",
+                        ".$this->df_personal_nombre_fac.",
                         ".$this->df_sector_cod_fac.",
                         '".$this->df_forma_pago_fac."',
                         ".$this->df_subtotal_fac.",
@@ -130,7 +165,7 @@ class Factura {
         }   
     }
 
-    // actualizar datos de factura
+    // actualizar datos de factura NO Dypromedic
     function update(){
         // query 
         $query = "UPDATE `df_factura` SET                     

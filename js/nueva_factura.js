@@ -94,7 +94,7 @@ function consultarCliente() {
             var tr;
             if (response.data.length > 0) {
                 $.each(response.data, function(index, row) {
-                    tr = $('<tr style="cursor: pointer;" onclick="seleccionarCliente(' + row.df_id_cliente + ', ' + row.df_documento_cli + ', ' + row.df_sector_cod + ', `' + row.df_nombre_cli + '`, `' + row.df_direccion_cli + '`, `' + row.df_telefono_cli + '`, `' + row.df_email_cli + '` )"/>');
+                    tr = $('<tr style="cursor: pointer;" onclick="seleccionarCliente(' + row.df_id_cliente + ',  `' + row.df_tipo_documento_cli + '`,' + row.df_documento_cli + ', ' + row.df_sector_cod + ', `' + row.df_nombre_cli + '`, `' + row.df_direccion_cli + '`, `' + row.df_telefono_cli + '`, `' + row.df_email_cli + '` )"/>');
                     tr.append("<td>" + row.df_codigo_cliente + "</td>");
                     tr.append("<td>" + row.df_tipo_documento_cli + "</td>");
                     tr.append("<td>" + row.df_documento_cli + "</td>");
@@ -109,8 +109,9 @@ function consultarCliente() {
     }, 0);
 }
 
-function seleccionarCliente(id_cliente, documento, sector, nombre, direccion, telefono, correo) {
+function seleccionarCliente(id_cliente, tipo, documento, sector, nombre, direccion, telefono, correo) {
     $('#consultarClientes').modal('hide');
+    $('#cliente_tipo_doc').val(tipo);
     $('#documento_cliente').val(documento);
     $('#cliente_id').val(id_cliente);
     $('#nombre_cliente').val(nombre);
@@ -1140,7 +1141,7 @@ function update(cliente) {
             alertar('success', '¡Éxito!', 'Cliente modificado exitosamente');
             off();
             $('#editarCliente').modal('hide');
-            seleccionarCliente(cliente.df_id_cliente, cliente.df_documento_cli, cliente.df_sector_cod, cliente.df_nombre_cli, cliente.df_direccion_cli, cliente.df_telefono_cli, cliente.df_email_cli);            
+            seleccionarCliente(cliente.df_id_cliente, cliente.df_tipo_documento_cli, cliente.df_documento_cli, cliente.df_sector_cod, cliente.df_nombre_cli, cliente.df_direccion_cli, cliente.df_telefono_cli, cliente.df_email_cli);            
         } else {
             alertar('danger', '¡Error!', 'Problema al modificar, por favor, verifica la información e intenta nuevamente');
         }

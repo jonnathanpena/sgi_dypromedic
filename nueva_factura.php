@@ -78,6 +78,7 @@ include("modal/editar_cliente.php");
                      <div class="col-md-4">
                         <input type="text" class="form-control input-sm" id="direccion_cliente" name="direccion_cliente" placeholder="Dirección Cliente" readonly>
                         <input type="hidden" id="cliente_id" >
+                        <input type="hidden" id="cliente_tipo_doc" >
                      </div> 
                      <label for="telefono_cliente" class="col-md-2 control-label" style="text-align:left">Teléfono Cliente <span class="obligatorio">*</span></label>
                      <div class="col-md-3">

@@ -27,10 +27,7 @@ class DetalleFactura {
     }
 
     // obtener factura de login
-    function readById(){
-    
-        // select all query
-        //INNER JOIN df_producto_precio as pp on (pp.`df_id_precio` = det.`df_prod_precio_detfac`)        //
+    function readById(){    
 
         $query = "SELECT det.`df_id_factura_detfac`, det.`df_num_factura_detfac`, det.`df_prod_precio_detfac`, 
                         det.df_precio_prod_detfac, prod.`df_id_producto`, prod.`df_nombre_producto`, 
@@ -81,7 +78,7 @@ class DetalleFactura {
         
     }
 
-    // actualizar datos de factura
+    // actualizar datos de factura NO Dypromedic
     function update(){
         // query 
         $query = "UPDATE `df_detalle_factura` SET 
