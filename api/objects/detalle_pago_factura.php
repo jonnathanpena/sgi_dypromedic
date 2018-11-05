@@ -51,7 +51,7 @@ class DetallePagoFactura {
 
         if ($this->metodo_pago_id === 3) {
             // query to insert record
-            $query = "INSERT INTO `detalle_pagos_factura`(`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
+            $query = "INSERT INTO `detalle_pagos_factura` (`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
                         `franquicia`, `recibo`, `titular`, `cheque`) 
                         VALUES (
                             ".$this->factura_id.",
@@ -67,7 +67,7 @@ class DetallePagoFactura {
                             null
                         )";
         }  else if ($this->metodo_pago_id === 2) {
-            $query = "INSERT INTO `detalle_pagos_factura`(`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
+            $query = "INSERT INTO `detalle_pagos_factura` (`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
                         `franquicia`, `recibo`, `titular`, `cheque`) 
                         VALUES (
                             ".$this->factura_id.",
@@ -83,7 +83,7 @@ class DetallePagoFactura {
                             null
                         )";
         } else if ($this->metodo_pago_id === 5) {
-            $query = "INSERT INTO `detalle_pagos_factura`(`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
+            $query = "INSERT INTO `detalle_pagos_factura` (`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
                         `franquicia`, `recibo`, `titular`, `cheque`) 
                         VALUES (
                             ".$this->factura_id.",
@@ -99,7 +99,7 @@ class DetallePagoFactura {
                             null
                         )";
         } else if ($this->metodo_pago_id === 1) {
-            $query = "INSERT INTO `detalle_pagos_factura`(`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
+            $query = "INSERT INTO `detalle_pagos_factura` (`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
                         `franquicia`, `recibo`, `titular`, `cheque`) 
                         VALUES (
                             ".$this->factura_id.",
@@ -115,7 +115,7 @@ class DetallePagoFactura {
                             '".$this->cheque."'
                         )";
         } else if ($this->metodo_pago_id === 6) {
-            $query = "INSERT INTO `detalle_pagos_factura`(`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
+            $query = "INSERT INTO `detalle_pagos_factura` (`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
                         `franquicia`, `recibo`, `titular`, `cheque`) 
                         VALUES (
                             ".$this->factura_id.",
@@ -131,7 +131,7 @@ class DetallePagoFactura {
                             null
                         )";
         } else if ($this->metodo_pago_id === 4) {
-            $query = "INSERT INTO `detalle_pagos_factura`(`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
+            $query = "INSERT INTO `detalle_pagos_factura` (`factura_id`, `metodo_pago_id`, `banco_emisor`, `banco_receptor`, `codigo`, `fecha`, `tipo_tarjeta`, 
                         `franquicia`, `recibo`, `titular`, `cheque`) 
                         VALUES (
                             ".$this->factura_id.",
