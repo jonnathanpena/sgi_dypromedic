@@ -66,7 +66,7 @@ if($num>0){
             "df_personal_cod_fac"=>$df_personal_cod_fac,
             "df_personal_nombre_fac"=>$df_personal_nombre_fac,
             "df_sector_cod_fac"=>$df_sector_cod_fac,
-            "df_forma_pago_fac"=>$df_forma_pago_fac,
+            "df_clave_acceso_fac"=>$df_clave_acceso_fac,
             "df_subtotal_fac"=>$df_subtotal_fac,
             "df_descuento_fac"=>$df_descuento_fac,
             "df_iva_fac"=>$df_iva_fac,

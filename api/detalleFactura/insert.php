@@ -24,12 +24,14 @@ $info = array($data);
 
 // configura los valores recibidos en post de la app
 $detalleFactura->df_num_factura_detfac= $info[0]["df_num_factura_detfac"];
+$detalleFactura->df_prod_codigo_detfac= $info[0]["df_prod_codigo_detfac"];
+$detalleFactura->df_prod_iess_detfac= $info[0]["df_prod_iess_detfac"];
+$detalleFactura->df_prod_nombre_detfac= $info[0]["df_prod_nombre_detfac"];
 $detalleFactura->df_prod_precio_detfac= $info[0]["df_prod_precio_detfac"];
 $detalleFactura->df_precio_prod_detfac= $info[0]["df_precio_prod_detfac"];
 $detalleFactura->df_cantidad_detfac= $info[0]["df_cantidad_detfac"];
 $detalleFactura->df_nombre_und_detfac= $info[0]["df_nombre_und_detfac"];
 $detalleFactura->df_cant_x_und_detfac= $info[0]["df_cant_x_und_detfac"];
-$detalleFactura->df_edo_entrega_prod_detfac= $info[0]["df_edo_entrega_prod_detfac"];
 $detalleFactura->df_valor_sin_iva_detfac= $info[0]["df_valor_sin_iva_detfac"];
 $detalleFactura->df_iva_detfac= $info[0]["df_iva_detfac"];
 $detalleFactura->df_valor_total_detfac= $info[0]["df_valor_total_detfac"];

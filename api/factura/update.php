@@ -23,16 +23,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 $info = array($data);  
 
 // configura los valores recibidos en post de la app
-$factura->df_cliente_cod_fac= $info[0]["df_cliente_cod_fac"];
-$factura->df_personal_cod_fac= $info[0]["df_personal_cod_fac"];
-$factura->df_sector_cod_fac= $info[0]["df_sector_cod_fac"];
-$factura->df_forma_pago_fac= $info[0]["df_forma_pago_fac"];
-$factura->df_subtotal_fac= $info[0]["df_subtotal_fac"];
-$factura->df_descuento_fac= $info[0]["df_descuento_fac"];
-$factura->df_iva_fac= $info[0]["df_iva_fac"];
-$factura->df_valor_total_fac= $info[0]["df_valor_total_fac"];
 $factura->df_edo_factura_fac= $info[0]["df_edo_factura_fac"];
-$factura->df_fecha_entrega_fac= $info[0]["df_fecha_entrega_fac"];
 $factura->df_num_factura= $info[0]["df_num_factura"];
 
 // modificar factura
