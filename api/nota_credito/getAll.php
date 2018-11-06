@@ -46,6 +46,7 @@ if($num>0){
         //Los nombres acá son iguales a los de la clase iguales a las columnas de la BD
         $nota_credito_item=array(
             "dp_num_notacred"=>$dp_num_notacred, 
+            "dp_clave_acceso_nc"=>$dp_clave_acceso_nc,
             "dp_fecha_nc"=>$dp_fecha_nc,
             "dp_factura_nc"=>$dp_factura_nc,
             "dp_fecha_fac_nc"=>$dp_fecha_fac_nc,

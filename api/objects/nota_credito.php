@@ -11,6 +11,7 @@ class NotaCredito {
     //Nombre igualitos a las columnas de la base de datos
 
     public $dp_num_notacred;
+    public $dp_clave_acceso_nc;
     public $dp_fecha_nc;
     public $dp_factura_nc;
     public $dp_fecha_fac_nc;
@@ -37,7 +38,7 @@ class NotaCredito {
 
     function read(){
         // select all query
-        $query = "SELECT `dp_num_notacred`, `dp_fecha_nc`, `dp_factura_nc`, `dp_fecha_fac_nc`, `dp_cliente_id_nc`, 
+        $query = "SELECT `dp_num_notacred`, `dp_clave_acceso_nc`, `dp_fecha_nc`, `dp_factura_nc`, `dp_fecha_fac_nc`, `dp_cliente_id_nc`, 
                     `dp_cliente_tipo_doc_nc`, `dp_cliente_documento_nc`, `dp_cliente_nombre_nc`, `dp_cliente_correo_nc`,
                     `dp_motivo_nc`, `dp_tipo_doc_venta_nc`, `dp_subtotal_nc`, `dp_iva_nc`, `dp_total_nc`, 
                     `dp_creadoby`, `dp_fecha_creacion` 
@@ -59,7 +60,7 @@ class NotaCredito {
 
         // select all query
 
-        $query = "SELECT `dp_num_notacred`, `dp_fecha_nc`, `dp_factura_nc`, `dp_fecha_fac_nc`, `dp_cliente_id_nc`, 
+        $query = "SELECT `dp_num_notacred`, `dp_clave_acceso_nc`, `dp_fecha_nc`, `dp_factura_nc`, `dp_fecha_fac_nc`, `dp_cliente_id_nc`, 
                     `dp_cliente_tipo_doc_nc`, `dp_cliente_documento_nc`, `dp_cliente_nombre_nc`, `dp_cliente_correo_nc`,
                     `dp_motivo_nc`, `dp_tipo_doc_venta_nc`, `dp_subtotal_nc`, `dp_iva_nc`, `dp_total_nc`, 
                     `dp_creadoby`, `dp_fecha_creacion` 
@@ -79,12 +80,13 @@ class NotaCredito {
     // insertar una nota de credito
     function insert(){
         // query to insert record
-        $query = "INSERT INTO `dp_nota_credito` (`dp_fecha_nc`, `dp_factura_nc`, `dp_fecha_fac_nc`, `dp_cliente_id_nc`, 
+        $query = "INSERT INTO `dp_nota_credito` (`dp_fecha_nc`, `dp_clave_acceso_nc`, `dp_factura_nc`, `dp_fecha_fac_nc`, `dp_cliente_id_nc`, 
                 `dp_cliente_tipo_doc_nc`, `dp_cliente_documento_nc`, `dp_cliente_nombre_nc`, `dp_cliente_correo_nc`,
                 `dp_motivo_nc`, `dp_tipo_doc_venta_nc`, `dp_subtotal_nc`, `dp_iva_nc`, `dp_total_nc`, 
                 `dp_creadoby`, `dp_fecha_creacion`) 
                 VALUES (
                         '".$this->dp_fecha_nc."',
+                        '".$this->dp_clave_acceso_nc."',
                         ".$this->dp_factura_nc.",
                         '".$this->dp_fecha_fac_nc."',
                         ".$this->dp_cliente_id_nc.",

@@ -24,6 +24,7 @@ $info = array($data);
 
 // configura los valores recibidos en post de la app
 $nota_credito->dp_fecha_nc= $info[0]["dp_fecha_nc"];
+$nota_credito->dp_clave_acceso_nc= $info[0]["dp_clave_acceso_nc"];
 $nota_credito->dp_factura_nc= $info[0]["dp_factura_nc"];
 $nota_credito->dp_fecha_fac_nc= $info[0]["dp_fecha_fac_nc"];
 $nota_credito->dp_cliente_id_nc= $info[0]["dp_cliente_id_nc"];
