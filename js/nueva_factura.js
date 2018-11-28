@@ -47,6 +47,10 @@ function load() {
     $('#span_documento').hide('slow');
     $('#ruc').hide();
     $('#pasaporte').hide();
+    $('#pago_transferencia').hide('slow');
+    $('#pago_tarjeta').hide('slow');
+    $('#pago_cheque').hide('slow');
+    $('#pago_electronico').hide('slow');
     clearTimeout(timer);
     timer = setTimeout(function() {
         cargar();
@@ -61,6 +65,34 @@ function cargar() {
     consultarSectores();
     consultarMedico();
     consultarInstrumentista();
+    consultarBancos();
+    consultarPerfilBancos();
+}
+
+function consultarBancos() {
+    var urlCompleta = url + 'bancos/getAll.php';
+    $.get(urlCompleta, function(response) {
+        if (response.data.length > 0) {
+            $('#banco_emisor').append('<option value="null">Seleccione...</option>');
+            $('#banco_cheque').append('<option value="null">Seleccione...</option>');
+            $.each(response.data, function(index, row) {
+                $('#banco_emisor').append('<option value="' + row.id_bancos + '">' + row.nombre_bancos + '</option>');
+                $('#banco_cheque').append('<option value="' + row.id_bancos + '">' + row.nombre_bancos + '</option>');
+            });
+        }
+    });
+}
+
+function consultarPerfilBancos() {
+    var urlCompleta = url + 'perfil_banco/getAll.php';
+    $.get(urlCompleta, function(response) {
+        if (response.data.length > 0) {
+            $('#banco_receptor').append('<option value="null">Seleccione...</option>');
+            $.each(response.data, function(index, row) {
+                $('#banco_receptor').append('<option value="' + row.dp_id_perfil_ban + '">' + row.dp_descripcion_per_ban + '</option>');
+            });
+        }
+    });
 }
 
 function consultarPersonal() {
@@ -264,7 +296,6 @@ function getCliente() {
     }, 0);
 }
 
-var acciones = '<a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
 var precio = 10;
 
 /*function agregar(codigo, producto, id_producto, id_precio, iva) {
@@ -404,7 +435,7 @@ function insertarFactura(factura) {
                 cant_bodega = cant_bodega - cantidad;
             } else {
                 cant_bodega = cant_bodega - (unidad_caja * cantidad);
-            }            
+            }
             insertDetalle(id_factura, id_precio, precio, cantidad, valor_sin_iva, iva, total_tupla, nombre_unidad, cant_x_und, nombre_producto, cant_bodega);
         });
         clearTimeout(timer);
@@ -433,7 +464,7 @@ function insertDetalle(id, id_precio, precio, cantidad, valor_sin_iva, iva, tota
     }
     getIdKardex(detalle, nombre_producto, cant_bodega);
     getInventario(detalle, cant_bodega);
-    $.post(urlCompleta, JSON.stringify(detalle), function(response) { });
+    $.post(urlCompleta, JSON.stringify(detalle), function(response) {});
 }
 
 function getInventario(detalle, cant_bodega) {
@@ -643,10 +674,12 @@ $('#cantidad_producto').keyup(function(e) {
     }
 });
 
+var acciones = '<a class="add" title="Agregar" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a><a class="edit" id="editar" title="Editar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a><a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>';
+
 function agregar() {
     if (producto.dp_tipo_pro == undefined || producto.dp_tipo_pro == '') {
-        alertar('danger', '¡Alerta!', 'Debe seleccionar un producto');        
-    } else  {
+        alertar('danger', '¡Alerta!', 'Debe seleccionar un producto');
+    } else {
         var cantidad = $('#cantidad_producto').val() * 1;
         var unidad_caja = producto.df_und_caja * 1;
         var stock = 0;
@@ -678,6 +711,7 @@ function agregar() {
                     '<td class="total_iva" style="display: none;">' + Number(total_iva_tabla).toFixed(2) + '</td>' +
                     '<td class="unidad_caja" style="display: none;">' + unidad_caja + '</td>' +
                     '<td width="100" class="codigo">' + producto.df_codigo_prod + '</td>' +
+                    '<td width="100" class="codigo">' + producto.df_codigo_prod + '</td>' +
                     '<td class="producto">' + producto.df_nombre_producto + '</td>' +
                     '<td width="100" class="unidad">' + unidad + '</td>' +
                     '<td width="100" class="cantidad">' + cantidad + '</td>' +
@@ -691,8 +725,51 @@ function agregar() {
             calcular();
             limpiarLineaProducto();
         }
-    }    
+    }
 }
+
+$(document).on("click", "#editar", function() {
+    var i = 0;
+    $(this).parents("tr").find("td:not(:last-child)").each(function() {
+        if (i == 7) {
+            $(this).html('<input type="text" class="form-control" id="codigo-tprod" value="' + $(this).text() + '"  autofocus>');
+        } else if (i == 8) {
+            $(this).html('<input type="text" class="form-control" id="iess-tprod" value="' + $(this).text() + '">');
+        } else if (i == 9) {
+            $(this).html('<input type="text" class="form-control" id="producto-tprod" value="' + $(this).text() + '">');
+        } else if (i == 10) {
+            $(this).html('<input type="text" class="form-control" id="unidad-tprod" value="' + $(this).text() + '">');
+        } else if (i == 11) {
+            $(this).html('<input type="number" class="form-control" id="cantidad-tprod" value="' + $(this).text() + '">');
+        } else if (i == 12) {
+            $(this).html('<input type="number" class="form-control" id="pu-tprod" value="' + $(this).text() + '">');
+        } else if (i == 13) {
+            $(this).html('<input type="number" class="form-control" id="total_tupla-tprod" value="' + $(this).text() + '">');
+        }
+        i++;
+    });
+    $(this).parents("tr").find(".add, .edit").toggle();
+});
+
+$(document).on("click", "a.add", function() {
+    var empty = false;
+    var input = $(this).parents("tr").find('input');
+    input.each(function() {
+        if (!$(this).val()) {
+            $(this).addClass("error");
+            empty = true;
+        } else {
+            $(this).removeClass("error");
+        }
+    });
+    $(this).parents("tr").find(".error").first().focus();
+    if (!empty) {
+        input.each(function() {
+            $(this).parent("td").html($(this).val());
+        });
+        $(this).parents("tr").find(".add, .edit").toggle();
+    }
+});
 
 function todasCategorias() {
     categorias = [];
@@ -818,8 +895,8 @@ function insertPrecioProducto(producto, productoPrecio) {
             } else {
                 var urlCompleta = url + 'producto/getByCodigoFactura.php';
                 $('#codigo_producto').val(producto.df_codigo_prod);
-                $('#codigo_producto').keyup();                                           
-            }                
+                $('#codigo_producto').keyup();
+            }
         } else {
             alertar('danger', '¡Error!', 'Error al insertar, verifique que todo está bien e intente de nuevo');
         }
@@ -1017,7 +1094,7 @@ function getByRUC() {
                     $('#guardar').prop('disabled', false);
                 }
             });
-        } 
+        }
     }, 100);
 }
 
@@ -1031,7 +1108,7 @@ function detallar() {
     var urlCompleta = url + 'cliente/getById.php';
     $.post(urlCompleta, JSON.stringify({ df_id_cliente: id }), function(data, status, hrx) {
         console.log('Detalle de Cliente para editar: ', data);
-        if (data.data.length > 0) {            
+        if (data.data.length > 0) {
             $('#editTipo_documento').val(data.data[0].df_tipo_documento_cli);
             $('#editDocumento').val(data.data[0].df_documento_cli);
             $('#editRuc').val(data.data[0].df_documento_cli);
@@ -1141,13 +1218,13 @@ function update(cliente) {
             alertar('success', '¡Éxito!', 'Cliente modificado exitosamente');
             off();
             $('#editarCliente').modal('hide');
-            seleccionarCliente(cliente.df_id_cliente, cliente.df_tipo_documento_cli, cliente.df_documento_cli, cliente.df_sector_cod, cliente.df_nombre_cli, cliente.df_direccion_cli, cliente.df_telefono_cli, cliente.df_email_cli);            
+            seleccionarCliente(cliente.df_id_cliente, cliente.df_tipo_documento_cli, cliente.df_documento_cli, cliente.df_sector_cod, cliente.df_nombre_cli, cliente.df_direccion_cli, cliente.df_telefono_cli, cliente.df_email_cli);
         } else {
             alertar('danger', '¡Error!', 'Problema al modificar, por favor, verifica la información e intenta nuevamente');
         }
         off();
         $('#editarCliente').modal('hide');
-        
+
     });
 }
 
@@ -1156,7 +1233,7 @@ function consultarMedico() {
     var urlCompleta = url + 'personal/getByCargo.php';
     $('#doctor').append('<option value="null">Seleccione...</option>');
     $.post(urlCompleta, JSON.stringify({ df_cargo_per: cargo }), function(data, status, hrx) {
-        console.log('Medico ',data);
+        console.log('Medico ', data);
         if (data.data.length > 0) {
             $.each(data.data, function(index, row) {
                 $('#doctor').append('<option value="' + row.df_id_personal + '">' + row.df_nombre_per + ' ' + row.df_apellido_per + '</option>');
@@ -1170,7 +1247,7 @@ function consultarInstrumentista() {
     var urlCompleta = url + 'personal/getByCargo.php';
     $('#instrumentista').append('<option value="null">Seleccione...</option>');
     $.post(urlCompleta, JSON.stringify({ df_cargo_per: cargo }), function(data, status, hrx) {
-        console.log('Instrumentista ',data);
+        console.log('Instrumentista ', data);
         if (data.data.length > 0) {
             $.each(data.data, function(index, row) {
                 $('#instrumentista').append('<option value="' + row.df_id_personal + '">' + row.df_nombre_per + ' ' + row.df_apellido_per + '</option>');
@@ -1178,3 +1255,130 @@ function consultarInstrumentista() {
         }
     });
 }
+
+function siguiente() {
+    $('#formasPagoFacturacion').modal('show');
+}
+
+$('#formas_pago').change(function() {
+    if ($('#formas_pago').val() == 1) {
+        $('#pago_efectivo').hide('slow');
+        $('#pago_transferencia').hide('slow');
+        $('#pago_tarjeta').hide('slow');
+        $('#pago_cheque').show('slow');
+        $('#pago_electronico').hide('slow');
+    } else if ($('#formas_pago').val() == 2) {
+        $('#pago_efectivo').hide('slow');
+        $('#pago_transferencia').show('slow');
+        $('#pago_tarjeta').hide('slow');
+        $('#pago_cheque').hide('slow');
+        $('#pago_electronico').hide('slow');
+    } else if ($('#formas_pago').val() == 3) {
+        $('#pago_efectivo').show('slow');
+        $('#pago_transferencia').hide('slow');
+        $('#pago_tarjeta').hide('slow');
+        $('#pago_cheque').hide('slow');
+        $('#pago_electronico').hide('slow');
+    } else if ($('#formas_pago').val() == 4) {
+        $('#pago_efectivo').hide('slow');
+        $('#pago_transferencia').hide('slow');
+        $('#pago_tarjeta').hide('slow');
+        $('#pago_cheque').hide('slow');
+        $('#pago_electronico').hide('slow');
+    }
+});
+
+var pagos = [];
+$('#nuevo_pago').click(function() {
+    var tr = $('<tr/>');
+    if ($('#formas_pago').val() == 3) {
+        if ($('#monto_efectivo').val() != '') {
+            tr = $('<tr/>');
+            tr.append('<td>Efectivo</td>');
+            tr.append('<td>' + $('#monto_efectivo').val() + '</td>');
+            tr.append('<td><a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>');
+            $('table#pagos tbody').append(tr);
+            $('#formas_pago').val('3');
+            $('#pago_efectivo').show('slow');
+            $('#pago_transferencia').hide('slow');
+            $('#pago_tarjeta').hide('slow');
+            $('#pago_cheque').hide('slow');
+            $('#pago_electronico').hide('slow');
+            $('#monto_efectivo').val('');
+        } else {
+            alert('Indicar el monto a cancelar');
+            return;
+        }
+    } else if ($('#formas_pago').val() == 1) {
+        if ($('#banco_cheque').val() != 'null') {
+            if ($('#numero_cheque').val() != '') {
+                if ($('#monto_cheque').val() != '' || $('#monto_cheque').val() > 0) {
+                    if ($('#titular_cheque').val() != '') {
+                        tr = $('<tr/>');
+                        tr.append('<td>Cheque</td>');
+                        tr.append('<td>' + $('#monto_cheque').val() + '</td>');
+                        tr.append('<td><a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>');
+                        $('table#pagos tbody').append(tr);
+                        $('#formas_pago').val('3');
+                        $('#pago_efectivo').show('slow');
+                        $('#pago_transferencia').hide('slow');
+                        $('#pago_tarjeta').hide('slow');
+                        $('#pago_cheque').hide('slow');
+                        $('#pago_electronico').hide('slow');
+                        $('#monto_efectivo').val('');
+                    } else {
+                        alert('Debe indicar el titular del cheque');
+                        return;
+                    }
+                } else {
+                    alert('Debe indicar el monto del cheque');
+                    return;
+                }
+            } else {
+                alert('Debe indicar el número del cheque');
+                return;
+            }
+        } else {
+            alert('Debe escoger un banco emisor');
+            return;
+        }
+    } else if ($('#formas_pago').val() == 2) {
+        if ($('#banco_emisor').val() != '') {
+            if ($('#banco_receptor').val() != 'null') {
+                if ($('#monto_transferencia').val() != '' || $('#monto_transferencia').val() > 0) {
+                    if ($('#codigo_transferencia').val() != '') {
+                        if ($('#fecha_transferencia').val() != '') {
+                            tr = $('<tr/>');
+                            tr.append('<td>Transferencia</td>');
+                            tr.append('<td>' + $('#monto_transferencia').val() + '</td>');
+                            tr.append('<td><a class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a></td>');
+                            $('table#pagos tbody').append(tr);
+                            $('#formas_pago').val('3');
+                            $('#pago_efectivo').show('slow');
+                            $('#pago_transferencia').hide('slow');
+                            $('#pago_tarjeta').hide('slow');
+                            $('#pago_cheque').hide('slow');
+                            $('#pago_electronico').hide('slow');
+                            $('#monto_efectivo').val('');
+                        } else {
+                            alert('Fecha de transferencia es necesaria');
+                            return;
+                        }
+                    } else {
+                        alert('Debe indicar el código de la transferencia');
+                        return;
+                    }
+                } else {
+                    alert('Debe indicar un monto de transferencia');
+                    return;
+                }
+            } else {
+                alert('Debe seleccionar un banco receptor');
+                return;
+            }
+        } else {
+            alert('Debe seleccionar un banco emisor');
+            return;
+        }
+    }
+});

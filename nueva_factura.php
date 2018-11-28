@@ -40,6 +40,7 @@ include("modal/load.php");
 include("modal/nuevo_producto.php");
 include("modal/nuevo_cliente.php");
 include("modal/editar_cliente.php");
+include("modal/formas_pago_facturacion.php");
 ?>
                <form class="form-horizontal" role="form" id="form_nueva_factura">
                   <div class="form-group row">
@@ -200,6 +201,7 @@ include("modal/editar_cliente.php");
                                 <thead>
                                     <tr>
                                         <th width="100">Código</th>
+                                        <th width="100">IESS</th>
                                         <th>Producto</th>
                                         <th width="100">Unidad</th>
                                         <th width="100">Cantidad</th>
@@ -239,8 +241,8 @@ include("modal/editar_cliente.php");
                             <a href="facturas.php"  class="btn btn-danger">
                                 <span class="glyphicon glyphicon-remove"></span> Cancelar
                             </a>
-                            <button type="button" class="btn btn-success" id="btn-guardar" onclick="guardar()">
-                                <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+                            <button type="button" class="btn btn-success" id="btn-guardar" onclick="siguiente()">
+                                <span class="glyphicon glyphicon-chevron-right"></span> Siguiente
                             </button>
                         </div>
                     </div>
